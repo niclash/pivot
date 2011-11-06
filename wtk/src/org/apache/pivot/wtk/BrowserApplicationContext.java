@@ -17,6 +17,8 @@
 package org.apache.pivot.wtk;
 
 import java.applet.Applet;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -147,7 +149,7 @@ public final class BrowserApplicationContext extends ApplicationContext {
 
                 // Create the display host
                 displayHost = new DisplayHost();
-                setLayout(new java.awt.BorderLayout());
+                setLayout(new BorderLayout());
                 add(displayHost);
 
                 // Add the display to the display list
@@ -247,7 +249,7 @@ public final class BrowserApplicationContext extends ApplicationContext {
         public void init() {
             InitCallback initCallback = new InitCallback();
 
-            if (java.awt.EventQueue.isDispatchThread()) {
+            if ( EventQueue.isDispatchThread()) {
                 initCallback.run();
             } else {
                 queueCallback(initCallback, true);
@@ -258,7 +260,7 @@ public final class BrowserApplicationContext extends ApplicationContext {
         public void start() {
             StartCallback startCallback = new StartCallback();
 
-            if (java.awt.EventQueue.isDispatchThread()) {
+            if (EventQueue.isDispatchThread()) {
                 startCallback.run();
             } else {
                 queueCallback(startCallback, true);
@@ -269,7 +271,7 @@ public final class BrowserApplicationContext extends ApplicationContext {
         public void stop() {
             StopCallback stopCallback = new StopCallback();
 
-            if (java.awt.EventQueue.isDispatchThread()) {
+            if (EventQueue.isDispatchThread()) {
                 stopCallback.run();
             } else {
                 queueCallback(stopCallback, true);
@@ -280,7 +282,7 @@ public final class BrowserApplicationContext extends ApplicationContext {
         public void destroy() {
             DestroyCallback destroyCallback = new DestroyCallback();
 
-            if (java.awt.EventQueue.isDispatchThread()) {
+            if (EventQueue.isDispatchThread()) {
                 destroyCallback.run();
             } else {
                 queueCallback(destroyCallback, true);

@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -27,6 +27,7 @@ import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.MenuBar;
 import org.apache.pivot.wtk.MenuBarListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 
 /**

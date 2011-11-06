@@ -16,8 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.Platform;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -57,7 +56,6 @@ import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
 import org.apache.pivot.wtk.ListView;
 import org.apache.pivot.wtk.Mouse;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.ScrollPane;
@@ -71,6 +69,8 @@ import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.FileBrowserSkin;
 
@@ -893,13 +893,13 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
      * CommandModifier + {@link KeyCode#F F} Transfers focus to the search
      * TextInput.
      *
-     * @see Platform#getCommandModifier()
+     * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
     public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyReleased(component, keyCode, keyLocation);
 
-        Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+        Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
         if (keyCode == Keyboard.KeyCode.F
             && Keyboard.isPressed(commandModifier)) {
             searchTextInput.requestFocus();

@@ -16,17 +16,11 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.PrintGraphics;
-import java.awt.Transparency;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.text.StringCharacterIterator;
 
 import org.apache.pivot.collections.ArrayList;
@@ -38,10 +32,16 @@ import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.LabelListener;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.TextDecoration;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.GlyphVector;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.PrintGraphics;
+import org.apache.pivot.wtk.graphics.Transparency;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
 /**
  * Label skin.
@@ -64,7 +64,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
     public LabelSkin() {
         Theme theme = Theme.getTheme();
         font = theme.getFont();
-        color = Color.BLACK;
+        color = ColorFactory.BLACK;
         backgroundColor = null;
         textDecoration = null;
         horizontalAlignment = HorizontalAlignment.LEFT;
@@ -90,7 +90,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
         if (text != null
             && text.length() > 0) {
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D stringBounds = font.getStringBounds(text, fontRenderContext);
+            Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
             preferredWidth = (int)Math.ceil(stringBounds.getWidth());
         } else {
             preferredWidth = 0;
@@ -131,9 +131,8 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                         lastWhitespaceIndex = i;
                     }
 
-                    Rectangle2D characterBounds = font.getStringBounds(text, i, i + 1,
-                        fontRenderContext);
-                    lineWidth += characterBounds.getWidth();
+                    Bounds characterBounds = font.getStringBounds(text, i, i + 1, fontRenderContext);
+                    lineWidth += characterBounds.toRectangle().getWidth();
 
                     if (lineWidth > width
                         && lastWhitespaceIndex != -1) {
@@ -167,8 +166,8 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
         int preferredWidth;
         if (text != null
             && text.length() > 0) {
-            Rectangle2D stringBounds = font.getStringBounds(text, fontRenderContext);
-            preferredWidth = (int)Math.ceil(stringBounds.getWidth());
+            Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
+            preferredWidth = (int)Math.ceil(stringBounds.toRectangle().getWidth());
         } else {
             preferredWidth = 0;
         }
@@ -248,8 +247,8 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                             lastWhitespaceIndex = i;
                         }
 
-                        Rectangle2D characterBounds = font.getStringBounds(ci, i, i + 1, fontRenderContext);
-                        lineWidth += characterBounds.getWidth();
+                        Bounds characterBounds = font.getStringBounds(ci, i, i + 1, fontRenderContext);
+                        lineWidth += characterBounds.toRectangle().getWidth();
 
                         if (lineWidth > width
                             && lastWhitespaceIndex != -1) {
@@ -277,7 +276,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
         GlyphVector glyphVector = font.createGlyphVector(fontRenderContext, line);
         glyphVectors.add(glyphVector);
 
-        Rectangle2D textBounds = glyphVector.getLogicalBounds();
+        Bounds textBounds = glyphVector.getLogicalBounds();
         textHeight += textBounds.getHeight();
     }
 
@@ -323,8 +322,8 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
             for (int i = 0, n = glyphVectors.getLength(); i < n; i++) {
                 GlyphVector glyphVector = glyphVectors.get(i);
 
-                Rectangle2D textBounds = glyphVector.getLogicalBounds();
-                float lineWidth = (float)textBounds.getWidth();
+                Bounds textBounds = glyphVector.getLogicalBounds();
+                float lineWidth = (float)textBounds.toRectangle().getWidth();
 
                 float x = 0;
                 switch (horizontalAlignment) {
@@ -344,7 +343,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                     }
                 }
 
-                if (graphics instanceof PrintGraphics) {
+                if (graphics instanceof PrintGraphics ) {
                     /* Work-around for printing problem in applets */
                     Label label = (Label)getComponent();
                     String text = label.getText();

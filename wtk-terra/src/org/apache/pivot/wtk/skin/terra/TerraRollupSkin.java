@@ -16,11 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.RoundRectangle2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
@@ -35,6 +33,8 @@ import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
 import org.apache.pivot.wtk.effects.easing.Easing;
 import org.apache.pivot.wtk.effects.easing.Quadratic;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.skin.RollupSkin;
 
@@ -128,7 +128,7 @@ public class TerraRollupSkin extends RollupSkin {
 
             graphics.setStroke(new BasicStroke(0));
             graphics.setPaint(buttonColor);
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             if (rollup.isCollapsible()) {

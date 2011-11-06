@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.MouseInfo;
-
 /**
  * Class representing the system mouse.
  */
@@ -74,7 +72,7 @@ public final class Mouse {
      * Returns the number of mouse buttons.
      */
     public static int getButtonCount() {
-        return MouseInfo.getNumberOfButtons();
+        return Platform.getInstalled().getNumberOfMouseButtons();
     }
 
     /**

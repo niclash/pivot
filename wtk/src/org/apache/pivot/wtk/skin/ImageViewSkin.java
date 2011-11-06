@@ -16,11 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Graphics2D;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
@@ -30,6 +27,9 @@ import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.ImageViewListener;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.Composite;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.media.ImageListener;
 
@@ -239,7 +239,7 @@ public class ImageViewSkin extends ComponentSkin implements ImageViewListener {
             float alpha = 1.0f;
 
             Composite composite = imageGraphics.getComposite();
-            if (composite instanceof AlphaComposite) {
+            if (composite instanceof AlphaComposite ) {
                 AlphaComposite alphaComposite = (AlphaComposite)composite;
                 alpha = alphaComposite.getAlpha();
             }

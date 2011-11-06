@@ -35,6 +35,7 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.serialization.CSVSerializer;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.concurrent.Task;
 import org.apache.pivot.util.concurrent.TaskListener;
@@ -49,7 +50,6 @@ import org.apache.pivot.wtk.ComponentKeyListener;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Label;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -200,7 +200,7 @@ public class StockTrackerWindow extends Window implements Bindable {
                     || keyCode == Keyboard.KeyCode.BACKSPACE) {
                     removeSymbolsAction.perform(component);
                 } else if (keyCode == Keyboard.KeyCode.A
-                    && Keyboard.isPressed(Platform.getCommandModifier())) {
+                    && Keyboard.isPressed( Platform.getCommandModifier())) {
                     stocksTableView.selectAll();
                 }
 

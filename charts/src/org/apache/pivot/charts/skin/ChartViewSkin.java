@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.charts.skin;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.charts.ChartView;
 import org.apache.pivot.charts.ChartViewCategoryListener;

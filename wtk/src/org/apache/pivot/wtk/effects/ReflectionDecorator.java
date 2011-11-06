@@ -16,16 +16,15 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
-
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that paints a reflection of a component.
@@ -54,7 +53,7 @@ public class ReflectionDecorator implements Decorator {
         componentImageGraphics.setComposite(AlphaComposite.Clear);
         componentImageGraphics.fillRect(0, 0, componentImage.getWidth(), componentImage.getHeight());
 
-        componentImageGraphics.setComposite(AlphaComposite.SrcOver);
+        componentImageGraphics.setComposite( AlphaComposite.SrcOver);
 
         return componentImageGraphics;
     }
@@ -68,8 +67,8 @@ public class ReflectionDecorator implements Decorator {
         int width = componentImage.getWidth();
         int height = componentImage.getHeight();
 
-        GradientPaint mask = new GradientPaint(0, height / 4f, new Color(1.0f, 1.0f, 1.0f, 0.0f),
-            0, height, new Color(1.0f, 1.0f, 1.0f, 0.5f));
+        GradientPaint mask = new GradientPaint(0, height / 4f, ColorFactory.create( 1.0f, 1.0f, 1.0f, 0.0f ),
+            0, height, ColorFactory.create(1.0f, 1.0f, 1.0f, 0.5f));
         componentImageGraphics.setPaint(mask);
 
         componentImageGraphics.setComposite(AlphaComposite.DstIn);

@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.text;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.util.Iterator;
 
 import org.apache.pivot.collections.ArrayList;
@@ -28,6 +28,8 @@ import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontFactory;
 
 /**
  * Abstract base class for elements.
@@ -89,7 +91,7 @@ public abstract class Element extends Node
 
     private int characterCount = 0;
     private ArrayList<Node> nodes = new ArrayList<Node>();
-    private java.awt.Font font;
+    private Font font;
     private Color foregroundColor;
     private Color backgroundColor;
     private boolean underline;
@@ -601,7 +603,7 @@ public abstract class Element extends Node
         System.out.println();
     }
 
-    public java.awt.Font getFont() {
+    public Font getFont() {
         return font;
     }
 
@@ -629,7 +631,7 @@ public abstract class Element extends Node
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            setFont(Font.decode(font));
+            setFont( FontFactory.decode( font ));
         }
     }
 

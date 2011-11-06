@@ -16,18 +16,16 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.AffineTransform;
-
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
 import org.apache.pivot.wtk.HorizontalAlignment;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.VerticalAlignment;
-
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 
 /**
  * Decorator that scales the painting of a component along the X and/or Y axes.
@@ -305,7 +303,7 @@ public class ScaleDecorator implements Decorator {
 
     @Override
     public Graphics2D prepare(Component component, Graphics2D graphics) {
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
         FontRenderContext fontRenderContext = Platform.getFontRenderContext();

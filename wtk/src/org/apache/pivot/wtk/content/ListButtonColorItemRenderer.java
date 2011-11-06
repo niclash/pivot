@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.GraphicsUtilities;
@@ -47,7 +48,7 @@ public class ListButtonColorItemRenderer extends ImageView
     public void render(Object data, Button button, boolean highlighted) {
         Color color;
         if (data == null) {
-            color = Color.WHITE;
+            color = ColorFactory.WHITE;
         } else if (data instanceof ColorItem) {
             ColorItem colorItem = (ColorItem)data;
             color = colorItem.getColor();
@@ -58,7 +59,7 @@ public class ListButtonColorItemRenderer extends ImageView
         }
 
         colorBadge.setColor(button.isEnabled() ?
-            color : new Color(color.getRed(), color.getGreen(), color.getBlue(), 0x99));
+            color : ColorFactory.create(color.getRed(), color.getGreen(), color.getBlue(), 0x99));
     }
 
     @Override

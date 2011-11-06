@@ -17,7 +17,7 @@ limitations under the License.
 -->
 
 <!--
-TODO create version that specifies system property:
+TODO create version that specifies platform property:
 org.apache.pivot.wtk.skin.terra.location=org/apache/pivot/tutorials/TerraTheme_dark.json
 -->
 

@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tests;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 
 import org.apache.pivot.collections.Map;

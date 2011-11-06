@@ -16,18 +16,15 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Cursor;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.Menu;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.MenuItemSkin;
 
@@ -59,7 +56,7 @@ public class TerraMenuItemSkin extends MenuItemSkin {
             graphics.setColor(color);
             graphics.setStroke(new BasicStroke(2.5f));
 
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             // Draw a checkmark

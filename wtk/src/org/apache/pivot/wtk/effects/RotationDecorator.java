@@ -16,11 +16,10 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that rotates a component about its center.

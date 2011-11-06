@@ -16,11 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -36,7 +33,6 @@ import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TableView;
@@ -46,6 +42,9 @@ import org.apache.pivot.wtk.TableViewListener;
 import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Transparency;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
 /**
@@ -345,7 +344,7 @@ public class TerraTableViewSkin extends ComponentSkin implements TableView.Skin,
         int rowStart = 0;
         int rowEnd = tableData.getLength() - 1;
 
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             if (variableRowHeight) {
                 rowStart = getRowAt(clipBounds.y);

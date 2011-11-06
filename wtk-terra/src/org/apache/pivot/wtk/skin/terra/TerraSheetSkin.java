@@ -16,9 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.util.Vote;
@@ -48,6 +47,7 @@ import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
 import org.apache.pivot.wtk.effects.TranslationDecorator;
 import org.apache.pivot.wtk.effects.easing.Quadratic;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.WindowSkin;
 
@@ -150,12 +150,12 @@ public class TerraSheetSkin extends WindowSkin implements SheetStateListener {
 
         @Override
         public void paint(Graphics2D graphics) {
-            graphics.setPaint(new Color(0, 0, 0, ALPHA));
+            graphics.setPaint(ColorFactory.create(0, 0, 0, ALPHA));
             graphics.fillRect(3, 0, 2, 1);
             graphics.fillRect(0, 3, 2, 1);
             graphics.fillRect(3, 3, 2, 1);
 
-            graphics.setPaint(new Color(borderColor.getRed(),
+            graphics.setPaint(ColorFactory.create(borderColor.getRed(),
                 borderColor.getGreen(), borderColor.getBlue(),
                 ALPHA));
             graphics.fillRect(3, 1, 2, 1);
@@ -256,7 +256,7 @@ public class TerraSheetSkin extends WindowSkin implements SheetStateListener {
         TerraTheme theme = (TerraTheme)Theme.getTheme();
 
         Color backgroundColor = theme.getColor(11);
-        backgroundColor = new Color(backgroundColor.getRed(), backgroundColor.getGreen(),
+        backgroundColor = ColorFactory.create(backgroundColor.getRed(), backgroundColor.getGreen(),
             backgroundColor.getBlue(), 235);
         setBackgroundColor(backgroundColor);
 

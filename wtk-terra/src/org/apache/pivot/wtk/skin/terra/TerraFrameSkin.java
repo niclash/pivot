@@ -16,14 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Line2D;
-
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.wtk.Bounds;
@@ -52,6 +44,13 @@ import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.wtk.graphics.GradientFactory;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.StrokeFactory;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.WindowSkin;
 
@@ -59,6 +58,9 @@ import org.apache.pivot.wtk.skin.WindowSkin;
  * Frame skin.
  */
 public class TerraFrameSkin extends WindowSkin implements FrameListener {
+    private final GradientFactory gradientFactory;
+    private final StrokeFactory strokeFactory;
+
     /**
      * Frame button.
      */
@@ -157,9 +159,9 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
             Frame frame = (Frame)getComponent();
             graphics.setPaint(frame.isActive() ?
                 titleBarColor : inactiveTitleBarColor);
-            graphics.setStroke(new BasicStroke(2));
+            graphics.setStroke(strokeFactory.createBasicStroke( 2 ));
 
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             graphics.draw(new Line2D.Double(0.5, 0.5, 7.5, 7.5));
@@ -185,14 +187,14 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
 
         @Override
         public void paint(Graphics2D graphics) {
-            graphics.setPaint(new Color(0, 0, 0, ALPHA));
+            graphics.setPaint(ColorFactory.create( 0, 0, 0, ALPHA ));
             graphics.fillRect(3, 0, 2, 1);
             graphics.fillRect(0, 3, 2, 1);
             graphics.fillRect(3, 3, 2, 1);
 
-            graphics.setPaint(new Color(contentBorderColor.getRed(),
-                contentBorderColor.getGreen(), contentBorderColor.getBlue(),
-                ALPHA));
+            graphics.setPaint( ColorFactory.create( contentBorderColor.getRed(),
+                                             contentBorderColor.getGreen(), contentBorderColor.getBlue(),
+                                             ALPHA ));
             graphics.fillRect(3, 1, 2, 1);
             graphics.fillRect(0, 4, 2, 1);
             graphics.fillRect(3, 4, 2, 1);
@@ -240,7 +242,9 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
 
     private static final float INACTIVE_ICON_OPACITY = 0.5f;
 
-    public TerraFrameSkin() {
+    public TerraFrameSkin( GradientFactory gradientFactory, StrokeFactory strokeFactory ) {
+        this.gradientFactory = gradientFactory;
+        this.strokeFactory = strokeFactory;
         TerraTheme theme = (TerraTheme)Theme.getTheme();
         setBackgroundColor(theme.getColor(10));
 
@@ -278,7 +282,7 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
         titleBoxPane.getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
         titleBoxPane.getStyles().put("padding", new Insets(0, 0, 0, 2));
 
-        Font titleFont = theme.getFont().deriveFont(Font.BOLD);
+        Font titleFont = theme.getFont().deriveFont( Font.BOLD);
         titleLabel.getStyles().put("font", titleFont);
 
         iconImageView.setPreferredSize(16, 16);
@@ -561,8 +565,8 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
             Color titleBarBevelColor = frame.isActive() ?
                 this.titleBarBevelColor : inactiveTitleBarBevelColor;
 
-            graphics.setPaint(new GradientPaint(width / 2f, 0, titleBarBevelColor,
-                width / 2f, titleBarHeight + 1, titleBarBackgroundColor));
+            graphics.setPaint( gradientFactory.createGradientPaint( width / 2f, 0, titleBarBevelColor,
+                                                           width / 2f, titleBarHeight + 1, titleBarBackgroundColor ));
             graphics.fillRect(0, 0, width, titleBarHeight + 1);
 
             // Draw the border

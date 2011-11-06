@@ -16,17 +16,15 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.HorizontalAlignment;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.TextPane;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 import org.apache.pivot.wtk.text.Paragraph;
 
 class TextPaneSkinParagraphView extends TextPaneSkinBlockView {
@@ -334,7 +332,7 @@ class TextPaneSkinParagraphView extends TextPaneSkinBlockView {
 
         // Determine the paint bounds
         Bounds paintBounds = new Bounds(0, 0, getWidth(), getHeight());
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             paintBounds = paintBounds.intersect(clipBounds);
         }

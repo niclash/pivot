@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.util.ListenerList;

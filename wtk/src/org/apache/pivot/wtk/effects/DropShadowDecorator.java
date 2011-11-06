@@ -16,12 +16,8 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
@@ -35,7 +31,7 @@ public class DropShadowDecorator implements Decorator {
     private int xOffset;
     private int yOffset;
 
-    private Color shadowColor = Color.BLACK;
+    private Color shadowColor = ColorFactory.BLACK;
     private float shadowOpacity = DEFAULT_SHADOW_OPACITY;
 
     private BufferedImage shadowImage = null;
@@ -179,7 +175,7 @@ public class DropShadowDecorator implements Decorator {
                 // Recreate the shadow
                 BufferedImage rectangleImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D rectangleImageGraphics = rectangleImage.createGraphics();
-                rectangleImageGraphics.setColor(Color.BLACK);
+                rectangleImageGraphics.setColor(ColorFactory.BLACK);
                 rectangleImageGraphics.fillRect(0, 0, width, height);
                 rectangleImageGraphics.dispose();
 

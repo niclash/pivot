@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tutorials.explorer.tools;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;

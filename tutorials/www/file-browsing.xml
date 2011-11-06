@@ -23,7 +23,7 @@ limitations under the License.
 
     <body>
         <p>
-            Pivot includes support for easily adding local file system access to an application.
+            Pivot includes support for easily adding local file platform access to an application.
             The following example demonstrates the use of the <tt>FileBrowserSheet</tt> class:
         </p>
 
@@ -41,7 +41,7 @@ limitations under the License.
         </application>
 
         <p>
-            It allows the user to browse the local file system using one of four supported modes:
+            It allows the user to browse the local file platform using one of four supported modes:
         </p>
 
         <ul>
@@ -167,7 +167,7 @@ limitations under the License.
 
         <p>
             Note that, internally, <tt>FileBrowserSheet</tt> uses an instance of the
-            <tt>org.apache.pivot.wtk.FileBrowser</tt> class to perform the actual file system
+            <tt>org.apache.pivot.wtk.FileBrowser</tt> class to perform the actual file platform
             navigation. It is actually possible to use this component directly within an
             application to create a custom file browser; however, a discussion of the
             <tt>FileBrowser</tt> class is outside the scope of this tutorial.

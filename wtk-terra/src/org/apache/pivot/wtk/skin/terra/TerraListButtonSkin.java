@@ -16,16 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
-
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.util.Vote;
@@ -48,6 +38,8 @@ import org.apache.pivot.wtk.WindowStateListener;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ListButtonSkin;
 
 /**

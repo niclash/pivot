@@ -154,9 +154,9 @@ limitations under the License.
             </xsl:if>
 
             <!-- System properties -->
-            <xsl:if test="system-properties">
+            <xsl:if test="platform-properties">
                 var systemProperties = [];
-                <xsl:for-each select="system-properties/*">
+                <xsl:for-each select="platform-properties/*">
                     systemProperties.push("<xsl:value-of select="name(.)"/>=<xsl:apply-templates/>");
                 </xsl:for-each>
                 parameters.system_properties = systemProperties.join("&amp;");

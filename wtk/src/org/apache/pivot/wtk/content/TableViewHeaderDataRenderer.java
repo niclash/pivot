@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Component;
@@ -28,6 +28,7 @@ import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewHeader;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 
 /**
@@ -96,7 +97,7 @@ public class TableViewHeaderDataRenderer extends BoxPane
             Component.StyleDictionary labelStyles = label.getStyles();
 
             Object labelFont = tableViewHeader.getStyles().get("font");
-            if (labelFont instanceof Font) {
+            if (labelFont instanceof Font ) {
                 labelStyles.put("font", labelFont);
             }
 
@@ -107,7 +108,7 @@ public class TableViewHeaderDataRenderer extends BoxPane
                 color = tableViewHeader.getStyles().get("disabledColor");
             }
 
-            if (color instanceof Color) {
+            if (color instanceof Color ) {
                 labelStyles.put("color", color);
             }
         }

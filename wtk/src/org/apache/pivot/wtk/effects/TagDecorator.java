@@ -16,15 +16,13 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Visual;
-
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that allows a caller to attach a "tag" visual to a component.

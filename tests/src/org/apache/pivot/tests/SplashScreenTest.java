@@ -16,9 +16,6 @@
  */
 package org.apache.pivot.tests;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.SplashScreen;
 import java.util.Date;
 import java.util.Random;
 
@@ -28,6 +25,7 @@ import org.apache.pivot.util.concurrent.Task;
 import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.wtk.Application;
+import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Container;
 import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
@@ -35,6 +33,8 @@ import org.apache.pivot.wtk.Meter;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.TaskAdapter;
 import org.apache.pivot.wtk.Window;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.SplashScreen;
 
 /**
  * Test Application for demonstrating the <code>--preserveSplashScreen</code>
@@ -118,7 +118,7 @@ public class SplashScreenTest implements Application {
         // Align the Meter on the SplashScreen, centered horizontally,
         // 10 pixels from the bottom edge
         private void configureGraphics() {
-            Rectangle splash = splashScreen.getBounds();
+            Bounds splash = splashScreen.getBounds();
             int x = ((splash.width - meter.getBounds().width) / 2);
             int y = (splash.height - meter.getBounds().height - 10);
             graphics = splashScreen.createGraphics();

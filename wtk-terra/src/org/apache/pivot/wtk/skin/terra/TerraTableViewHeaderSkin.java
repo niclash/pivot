@@ -16,14 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -44,6 +39,11 @@ import org.apache.pivot.wtk.TableViewHeaderListener;
 import org.apache.pivot.wtk.TableViewSortListener;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.TableViewHeader.SortMode;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 

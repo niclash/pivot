@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
@@ -29,7 +29,7 @@ import org.apache.pivot.wtk.Window;
 public class DisplaySkin extends ContainerSkin {
     public DisplaySkin() {
         super();
-        setBackgroundColor(Color.LIGHT_GRAY);
+        setBackgroundColor(ColorFactory.LIGHT_GRAY);
     }
 
     @Override

@@ -101,17 +101,6 @@ public final class Bounds implements Serializable {
         }
     }
 
-    public Bounds(java.awt.Rectangle rectangle) {
-        if (rectangle == null) {
-            throw new IllegalArgumentException("rectangle is null.");
-        }
-
-        x = rectangle.x;
-        y = rectangle.y;
-        width = rectangle.width;
-        height = rectangle.height;
-    }
-
     public Point getLocation() {
         return new Point(x, y);
     }
@@ -145,10 +134,6 @@ public final class Bounds implements Serializable {
 
     public Bounds intersect(Bounds bounds) {
         return intersect(bounds.x, bounds.y, bounds.width, bounds.height);
-    }
-
-    public Bounds intersect(java.awt.Rectangle rect) {
-        return intersect(rect.x, rect.y, rect.width, rect.height);
     }
 
     public Bounds translate(int dx, int dy) {
@@ -237,9 +222,24 @@ public final class Bounds implements Serializable {
         return result;
     }
 
+    public int getX()
+    {
+        return x;
+    }
 
-    public java.awt.Rectangle toRectangle() {
-        return new java.awt.Rectangle(x, y, width, height);
+    public int getY()
+    {
+        return y;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
     }
 
     @Override

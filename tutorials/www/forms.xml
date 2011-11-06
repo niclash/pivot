@@ -26,7 +26,7 @@ limitations under the License.
             Forms are often used to collect related pieces of information from a user. For example,
             an application that manages a user's music collection might provide a form that allows
             the user to enter such information as song title, artist, and album name, and a content
-            management system might provide a form that allows a user to specify the title, author,
+            management platform might provide a form that allows a user to specify the title, author,
             and publication date of an article.
         </p>
 

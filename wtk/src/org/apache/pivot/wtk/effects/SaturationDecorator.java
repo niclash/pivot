@@ -20,14 +20,14 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.WritableRaster;
 
 /**
  * Decorator that modifies the color saturation of a component.
@@ -71,7 +71,7 @@ public class SaturationDecorator implements Decorator {
         int width = component.getWidth();
         int height = component.getHeight();
 
-        java.awt.Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             x = clipBounds.x;
             y = clipBounds.y;
@@ -111,9 +111,9 @@ public class SaturationDecorator implements Decorator {
                 int srcRGB = buffer[i * width + j];
 
                 // Adjust color saturation
-                Color.RGBtoHSB((srcRGB >> 16) & 0xff,
+                ColorFactory.RGBtoHSB((srcRGB >> 16) & 0xff,
                     (srcRGB >> 8) & 0xff, srcRGB & 0xff, hsb);
-                int dstRGB = Color.HSBtoRGB(hsb[0],
+                int dstRGB = ColorFactory.HSBtoRGB(hsb[0],
                     Math.min(Math.max(hsb[1] * multiplier, 0f), 1f), hsb[2]);
 
                 // Preserve the source alpha channel
@@ -128,7 +128,7 @@ public class SaturationDecorator implements Decorator {
         int x = 0;
         int y = 0;
 
-        java.awt.Rectangle clipBounds = componentGraphics.getClipBounds();
+        Bounds clipBounds = componentGraphics.getClipBounds();
         if (clipBounds != null) {
             x = clipBounds.x;
             y = clipBounds.y;

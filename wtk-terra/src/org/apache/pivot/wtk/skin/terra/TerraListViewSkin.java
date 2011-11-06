@@ -16,11 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.Platform;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -42,7 +38,6 @@ import org.apache.pivot.wtk.ListViewItemStateListener;
 import org.apache.pivot.wtk.ListViewListener;
 import org.apache.pivot.wtk.ListViewSelectionListener;
 import org.apache.pivot.wtk.Mouse;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.skin.ComponentSkin;

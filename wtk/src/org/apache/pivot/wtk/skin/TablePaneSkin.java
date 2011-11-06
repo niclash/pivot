@@ -16,12 +16,10 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -34,6 +32,8 @@ import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TablePaneAttributeListener;
 import org.apache.pivot.wtk.TablePaneListener;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 
 /**
  * Table pane skin.
@@ -45,9 +45,9 @@ public class TablePaneSkin extends ContainerSkin implements TablePane.Skin,
     private int verticalSpacing = 0;
     private boolean showHorizontalGridLines = false;
     private boolean showVerticalGridLines = false;
-    private Color horizontalGridColor = Color.BLACK;
-    private Color verticalGridColor = Color.BLACK;
-    private Color highlightBackgroundColor = Color.GRAY;
+    private Color horizontalGridColor = ColorFactory.BLACK;
+    private Color verticalGridColor = ColorFactory.BLACK;
+    private Color highlightBackgroundColor = ColorFactory.GRAY;
 
     private int[] columnWidths = null;
     private int[] rowHeights = null;
@@ -628,7 +628,7 @@ public class TablePaneSkin extends ContainerSkin implements TablePane.Skin,
             Graphics2D gridGraphics = (Graphics2D)graphics.create();
 
             gridGraphics.setStroke(new BasicStroke());
-            gridGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            gridGraphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             // Find any components that span multiple rows or columns, and

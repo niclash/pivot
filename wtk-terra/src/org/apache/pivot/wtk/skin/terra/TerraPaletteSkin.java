@@ -16,13 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Line2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Bounds;
@@ -50,6 +46,10 @@ import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowClassListener;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.WindowSkin;
 
@@ -76,7 +76,7 @@ public class TerraPaletteSkin extends WindowSkin {
             graphics.setPaint(titleBarColor);
             graphics.setStroke(new BasicStroke(2));
 
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             graphics.draw(new Line2D.Double(0.5, 0.5, 5.5, 5.5));
@@ -107,9 +107,9 @@ public class TerraPaletteSkin extends WindowSkin {
             graphics.fillRect(0, 3, 2, 1);
             graphics.fillRect(3, 3, 2, 1);
 
-            graphics.setPaint(new Color(contentBorderColor.getRed(),
-                contentBorderColor.getGreen(), contentBorderColor.getBlue(),
-                ALPHA));
+            graphics.setPaint(ColorFactory.create( contentBorderColor.getRed(),
+                                                   contentBorderColor.getGreen(), contentBorderColor.getBlue(),
+                                                   ALPHA ));
             graphics.fillRect(3, 1, 2, 1);
             graphics.fillRect(0, 4, 2, 1);
             graphics.fillRect(3, 4, 2, 1);
@@ -187,7 +187,7 @@ public class TerraPaletteSkin extends WindowSkin {
         titleBoxPane.getStyles().put("padding", new Insets(0, 0, 0, 3));
 
         Font titleFont = theme.getFont();
-        titleFont = titleFont.deriveFont(Font.BOLD, Math.round(titleFont.getSize2D() * 0.8f));
+        titleFont = titleFont.deriveFont(Font.BOLD, Math.round(titleFont.getSize() * 0.8f));
         titleLabel.getStyles().put("font", titleFont);
         titleLabel.getStyles().put("color", titleBarColor);
 

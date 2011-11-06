@@ -136,9 +136,9 @@ limitations under the License.
                 <library>wtk-terra</library>
                 <library>tutorials</library>
             </libraries>
-            <system-properties>
+            <platform-properties>
                 <user.language>fr</user.language>
-            </system-properties>
+            </platform-properties>
         </application>
 
         <p>

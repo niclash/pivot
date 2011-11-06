@@ -16,9 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Cursor;
@@ -29,6 +29,7 @@ import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.SplitPane;
 import org.apache.pivot.wtk.SplitPaneListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 

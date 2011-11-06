@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Font;
-
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.wtk.Bounds;
@@ -46,6 +44,8 @@ import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Tooltip;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontFactory;
 
 /**
  * Abstract base class for component skins.
@@ -381,7 +381,7 @@ public abstract class ComponentSkin implements Skin, ComponentListener,
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            font = Font.decode(value);
+            font = FontFactory.decode( value );
         }
 
         return font;

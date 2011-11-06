@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.BoxPane;
@@ -25,6 +25,7 @@ import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 
 

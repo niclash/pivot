@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Graphics2D;
-
 import org.apache.pivot.wtk.skin.DisplaySkin;
 
 /**

@@ -16,11 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
@@ -32,6 +30,9 @@ import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Slider;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.skin.SliderSkin;
 
@@ -84,7 +85,7 @@ public class TerraSliderSkin extends SliderSkin {
             graphics.fillRect(0, 0, width, height);
 
             float alpha = (highlighted || dragOffset != null) ? 0.25f : 0.0f;
-            graphics.setPaint(new Color(0, 0, 0, alpha));
+            graphics.setPaint(ColorFactory.create(0, 0, 0, alpha));
             graphics.fillRect(0, 0, width, height);
 
             graphics.setPaint(buttonBorderColor);

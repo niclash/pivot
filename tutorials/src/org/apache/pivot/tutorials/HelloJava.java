@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tutorials;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.awt.Font;
 
 import org.apache.pivot.collections.Map;

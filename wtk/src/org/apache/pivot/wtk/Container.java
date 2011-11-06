@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.Iterator;
 
 import org.apache.pivot.collections.ArrayList;
@@ -25,6 +23,7 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.effects.Decorator;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Abstract base class for containers.
@@ -359,7 +358,7 @@ public abstract class Container extends Component
 
         // Determine the paint bounds
         Bounds paintBounds = new Bounds(0, 0, getWidth(), getHeight());
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             paintBounds = paintBounds.intersect(clipBounds);
         }
@@ -382,7 +381,7 @@ public abstract class Container extends Component
             // Give the base method a copy of the graphics context; otherwise,
             // container skins can change the graphics state before it is passed
             // to subcomponents
-            Graphics2D containerGraphics = (Graphics2D)graphics.create();
+            Graphics2D containerGraphics = graphics.create();
             super.paint(containerGraphics);
             containerGraphics.dispose();
         }

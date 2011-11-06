@@ -16,10 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -55,6 +53,9 @@ import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 import org.apache.pivot.wtk.content.NumericSpinnerData;
 import org.apache.pivot.wtk.content.SpinnerItemRenderer;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ButtonSkin;
 import org.apache.pivot.wtk.skin.CalendarSkin;
 

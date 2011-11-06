@@ -16,14 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-import java.awt.geom.GeneralPath;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.Color;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -43,7 +38,6 @@ import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.TreeView;
 import org.apache.pivot.wtk.TreeView.SelectMode;
@@ -52,6 +46,11 @@ import org.apache.pivot.wtk.TreeViewListener;
 import org.apache.pivot.wtk.TreeViewNodeListener;
 import org.apache.pivot.wtk.TreeViewNodeStateListener;
 import org.apache.pivot.wtk.TreeViewSelectionListener;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.Transparency;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
 /**
@@ -616,7 +615,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
         int nodeEnd = visibleNodes.getLength() - 1;
 
         // Ensure that we only paint items that are visible
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             nodeStart = Math.max(nodeStart, (int)(clipBounds.y
                 / (double)(nodeHeight + VERTICAL_SPACING)));
@@ -694,13 +693,13 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
 
                         shape.closePath();
 
-                        Graphics2D branchControlGraphics = (Graphics2D)graphics.create();
+                        Graphics2D branchControlGraphics = graphics.create();
                         branchControlGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
                         if (!treeView.isEnabled()
                             || disabled) {
                             branchControlGraphics.setComposite
-                                (AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+                                ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.5f ));
                         }
                         branchControlGraphics.setPaint(branchControlColor);
                         branchControlGraphics.fill(shape);
@@ -721,7 +720,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
 
                 int checkboxX = Math.max(indent - checkboxWidth, 0) / 2;
                 int checkboxY = (nodeHeight - checkboxHeight) / 2;
-                Graphics2D checkboxGraphics = (Graphics2D)graphics.create(nodeX + checkboxX,
+                Graphics2D checkboxGraphics = graphics.create(nodeX + checkboxX,
                     nodeY + checkboxY, checkboxWidth, checkboxHeight);
 
                 Button.State state;

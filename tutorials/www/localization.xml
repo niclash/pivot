@@ -48,7 +48,7 @@ limitations under the License.
         </application>
 
         <p>
-            The following resource bundles are provided; if your default system locale is among
+            The following resource bundles are provided; if your default platform locale is among
             these, you should see a localized version of the application. Otherwise, the default
             locale ("en") will be used:
         </p>
@@ -121,8 +121,6 @@ limitations under the License.
             <![CDATA[
             package org.apache.pivot.tutorials.localization;
 
-            import java.awt.Font;
-            import java.awt.GraphicsEnvironment;
             import java.util.Locale;
 
             import org.apache.pivot.beans.BXMLSerializer;
@@ -192,7 +190,7 @@ limitations under the License.
 
         <p>
             The following example shows the application localized in German. Note that the applet
-            is signed to allow the code to set the "user.language" system property:
+            is signed to allow the code to set the "user.language" platform property:
         </p>
 
         <application class="org.apache.pivot.tutorials.localization.Localization"

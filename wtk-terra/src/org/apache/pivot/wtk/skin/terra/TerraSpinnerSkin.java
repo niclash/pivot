@@ -16,13 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
@@ -39,6 +35,10 @@ import org.apache.pivot.wtk.SpinnerListener;
 import org.apache.pivot.wtk.SpinnerSelectionListener;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.skin.ContainerSkin;
@@ -236,7 +236,7 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
                 graphics.setStroke(dashStroke);
                 graphics.setColor(borderColor);
 
-                graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
                 graphics.draw(new Rectangle2D.Double(1, 1.5, Math.max(width - 2.5, 0),
@@ -385,7 +385,7 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
 
             // Paint the background
             float alpha = pressed ? 0.5f : highlighted ? 0.25f : 0.0f;
-            graphics.setPaint(new Color(0, 0, 0, alpha));
+            graphics.setPaint( ColorFactory.create(0, 0, 0, alpha));
             graphics.fillRect(0, 0, width, height);
 
             // Paint the image

@@ -16,10 +16,7 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
@@ -38,6 +35,9 @@ import org.apache.pivot.wtk.ViewportListener;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.ScrollPane.Corner;
 import org.apache.pivot.wtk.ScrollPane.ScrollBarPolicy;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.Transparency;
 
 /**
  * Scroll pane skin.
@@ -66,7 +66,7 @@ public class ScrollPaneSkin extends ContainerSkin
     private static final int DEFAULT_VERTICAL_INCREMENT = 10;
 
     public ScrollPaneSkin() {
-        setBackgroundPaint(Color.WHITE);
+        setBackgroundPaint(ColorFactory.WHITE);
 
         horizontalScrollBar.setUnitIncrement(DEFAULT_HORIZONTAL_INCREMENT);
         verticalScrollBar.setUnitIncrement(DEFAULT_VERTICAL_INCREMENT);

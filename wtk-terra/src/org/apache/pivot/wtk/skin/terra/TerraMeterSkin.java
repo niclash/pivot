@@ -16,15 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Component;
@@ -33,8 +27,15 @@ import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Meter;
 import org.apache.pivot.wtk.MeterListener;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.GradientFactory;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.Shape;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
 
@@ -52,8 +53,10 @@ public class TerraMeterSkin extends ComponentSkin
 
     private static final int DEFAULT_WIDTH = 100;
     private static final int DEFAULT_HEIGHT = 12;
+    private final GradientFactory factory;
 
-    public TerraMeterSkin() {
+    public TerraMeterSkin( GradientFactory factory ) {
+        this.factory = factory;
         TerraTheme theme = (TerraTheme)Theme.getTheme();
         fillColor = theme.getColor(16);
         gridColor = theme.getColor(10);
@@ -87,8 +90,8 @@ public class TerraMeterSkin extends ComponentSkin
 
             if (text != null
                 && text.length() > 0) {
-                FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-                Rectangle2D stringBounds = font.getStringBounds(text, fontRenderContext);
+                FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
+                Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
                 preferredWidth = (int)Math.ceil(stringBounds.getWidth()) + 2;
             } else {
                 preferredWidth = 0;
@@ -117,7 +120,7 @@ public class TerraMeterSkin extends ComponentSkin
 
             if (text != null
                 && text.length() > 0) {
-                FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+                FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
                 LineMetrics lm = font.getLineMetrics("", fontRenderContext);
                 preferredHeight = (int)Math.ceil(lm.getHeight()) + 2;
             } else {
@@ -141,8 +144,8 @@ public class TerraMeterSkin extends ComponentSkin
         int preferredHeight = 0;
         if (text != null
             && text.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D stringBounds = font.getStringBounds(text, fontRenderContext);
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
+            Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
             preferredWidth = (int)Math.ceil(stringBounds.getWidth()) + 2;
 
             LineMetrics lm = font.getLineMetrics("", fontRenderContext);
@@ -174,7 +177,7 @@ public class TerraMeterSkin extends ComponentSkin
 
             if (text != null
                 && text.length() > 0) {
-                FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+                FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
                 LineMetrics lm = font.getLineMetrics("", fontRenderContext);
                 float ascent = lm.getAscent();
                 float textHeight = lm.getHeight();
@@ -211,8 +214,8 @@ public class TerraMeterSkin extends ComponentSkin
         int meterStop = (int)(meter.getPercentage() * width);
 
         // Paint the interior fill
-        graphics.setPaint(new GradientPaint(0, 0, TerraTheme.brighten(fillColor),
-            0, height, TerraTheme.darken(fillColor)));
+        graphics.setPaint(factory.createGradientPaint( 0, 0, TerraTheme.brighten( fillColor ),
+                                                       0, height, TerraTheme.darken( fillColor ) ));
         graphics.fillRect(0, 0, meterStop, height);
 
         // Paint the grid
@@ -228,11 +231,11 @@ public class TerraMeterSkin extends ComponentSkin
         String text = meter.getText();
         if (text != null
             && text.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics("", fontRenderContext);
             float ascent = lm.getAscent();
 
-            Rectangle2D stringBounds = font.getStringBounds(text, fontRenderContext);
+            Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
             float textWidth = (float)stringBounds.getWidth();
             float textHeight = (float)stringBounds.getHeight();
 
@@ -240,12 +243,12 @@ public class TerraMeterSkin extends ComponentSkin
             float textY = (height - textHeight) / 2;
 
             // Paint the text
-            graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                 fontRenderContext.getAntiAliasingHint());
             graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
                 fontRenderContext.getFractionalMetricsHint());
 
-            Shape clip = graphics.getClip();
+            Bounds clip = graphics.getClip();
             graphics.clipRect(0, 0, meterStop, height);
             graphics.setPaint(textFillColor);
             graphics.setFont(font);

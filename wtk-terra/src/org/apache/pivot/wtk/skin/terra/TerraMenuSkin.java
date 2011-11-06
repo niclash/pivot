@@ -16,9 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -34,6 +33,8 @@ import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Menu.Item;
 import org.apache.pivot.wtk.Menu.Section;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 
 /**
@@ -54,8 +55,8 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
     public TerraMenuSkin() {
         TerraTheme theme = (TerraTheme)Theme.getTheme();
         Color backgroundColor = theme.getColor(4);
-        backgroundColor = new Color(backgroundColor.getRed(), backgroundColor.getGreen(),
-            backgroundColor.getBlue(), 228);
+        backgroundColor = ColorFactory.create( backgroundColor.getRed(), backgroundColor.getGreen(),
+                                               backgroundColor.getBlue(), 228 );
         setBackgroundColor(backgroundColor);
 
         font = theme.getFont();

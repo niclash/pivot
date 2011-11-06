@@ -16,13 +16,12 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Graphics2D;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentListener;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.TextPane;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.text.ComponentNode;
 import org.apache.pivot.wtk.text.ComponentNodeListener;
 

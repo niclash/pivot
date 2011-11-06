@@ -16,11 +16,12 @@
  */
 package org.apache.pivot.tutorials.navigation;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
 class RulerSkin extends ComponentSkin implements RulerListener {
@@ -60,10 +61,10 @@ class RulerSkin extends ComponentSkin implements RulerListener {
 
         Ruler ruler = (Ruler)getComponent();
 
-        graphics.setColor(new Color(0xFF, 0xFF, 0xE0));
+        graphics.setColor(ColorFactory.create(0xFF, 0xFF, 0xE0));
         graphics.fillRect(0, 0, width, height);
 
-        graphics.setColor(Color.BLACK);
+        graphics.setColor( ColorFactory.BLACK);
         graphics.drawRect(0, 0, width - 1, height - 1);
 
         Orientation orientation = ruler.getOrientation();

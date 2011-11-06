@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.media;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +31,7 @@ import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.Visual;
 
 import com.kitfox.svg.SVGDiagram;
+import org.apache.pivot.wtk.graphics.BufferedImage;
 
 /**
  * Abstract base class for images. An image is either a bitmapped "picture"
@@ -102,7 +102,7 @@ public abstract class Image implements Visual {
                         image = new Drawing(diagram);
                     } else {
                         BufferedImageSerializer serializer = new BufferedImageSerializer();
-                        BufferedImage bufferedImage = serializer.readObject(inputStream);
+                        BufferedImage bufferedImage = (BufferedImage) serializer.readObject(inputStream);
                         image = new Picture(bufferedImage);
                     }
                 } finally {

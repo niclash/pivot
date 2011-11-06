@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -29,6 +29,7 @@ import org.apache.pivot.wtk.GridPane;
 import org.apache.pivot.wtk.GridPaneListener;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Grid pane skin.
@@ -98,8 +99,8 @@ public class GridPaneSkin extends ContainerSkin implements GridPane.Skin, GridPa
     private int verticalSpacing = 0;
     private boolean showHorizontalGridLines = false;
     private boolean showVerticalGridLines = false;
-    private Color horizontalGridColor = Color.BLACK;
-    private Color verticalGridColor = Color.BLACK;
+    private Color horizontalGridColor = ColorFactory.BLACK;
+    private Color verticalGridColor = ColorFactory.BLACK;
 
     /**
      * These are cached computed values, for performance.

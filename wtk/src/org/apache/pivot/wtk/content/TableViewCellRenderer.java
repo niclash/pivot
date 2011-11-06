@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.wtk.Component;
@@ -25,6 +25,7 @@ import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.font.Font;
 
 /**
  * Default table cell renderer. Renders cell contents as a string.

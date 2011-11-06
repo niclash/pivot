@@ -16,22 +16,21 @@
  */
 package org.apache.pivot.examples.effects;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.effects.Decorator;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 public class BorderDecorator implements Decorator {
     @Override
     public Graphics2D prepare(Component component, Graphics2D graphics) {
-        graphics.setColor(Color.RED);
+        graphics.setColor(ColorFactory.RED);
         graphics.setStroke(new BasicStroke(1));
-        graphics.draw(new Rectangle2D.Double(-1, -1,
+        graphics.draw(new Bounds(-1, -1,
             component.getWidth() + 1, component.getHeight() + 1));
         return graphics;
     }

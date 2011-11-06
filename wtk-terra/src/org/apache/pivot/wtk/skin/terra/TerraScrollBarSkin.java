@@ -16,12 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Component;
@@ -33,6 +30,10 @@ import org.apache.pivot.wtk.ScrollBar;
 import org.apache.pivot.wtk.ScrollBarListener;
 import org.apache.pivot.wtk.ScrollBarValueListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.skin.ContainerSkin;
@@ -355,7 +356,7 @@ public class TerraScrollBarSkin extends ContainerSkin
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-            GeneralPath arrow = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+            GeneralPath arrow = new GeneralPath( GeneralPath.WIND_EVEN_ODD);
 
             if (scrollBar.getOrientation() == Orientation.HORIZONTAL) {
                 arrow.moveTo(width + 0.5f, 0);

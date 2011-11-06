@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Table pane filler skin.

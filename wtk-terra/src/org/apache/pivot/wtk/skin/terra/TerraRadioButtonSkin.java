@@ -16,15 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
-import java.awt.RenderingHints;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Button;
@@ -32,6 +26,12 @@ import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.RadioButton;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.RadialGradientPaint;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.geom.Ellipse;
 import org.apache.pivot.wtk.skin.RadioButtonSkin;
 
 /**
@@ -173,7 +173,7 @@ public class TerraRadioButtonSkin extends RadioButtonSkin {
         // Paint the focus state
         if (radioButton.isFocused()) {
             if (buttonData == null) {
-                Color focusColor = new Color(buttonSelectionColor.getRed(),
+                Color focusColor = ColorFactory.create(buttonSelectionColor.getRed(),
                     buttonSelectionColor.getGreen(),
                     buttonSelectionColor.getBlue(), 0x44);
                 graphics.setColor(focusColor);
@@ -185,7 +185,7 @@ public class TerraRadioButtonSkin extends RadioButtonSkin {
                 graphics.setStroke(dashStroke);
                 graphics.setColor(buttonBorderColor);
 
-                graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
                 Rectangle2D focusRectangle = new Rectangle2D.Double(BUTTON_DIAMETER + 1, 0.5,
@@ -201,7 +201,7 @@ public class TerraRadioButtonSkin extends RadioButtonSkin {
         Color buttonBorderColor = null;
         Color buttonSelectionColor = null;
 
-        Ellipse2D buttonBackgroundCircle = new Ellipse2D.Double(1, 1,
+        Ellipse buttonBackgroundCircle = new Ellipse.Double(1, 1,
             BUTTON_DIAMETER - 3, BUTTON_DIAMETER - 3);
 
         if (enabled) {

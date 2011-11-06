@@ -20,7 +20,7 @@ limitations under the License.
     <!-- Output method -->
     <xsl:output method="html" encoding="UTF-8" indent="no"
         doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-        doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+        doctype-platform="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 
     <!-- Variables (not overrideable) -->
     <xsl:variable name="project" select="document('project.xml')/project"/>

@@ -27,7 +27,7 @@ limitations under the License.
     <body>
         <p>
             This application demonstrates Pivot's support for drag and drop. Users can drag files
-            from the desktop or local file system into the applet for upload to a web or other
+            from the desktop or local file platform into the applet for upload to a web or other
             server.
         </p>
         <application class="org.apache.pivot.wtk.ScriptApplication" width="380" height="260">

@@ -15,8 +15,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Toolkit;
-
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -28,8 +26,11 @@ import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
+import org.apache.pivot.wtk.graphics.GradientFactory;
+import org.apache.pivot.wtk.graphics.StrokeFactory;
 
 /**
  * Dialog skin.
@@ -54,7 +55,7 @@ public class TerraDialogSkin extends TerraFrameSkin
                 rootOwner.moveToFront();
                 consumed = true;
 
-                Toolkit.getDefaultToolkit().beep();
+                Platform.getInstalled().getSoundSystem().beep();
             }
 
             int top = display.getLength() - 1;
@@ -93,6 +94,11 @@ public class TerraDialogSkin extends TerraFrameSkin
             return mouseOverOwner;
         }
     };
+
+    public TerraDialogSkin(GradientFactory gradientFactory,StrokeFactory strokeFactory)
+    {
+        super( gradientFactory, strokeFactory );
+    }
 
     @Override
     public void install(Component component) {

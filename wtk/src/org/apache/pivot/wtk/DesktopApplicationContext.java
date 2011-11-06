@@ -202,7 +202,7 @@ public final class DesktopApplicationContext extends ApplicationContext {
         private static final long serialVersionUID = 5340356674429280196L;
 
         public HostFrame() {
-            enableEvents(AWTEvent.WINDOW_EVENT_MASK
+            enableEvents( AWTEvent.WINDOW_EVENT_MASK
                 | AWTEvent.WINDOW_STATE_EVENT_MASK);
 
             // Disable focus traversal keys

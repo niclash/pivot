@@ -16,13 +16,10 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.ApplicationContext;
@@ -34,11 +31,14 @@ import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.TextPane;
 import org.apache.pivot.wtk.TextPaneListener;
 import org.apache.pivot.wtk.TextPaneSelectionListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 import org.apache.pivot.wtk.text.BulletedList;
 import org.apache.pivot.wtk.text.ComponentNode;
 import org.apache.pivot.wtk.text.Document;
@@ -150,12 +150,12 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
     public TextPaneSkin() {
         Theme theme = Theme.getTheme();
         font = theme.getFont();
-        color = Color.BLACK;
-        inactiveColor = Color.GRAY;
-        selectionColor = Color.LIGHT_GRAY;
-        selectionBackgroundColor = Color.BLACK;
-        inactiveSelectionColor = Color.LIGHT_GRAY;
-        inactiveSelectionBackgroundColor = Color.BLACK;
+        color = ColorFactory.BLACK;
+        inactiveColor = ColorFactory.GRAY;
+        selectionColor = ColorFactory.LIGHT_GRAY;
+        selectionBackgroundColor = ColorFactory.BLACK;
+        inactiveSelectionColor = ColorFactory.LIGHT_GRAY;
+        inactiveSelectionBackgroundColor = ColorFactory.BLACK;
     }
 
     @Override
@@ -1059,7 +1059,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 textPane.repaint(caret.x, caret.y, caret.width, caret.height);
             } else {
                 // Repaint previous selection bounds
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textPane.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
 
@@ -1071,7 +1071,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 showCaret(false);
 
                 // Repaint current selection bounds
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textPane.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }

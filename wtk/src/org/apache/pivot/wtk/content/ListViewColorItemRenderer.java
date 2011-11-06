@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.ListView;
@@ -31,7 +31,7 @@ public class ListViewColorItemRenderer extends ListViewItemRenderer {
      * Internal image class for rendering color swatches.
      */
     public static class ColorBadge extends Image {
-        private Color color = Color.BLACK;
+        private Color color = ColorFactory.BLACK;
         public static final int SIZE = 14;
 
         @Override
@@ -59,11 +59,11 @@ public class ListViewColorItemRenderer extends ListViewItemRenderer {
 
         @Override
         public void paint(Graphics2D graphics) {
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(ColorFactory.WHITE);
             graphics.fillRect(0, 0, SIZE, SIZE);
             graphics.setColor(color);
             graphics.fillRect(2, 2, SIZE - 4, SIZE - 4);
-            graphics.setColor(Color.GRAY);
+            graphics.setColor(ColorFactory.GRAY);
             GraphicsUtilities.drawRect(graphics, 0, 0, SIZE, SIZE);
         }
     }

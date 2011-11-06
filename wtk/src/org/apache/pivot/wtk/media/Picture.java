@@ -16,11 +16,11 @@
  */
 package org.apache.pivot.wtk.media;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.Transparency;
 
 /**
  * Image representing a bitmapped picture.
@@ -100,12 +100,12 @@ public class Picture extends Image {
             float scaleX = ((float)width / (float)previousWidth);
             float scaleY = ((float)height / (float)previousHeight);
 
-            java.awt.image.BufferedImage bufferedImage = new BufferedImage(width, height, type);
-            Graphics2D bufferedImageGraphics = (Graphics2D)bufferedImage.getGraphics();
+            BufferedImage bufferedImage = new BufferedImage(width, height, type);
+            Graphics2D bufferedImageGraphics = bufferedImage.getGraphics();
 
             // Clear the background
             if (this.bufferedImage.getTransparency() != Transparency.OPAQUE) {
-                bufferedImageGraphics.setComposite(AlphaComposite.Clear);
+                bufferedImageGraphics.setComposite( AlphaComposite.Clear);
                 bufferedImageGraphics.fillRect(0, 0, width, height);
 
                 bufferedImageGraphics.setComposite(AlphaComposite.SrcOver);

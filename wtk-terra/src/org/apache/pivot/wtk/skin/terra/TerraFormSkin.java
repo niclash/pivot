@@ -16,12 +16,10 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -46,6 +44,9 @@ import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowStateListener;
 import org.apache.pivot.wtk.effects.Decorator;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 
@@ -74,7 +75,7 @@ public class TerraFormSkin extends ContainerSkin
             arrow.lineTo(POPUP_FIELD_INDICATOR_OFFSET + POPUP_FIELD_INDICATOR_WIDTH, 0);
             arrow.closePath();
 
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             graphics.setStroke(new BasicStroke(0));

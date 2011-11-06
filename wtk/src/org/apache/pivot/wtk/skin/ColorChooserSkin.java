@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.ColorChooser;
 import org.apache.pivot.wtk.ColorChooserSelectionListener;

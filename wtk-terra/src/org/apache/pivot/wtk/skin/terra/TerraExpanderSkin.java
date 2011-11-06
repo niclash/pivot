@@ -16,12 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.util.Vote;
@@ -48,6 +45,10 @@ import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
 import org.apache.pivot.wtk.effects.easing.Easing;
 import org.apache.pivot.wtk.effects.easing.Quadratic;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.ExpanderSkin;
 
@@ -151,7 +152,7 @@ public class TerraExpanderSkin extends ExpanderSkin
         public void paint(Graphics2D graphics) {
             graphics.setStroke(new BasicStroke(0));
             graphics.setPaint(shadeButtonColor);
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             int[] xPoints = {3, 6, 9};

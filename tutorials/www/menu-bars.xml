@@ -43,7 +43,7 @@ limitations under the License.
         <p>
             The example application below shows a menu bar containing two common top-level menu
             items: "File" and "Edit" (note that the applet is signed since it makes use of the
-            <tt>FileBrowserSheet</tt> component, which requires access to the local file system):
+            <tt>FileBrowserSheet</tt> component, which requires access to the local file platform):
         </p>
 
         <application class="org.apache.pivot.wtk.ScriptApplication"

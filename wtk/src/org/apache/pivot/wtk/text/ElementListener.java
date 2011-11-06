@@ -16,10 +16,11 @@
  */
 package org.apache.pivot.wtk.text;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.wtk.graphics.font.Font;
 
 /**
  * Element listener interface.
@@ -73,7 +74,7 @@ public interface ElementListener {
      * @param element
      * @param previousFont
      */
-    public void fontChanged(Element element, java.awt.Font previousFont);
+    public void fontChanged(Element element, Font previousFont);
 
 
     /**

@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

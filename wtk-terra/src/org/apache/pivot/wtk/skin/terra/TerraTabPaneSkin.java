@@ -16,14 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -45,7 +40,6 @@ import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.Panorama;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.TabPane;
 import org.apache.pivot.wtk.TabPaneAttributeListener;
@@ -58,6 +52,10 @@ import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
 import org.apache.pivot.wtk.effects.easing.Easing;
 import org.apache.pivot.wtk.effects.easing.Quadratic;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ButtonSkin;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 
@@ -238,7 +236,7 @@ public class TerraTabPaneSkin extends ContainerSkin
             int height = getHeight();
 
             // Draw the background
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
             switch(tabOrientation) {
@@ -1403,7 +1401,7 @@ public class TerraTabPaneSkin extends ContainerSkin
      * {@link KeyCode#N1 1} to {@link KeyCode#N9 9} Select the (enabled) tab at
      * index 0 to 8 respectively<p>
      *
-     * @see Platform#getCommandModifier()
+     * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
     public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {

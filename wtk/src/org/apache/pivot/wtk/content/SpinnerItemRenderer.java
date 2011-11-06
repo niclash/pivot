@@ -16,14 +16,14 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.VerticalAlignment;
-
+import org.apache.pivot.wtk.graphics.font.Font;
 
 /**
  * Default spinner item renderer, which renders all items as strings by

@@ -16,14 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.RoundRectangle2D;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Bounds;
@@ -39,6 +33,11 @@ import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowStateListener;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.MenuButtonSkin;
 
 /**
@@ -264,7 +263,7 @@ public class TerraMenuButtonSkin extends MenuButtonSkin {
         }
 
         // Paint the background
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (backgroundColor != null
@@ -318,7 +317,7 @@ public class TerraMenuButtonSkin extends MenuButtonSkin {
             RenderingHints.VALUE_ANTIALIAS_OFF);
 
         // Paint the trigger
-        GeneralPath triggerIconShape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+        GeneralPath triggerIconShape = new GeneralPath( GeneralPath.WIND_EVEN_ODD);
         triggerIconShape.moveTo(0, 0);
         triggerIconShape.lineTo(3, 3);
         triggerIconShape.lineTo(6, 0);

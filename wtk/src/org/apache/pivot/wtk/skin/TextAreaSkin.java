@@ -16,17 +16,10 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.Transparency;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -39,12 +32,17 @@ import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextAreaContentListener;
 import org.apache.pivot.wtk.TextAreaListener;
 import org.apache.pivot.wtk.TextAreaSelectionListener;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.GlyphVector;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Transparency;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
 /**
  * Text area skin.
@@ -145,13 +143,13 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
     public TextAreaSkin() {
         Theme theme = Theme.getTheme();
         font = theme.getFont();
-        color = Color.BLACK;
+        color = ColorFactory.BLACK;
         backgroundColor = null;
-        inactiveColor = Color.GRAY;
-        selectionColor = Color.LIGHT_GRAY;
-        selectionBackgroundColor = Color.BLACK;
-        inactiveSelectionColor = Color.LIGHT_GRAY;
-        inactiveSelectionBackgroundColor = Color.BLACK;
+        inactiveColor = ColorFactory.GRAY;
+        selectionColor = ColorFactory.LIGHT_GRAY;
+        selectionBackgroundColor = ColorFactory.BLACK;
+        inactiveSelectionColor = ColorFactory.LIGHT_GRAY;
+        inactiveSelectionBackgroundColor = ColorFactory.BLACK;
         margin = new Insets(4);
         wrapText = true;
         tabWidth = 4;
@@ -497,11 +495,11 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
         GlyphVector missingGlyphVector = font.createGlyphVector(fontRenderContext,
             new int[] {missingGlyphCode});
-        Rectangle2D textBounds = missingGlyphVector.getLogicalBounds();
+        Bounds textBounds = missingGlyphVector.getLogicalBounds();
 
-        Rectangle2D maxCharBounds = font.getMaxCharBounds(fontRenderContext);
-        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.getWidth()),
-            (int)Math.ceil(maxCharBounds.getHeight()));
+        Bounds maxCharBounds = font.getMaxCharBounds(fontRenderContext);
+        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.toRectangle().getWidth()),
+            (int)Math.ceil( maxCharBounds.toRectangle().getHeight() ));
 
         invalidateComponent();
     }
@@ -748,11 +746,11 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
             GlyphVector missingGlyphVector = font.createGlyphVector(fontRenderContext,
                 new int[] {missingGlyphCode});
-            Rectangle2D textBounds = missingGlyphVector.getLogicalBounds();
+            Bounds textBounds = missingGlyphVector.getLogicalBounds();
 
-            Rectangle2D maxCharBounds = font.getMaxCharBounds(fontRenderContext);
-            averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.getWidth()),
-                (int)Math.ceil(maxCharBounds.getHeight()));
+            Bounds maxCharBounds = font.getMaxCharBounds(fontRenderContext);
+            averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.toRectangle().getWidth()),
+                (int)Math.ceil(maxCharBounds.toRectangle().getHeight()));
 
             invalidateComponent();
         }

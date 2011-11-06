@@ -16,26 +16,26 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Separator;
 import org.apache.pivot.wtk.SeparatorListener;
 import org.apache.pivot.wtk.Theme;
-
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
 /**
  * Separator skin.
@@ -50,8 +50,8 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
     public SeparatorSkin() {
         Theme theme = Theme.getTheme();
         font = theme.getFont().deriveFont(Font.BOLD);
-        color = Color.BLACK;
-        headingColor = Color.BLACK;
+        color = ColorFactory.BLACK;
+        headingColor = ColorFactory.BLACK;
         thickness = 1;
         padding = new Insets(4, 0, 4, 4);
     }
@@ -74,8 +74,8 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
         if (heading != null
             && heading.length() > 0) {
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D headingBounds = font.getStringBounds(heading, fontRenderContext);
-            preferredWidth = (int)Math.ceil(headingBounds.getWidth())
+            Bounds headingBounds = font.getStringBounds(heading, fontRenderContext);
+            preferredWidth = (int)Math.ceil(headingBounds.toRectangle().getWidth())
                 + (padding.left + padding.right);
         }
 
@@ -113,7 +113,7 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
         if (heading != null
             && heading.length() > 0) {
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D headingBounds = font.getStringBounds(heading, fontRenderContext);
+            Bounds headingBounds = font.getStringBounds(heading, fontRenderContext);
             LineMetrics lm = font.getLineMetrics(heading, fontRenderContext);
             preferredWidth = (int)Math.ceil(headingBounds.getWidth());
             preferredHeight = Math.max((int)Math.ceil(lm.getAscent() + lm.getDescent()
@@ -144,7 +144,7 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(heading, fontRenderContext);
 
-            graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+            graphics.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                 fontRenderContext.getAntiAliasingHint());
             graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
                 fontRenderContext.getFractionalMetricsHint());

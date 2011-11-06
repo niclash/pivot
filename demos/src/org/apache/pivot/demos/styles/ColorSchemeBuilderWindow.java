@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.demos.styles;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.net.URL;
 
@@ -49,6 +49,7 @@ import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.content.NumericSpinnerData;
 import org.apache.pivot.wtk.content.SpinnerItemRenderer;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import org.apache.pivot.wtk.skin.terra.TerraTheme;
 
 public class ColorSchemeBuilderWindow extends Window implements Bindable {
@@ -69,7 +70,7 @@ public class ColorSchemeBuilderWindow extends Window implements Bindable {
         for (int i = 0; i < 8; i++) {
             final ColorChooserButton colorChooserButton = new ColorChooserButton();
             colorChooserButtons.add(colorChooserButton);
-            colorChooserButton.setSelectedColor(Color.BLACK);
+            colorChooserButton.setSelectedColor( ColorFactory.BLACK);
 
             NumericSpinnerData colorSpinnerData = new NumericSpinnerData(0, 255);
             SpinnerItemRenderer colorSpinnerItemRenderer = new SpinnerItemRenderer();

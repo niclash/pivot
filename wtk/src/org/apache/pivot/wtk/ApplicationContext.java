@@ -16,31 +16,8 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.AWTEvent;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureRecognizer;
-import java.awt.dnd.DragSourceContext;
-import java.awt.dnd.DragSourceDragEvent;
-import java.awt.dnd.DragSourceDropEvent;
-import java.awt.dnd.DragSourceEvent;
-import java.awt.dnd.DragSourceListener;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -63,6 +40,9 @@ import org.apache.pivot.util.Version;
 import org.apache.pivot.wtk.Component.DecoratorSequence;
 import org.apache.pivot.wtk.effects.Decorator;
 import org.apache.pivot.wtk.effects.ShadeDecorator;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsConfiguration;
+import org.apache.pivot.wtk.graphics.VolatileImage;
 
 /**
  * Base class for application contexts.
@@ -92,7 +72,7 @@ public abstract class ApplicationContext {
         private boolean paintPending = false;
         private boolean disableVolatileBuffer = false;
         private boolean debugPaint = false;
-        private java.awt.image.VolatileImage volatileImage = null;
+        private VolatileImage volatileImage = null;
         private GraphicsConfiguration volatileImageGC = null;
 
         private Random random = null;
@@ -305,7 +285,7 @@ public abstract class ApplicationContext {
                 boolean debugFocus = Boolean.parseBoolean(System.getProperty("org.apache.pivot.wtk.debugfocus"));
 
                 if (debugFocus) {
-                    final Decorator focusDecorator = new ShadeDecorator(0.2f, Color.RED);
+                    final Decorator focusDecorator = new ShadeDecorator(0.2f, ColorFactory.RED);
 
                     ComponentClassListener focusChangeListener = new ComponentClassListener() {
                         @Override
@@ -474,10 +454,10 @@ public abstract class ApplicationContext {
 
             // Paint the display into an offscreen buffer
             GraphicsConfiguration gc = graphics.getDeviceConfiguration();
-            java.awt.Rectangle clipBounds = graphics.getClipBounds();
-            java.awt.image.BufferedImage bufferedImage =
-                gc.createCompatibleImage(clipBounds.width, clipBounds.height,
-                    Transparency.OPAQUE);
+            Bounds clipBounds = graphics.getClipBounds();
+            BufferedImage bufferedImage =
+                gc.createCompatibleImage( clipBounds.width, clipBounds.height,
+                                          Transparency.OPAQUE );
 
             if (bufferedImage != null) {
                 Graphics2D bufferedImageGraphics = (Graphics2D)bufferedImage.getGraphics();
@@ -1760,7 +1740,7 @@ public abstract class ApplicationContext {
         timer = null;
     }
 
-    protected static void invalidateDisplays() {
+    public static void invalidateDisplays() {
         for (Display display : displays) {
             display.invalidate();
         }

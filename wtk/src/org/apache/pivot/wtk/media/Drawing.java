@@ -16,9 +16,8 @@
  */
 package org.apache.pivot.wtk.media;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.media.Image;
 
 import com.kitfox.svg.SVGDiagram;
@@ -79,7 +78,7 @@ public class Drawing extends Image {
     @Override
     public void paint(Graphics2D graphics) {
         try {
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             diagram.render(graphics);
         } catch (SVGException exception) {
             throw new RuntimeException(exception);

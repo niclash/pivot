@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.media;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,7 +24,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.serialization.Serializer;
-
+import org.apache.pivot.wtk.graphics.BufferedImage;
 
 /**
  * Implementation of the {@link Serializer} interface that reads and writes

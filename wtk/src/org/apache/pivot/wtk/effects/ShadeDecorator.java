@@ -16,14 +16,15 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.GraphicsUtilities;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that applies a "shade" to a component. The shade is a rectangle
@@ -42,7 +43,7 @@ public class ShadeDecorator implements Decorator {
      * shade color.
      */
     public ShadeDecorator() {
-        this(0.33f, Color.BLACK);
+        this(0.33f, ColorFactory.BLACK);
     }
 
     /**
@@ -117,7 +118,7 @@ public class ShadeDecorator implements Decorator {
 
     @Override
     public void update() {
-        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+        graphics.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity));
         graphics.setColor(color);
         graphics.fillRect(0, 0, component.getWidth(), component.getHeight());
 

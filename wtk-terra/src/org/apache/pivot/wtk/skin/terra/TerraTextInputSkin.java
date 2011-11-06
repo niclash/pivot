@@ -16,19 +16,9 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Toolkit;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.text.CharSequenceCharacterIterator;
@@ -46,13 +36,18 @@ import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.TextInputListener;
 import org.apache.pivot.wtk.TextInputSelectionListener;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
+import org.apache.pivot.wtk.graphics.GlyphVector;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.validation.Validator;
 
@@ -112,8 +107,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
     private GlyphVector glyphVector = null;
 
     private int anchor = -1;
-    private Rectangle caret = new Rectangle();
-    private Rectangle selection = null;
+    private Bounds caret = new Bounds();
+    private Bounds selection = null;
 
     private int scrollLeft = 0;
 
@@ -247,7 +242,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
             glyphVector = font.createGlyphVector(fontRenderContext, ci);
 
-            Rectangle2D textBounds = glyphVector.getLogicalBounds();
+            Bounds textBounds = glyphVector.getLogicalBounds();
             int textWidth = (int)textBounds.getWidth();
             int width = getWidth();
 
@@ -322,10 +317,10 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             graphics.setColor(promptColor);
             graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 fontRenderContext.getAntiAliasingHint());
-            graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+            graphics.setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS,
                 fontRenderContext.getFractionalMetricsHint());
             graphics.drawString(prompt, padding.left - scrollLeft + 1,
-                (height - textHeight) / 2 + ascent);
+                (int) ((height - textHeight) / 2 + ascent));
 
             caretColor = color;
         } else {
@@ -380,7 +375,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                     graphics.setColor(selectionBackgroundColor);
                     graphics.fill(selection);
 
-                    Graphics2D selectedTextGraphics = (Graphics2D)graphics.create();
+                    Graphics2D selectedTextGraphics = graphics.create();
                     selectedTextGraphics.setColor(selectionColor);
                     selectedTextGraphics.clip(selection.getBounds());
                     selectedTextGraphics.drawGlyphVector(glyphVector, padding.left - scrollLeft + 1,
@@ -1108,7 +1103,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
      * CommandModifier + {@link KeyCode#V V} Paste from clipboard.<br>
      * CommandModifier + {@link KeyCode#Z Z} Undo.
      *
-     * @see Platform#getCommandModifier()
+     * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
     public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {

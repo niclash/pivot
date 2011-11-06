@@ -16,8 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;

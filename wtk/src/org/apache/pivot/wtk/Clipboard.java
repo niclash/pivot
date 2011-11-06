@@ -17,8 +17,6 @@
 package org.apache.pivot.wtk;
 
 import java.awt.Toolkit;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.Transferable;
 
 /**
  * Singleton class providing a means of sharing data between components and

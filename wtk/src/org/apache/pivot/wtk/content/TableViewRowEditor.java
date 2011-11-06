@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Graphics2D;
-
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
@@ -40,6 +38,7 @@ import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Viewport;
 import org.apache.pivot.wtk.ViewportListener;
 import org.apache.pivot.wtk.Window;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.skin.CardPaneSkin;
 

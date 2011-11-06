@@ -16,11 +16,10 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Graphics2D;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.TextPane;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.media.ImageListener;
 import org.apache.pivot.wtk.text.ImageNode;

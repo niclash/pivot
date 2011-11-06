@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.GraphicsUtilities;
 
@@ -28,7 +29,7 @@ public class ColorItem {
     private String name;
 
     public ColorItem() {
-        this(Color.BLACK, null);
+        this(ColorFactory.BLACK, null);
     }
 
     public ColorItem(Color color) {

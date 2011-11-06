@@ -16,10 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
@@ -41,13 +39,15 @@ import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.effects.ClipDecorator;
 import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
 import org.apache.pivot.wtk.effects.easing.Easing;
 import org.apache.pivot.wtk.effects.easing.Quartic;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ButtonSkin;
 import org.apache.pivot.wtk.skin.ContainerSkin;
 
@@ -785,7 +785,7 @@ public class TerraAccordionSkin extends ContainerSkin
      * {@link Modifier#ALT ALT} + {@link KeyCode#DOWN DOWN} Select the previous
      * enabled panel.
      *
-     * @see Platform#getCommandModifier()
+     * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
     public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {

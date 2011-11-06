@@ -31,7 +31,7 @@ limitations under the License.
 
         <p>
             The following application demonstrates the use of the clipboard. It is signed to allow
-            it to access the system clipboard; untrusted Pivot applications can only perform copy
+            it to access the platform clipboard; untrusted Pivot applications can only perform copy
             and paste with a local clipboard whose content is not shared with other applications.
         </p>
 
@@ -242,7 +242,7 @@ limitations under the License.
             concrete implementation of the abstract <tt>Manifest</tt> class that is used to
             represent the source data in a clipboard transaction. In contrast, a
             <tt>RemoteManifest</tt> represents data obtained from the clipboard. Local manifests
-            are created by an application, whereas remote manifests are created by the system.
+            are created by an application, whereas remote manifests are created by the platform.
         </p>
 
         <p>

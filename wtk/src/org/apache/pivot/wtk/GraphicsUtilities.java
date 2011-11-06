@@ -16,14 +16,9 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.util.Locale;
 
 import org.apache.pivot.collections.Dictionary;
@@ -31,6 +26,12 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.LinearGradientPaint;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.RadialGradientPaint;
+import org.apache.pivot.wtk.graphics.RenderingHints;
 
 /**
  * Contains utility methods dealing with the Java2D API.
@@ -220,7 +221,7 @@ public final class GraphicsUtilities {
         float green = ((rgb >> 8) & 0xff) / 255f;
         float blue = (rgb >> 0 & 0xff) / 255f;
 
-        return new Color(red, green, blue, alpha);
+        return ColorFactory.create( red, green, blue, alpha);
     }
 
     public static Paint decodePaint(String value) {

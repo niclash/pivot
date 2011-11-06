@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.demos.rss;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.List;
 import org.apache.pivot.wtk.BoxPane;
@@ -25,6 +25,7 @@ import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.ListView;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.xml.Element;
 import org.apache.pivot.xml.TextNode;
 import org.apache.pivot.xml.XML;

@@ -16,15 +16,16 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.ColorChooser;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.TablePane;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.skin.ColorChooserSkin;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
@@ -77,7 +78,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
 
                 // Paint the hue spectrum
                 for (int y = 0; y < height; y++) {
-                    Color color = Color.getHSBColor(1f - (y / (float)height), 1f, 1f);
+                    Color color = ColorFactory.getHSBColor(1f - (y / (float)height), 1f, 1f);
                     hueSpectrumImageGraphics.setColor(color);
                     hueSpectrumImageGraphics.fillRect(0, y, width, 1);
                 }
@@ -89,7 +90,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
 
             // Mark the selected hue
             float hue = hueChooser.getHue();
-            graphics.setColor(Color.BLACK);
+            graphics.setColor(ColorFactory.BLACK);
             graphics.fillRect(0, Math.min((int)(height * (1f - hue)), height - 1), width, 1);
         }
 
@@ -164,7 +165,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
 
             updating = true;
             try {
-                colorChooser.setSelectedColor(Color.getHSBColor(hue, saturation, value));
+                colorChooser.setSelectedColor(ColorFactory.getHSBColor(hue, saturation, value));
             } finally {
                 updating = false;
             }
@@ -228,7 +229,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
                 // Paint the saturation/value spectrum
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
-                        Color color = Color.getHSBColor(hue, 1f - (y / (float)height),
+                        Color color = ColorFactory.getHSBColor(hue, 1f - (y / (float)height),
                             x / (float)width);
                         saturationValueImageGraphics.setColor(color);
                         saturationValueImageGraphics.fillRect(x, y, 1, 1);
@@ -244,8 +245,8 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
             if (!getComponent().getWindow().isClosing()) {
                 float saturation = saturationValueChooser.getSaturation();
                 float value = saturationValueChooser.getValue();
-                graphics.setColor(Color.WHITE);
-                graphics.setXORMode(Color.getHSBColor(hue, 0f, 0f));
+                graphics.setColor(ColorFactory.WHITE);
+                graphics.setXORMode(ColorFactory.getHSBColor(hue, 0f, 0f));
                 graphics.fillRect(0, Math.min((int)(height * (1f - saturation)), height - 1), width, 1);
                 graphics.fillRect(Math.min((int)(width * value), width - 1), 0, 1, height);
             }
@@ -324,7 +325,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
 
             updating = true;
             try {
-                colorChooser.setSelectedColor(Color.getHSBColor(hue, saturation, value));
+                colorChooser.setSelectedColor(ColorFactory.getHSBColor(hue, saturation, value));
             } finally {
                 updating = false;
             }
@@ -418,7 +419,7 @@ public class TerraColorChooserSkin extends ColorChooserSkin {
             float value = 0f;
 
             if (color != null) {
-                float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(),
+                float[] hsb = ColorFactory.RGBtoHSB(color.getRed(), color.getGreen(),
                     color.getBlue(), null);
                 hue = hsb[0];
                 saturation = hsb[1];

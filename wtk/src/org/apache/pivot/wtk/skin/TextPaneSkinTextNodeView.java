@@ -16,24 +16,22 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
 import java.text.CharacterIterator;
 
 import org.apache.pivot.text.CharSequenceCharacterIterator;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Dimensions;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TextPane;
+import org.apache.pivot.wtk.graphics.GlyphVector;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Shape;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 import org.apache.pivot.wtk.text.Element;
 import org.apache.pivot.wtk.text.TextNode;
 import org.apache.pivot.wtk.text.TextNodeListener;
@@ -100,7 +98,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
             }
 
             int i = ci.getIndex();
-            Rectangle2D characterBounds = effectiveFont.getStringBounds(ci, i, i + 1, fontRenderContext);
+            Bounds characterBounds = effectiveFont.getStringBounds(ci, i, i + 1, fontRenderContext);
             lineWidth += characterBounds.getWidth();
 
             c = ci.current();
@@ -141,7 +139,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
             next = null;
         }
 
-        Rectangle2D textBounds = glyphVector.getLogicalBounds();
+        Bounds textBounds = glyphVector.getLogicalBounds();
         setSize((int)Math.ceil(textBounds.getWidth()),
             (int)Math.ceil(textBounds.getHeight()));
     }
@@ -165,7 +163,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
             }
 
             int i = ci.getIndex();
-            Rectangle2D characterBounds = effectiveFont.getStringBounds(ci, i, i + 1, fontRenderContext);
+            Bounds characterBounds = effectiveFont.getStringBounds(ci, i, i + 1, fontRenderContext);
             lineWidth += characterBounds.getWidth();
 
             c = ci.current();
@@ -196,7 +194,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
         GlyphVector glyphVector = getEffectiveFont().createGlyphVector(fontRenderContext,
             new CharSequenceCharacterIterator(textNode.getCharacters(), start, end));
 
-        Rectangle2D textBounds = glyphVector.getLogicalBounds();
+        Bounds textBounds = glyphVector.getLogicalBounds();
         return new Dimensions((int)Math.ceil(textBounds.getWidth()),
             (int)Math.ceil(textBounds.getHeight()));
     }
@@ -340,7 +338,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
             Shape glyphBounds = glyphVector.getGlyphLogicalBounds(i);
 
             if (glyphBounds.contains(x, y - ascent)) {
-                Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+                Bounds glyphBounds2D = glyphBounds.getBounds();
 
                 if (x - glyphBounds2D.getX() > glyphBounds2D.getWidth() / 2
                     && i < n - 1) {
@@ -432,7 +430,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
 
             while (i < n) {
                 Shape glyphBounds = glyphVector.getGlyphLogicalBounds(i);
-                Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+                Bounds glyphBounds2D = glyphBounds.getBounds();
 
                 float glyphX = (float)glyphBounds2D.getX();
                 float glyphWidth = (float)glyphBounds2D.getWidth();
@@ -469,7 +467,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
     @Override
     public Bounds getCharacterBounds(int offset) {
         Shape glyphBounds = glyphVector.getGlyphLogicalBounds(offset);
-        Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+        Bounds glyphBounds2D = glyphBounds.getBounds();
 
         return new Bounds((int)Math.floor(glyphBounds2D.getX()), 0,
             (int)Math.ceil(glyphBounds2D.getWidth()), getHeight());

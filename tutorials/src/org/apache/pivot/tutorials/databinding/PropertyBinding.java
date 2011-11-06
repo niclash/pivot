@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tutorials.databinding;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;

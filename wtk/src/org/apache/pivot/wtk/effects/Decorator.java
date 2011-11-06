@@ -16,12 +16,9 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
-
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Interface defining a component "decorator". Decorators allow a caller to

@@ -16,10 +16,6 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
 import org.apache.pivot.beans.BeanAdapter;
@@ -36,6 +32,9 @@ import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.effects.Decorator;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Shape;
 
 /**
  * Top level abstract base class for all components. In MVC terminology, a
@@ -2068,7 +2067,7 @@ public abstract class Component implements ConstrainedVisual {
 
                     if (!transform.isIdentity()) {
                         // Apply the decorator's transform to the repaint area
-                        Rectangle area = new Rectangle(x, y, width, height);
+                        Bounds area = new Bounds(x, y, width, height);
                         Shape transformedShape = transform.createTransformedShape(area);
                         Bounds tranformedBounds = new Bounds(transformedShape.getBounds());
 

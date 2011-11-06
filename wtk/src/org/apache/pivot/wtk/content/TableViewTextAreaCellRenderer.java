@@ -16,14 +16,15 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TextArea;
+import org.apache.pivot.wtk.graphics.font.Font;
 
 /**
  * Renders cell contents as a string using a text area (which supports line feeds,

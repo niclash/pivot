@@ -16,16 +16,15 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.LinkButton;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.LinkButtonSkin;
 
 

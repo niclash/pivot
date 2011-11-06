@@ -16,9 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
@@ -27,6 +26,8 @@ import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.MovieView;
 import org.apache.pivot.wtk.MovieViewListener;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.media.Movie;
 import org.apache.pivot.wtk.media.MovieListener;
 

@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.wtk.content;
 
-import java.awt.Graphics2D;
-
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.HashMap;
@@ -25,7 +23,6 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.TableView;
-import org.apache.pivot.wtk.content.TableViewCellRenderer;
 
 /**
  * Table cell renderer that supports dynamic rendering based on the type of

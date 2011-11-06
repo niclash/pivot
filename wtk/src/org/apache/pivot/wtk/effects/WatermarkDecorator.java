@@ -16,10 +16,6 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.AlphaComposite;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 import org.apache.pivot.json.JSONSerializer;
@@ -34,6 +30,11 @@ import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.VerticalAlignment;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontFactory;
 import org.apache.pivot.wtk.media.Image;
 
 /**
@@ -169,7 +170,7 @@ public class WatermarkDecorator implements Decorator {
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            setFont(Font.decode(font));
+            setFont( FontFactory.decode( font ));
         }
     }
 
@@ -315,8 +316,8 @@ public class WatermarkDecorator implements Decorator {
 
         Graphics2D watermarkGraphics = (Graphics2D)graphics.create();
         watermarkGraphics.clipRect(0, 0, component.getWidth(), component.getHeight());
-        watermarkGraphics.setComposite(AlphaComposite.getInstance
-            (AlphaComposite.SRC_OVER, opacity));
+        watermarkGraphics.setComposite( AlphaComposite.getInstance
+            ( AlphaComposite.SRC_OVER, opacity ));
         watermarkGraphics.rotate(theta);
 
         // Calculate the separation in between each repetition of the watermark

@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tutorials;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;

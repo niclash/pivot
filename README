@@ -24,7 +24,7 @@ Distribution JARs
   lists, text input, layout, drag and drop, XML markup, etc.
 
 * WTK Terra Theme (pivot-wtk-terra-2.0.jar):
-  The default WTK theme provider for Pivot, responsible for the look & feel of
+  The default WTK theme platform for Pivot, responsible for the look & feel of
   the user interface components.
 
 * Web (pivot-web-2.0.jar):
@@ -65,13 +65,13 @@ Dependencies
 
 * Pivot requires Java 6 or greater.
 
-* Pivot's charting components require a compatible chart provider. No such
-  provider is included in this release, but one is available here:
+* Pivot's charting components require a compatible chart platform. No such
+  platform is included in this release, but one is available here:
 
   http://code.google.com/p/pivot-jfree/
 
-  Version 2.0 of this provider is compatible with Pivot 2.0.x. Please note that
-  this provider has a dependency on JFreeChart, which is licensed under LGPL.
+  Version 2.0 of this platform is compatible with Pivot 2.0.x. Please note that
+  this platform has a dependency on JFreeChart, which is licensed under LGPL.
 
 * SVG support requires SVG Salamander, which is licensed under a dual LGPL/BSD
   license and is available here:

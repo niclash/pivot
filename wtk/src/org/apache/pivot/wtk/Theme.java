@@ -16,11 +16,11 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Font;
-
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.util.Service;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontFactory;
 import org.apache.pivot.wtk.skin.BorderSkin;
 import org.apache.pivot.wtk.skin.BoxPaneSkin;
 import org.apache.pivot.wtk.skin.CardPaneSkin;
@@ -212,6 +212,6 @@ public abstract class Theme {
             }
         }
 
-        return new Font(name, style, size);
+        return FontFactory.create( name, style, size );
     }
 }

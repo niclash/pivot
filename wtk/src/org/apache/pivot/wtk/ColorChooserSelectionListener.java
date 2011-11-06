@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.wtk;
 
-import java.awt.Color;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 /**
  * Color chooser selection listener interface.

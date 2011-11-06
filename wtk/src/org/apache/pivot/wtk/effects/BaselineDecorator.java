@@ -16,14 +16,15 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Displays a component's baseline.
@@ -50,10 +51,10 @@ public class BaselineDecorator implements Decorator {
         Color color;
         if (baseline == -1) {
             y = height / 2;
-            color = Color.BLUE;
+            color = ColorFactory.BLUE;
         } else {
             y = baseline;
-            color = Color.RED;
+            color = ColorFactory.RED;
         }
 
         graphics.setPaint(color);

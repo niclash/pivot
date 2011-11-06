@@ -16,14 +16,11 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.util.Vote;
@@ -42,6 +39,13 @@ import org.apache.pivot.wtk.WindowStateListener;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.StrokeFactory;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.geom.GeneralPath;
 import org.apache.pivot.wtk.skin.ColorChooserButtonSkin;
 
 /**
@@ -145,8 +149,10 @@ public class TerraColorChooserButtonSkin extends ColorChooserButtonSkin {
 
     private static final int DEFAULT_CLOSE_TRANSITION_DURATION = 250;
     private static final int DEFAULT_CLOSE_TRANSITION_RATE = 30;
+    private final StrokeFactory strokeFactory;
 
-    public TerraColorChooserButtonSkin() {
+    public TerraColorChooserButtonSkin( StrokeFactory strokeFactory ) {
+        this.strokeFactory = strokeFactory;
         TerraTheme theme = (TerraTheme)Theme.getTheme();
 
         font = theme.getFont();
@@ -265,7 +271,7 @@ public class TerraColorChooserButtonSkin extends ColorChooserButtonSkin {
         }
 
         // Paint the background
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
         graphics.setPaint(new GradientPaint(width / 2f, 0, bevelColor,
@@ -296,15 +302,19 @@ public class TerraColorChooserButtonSkin extends ColorChooserButtonSkin {
         // Paint the border
         if (borderColor != null) {
             graphics.setPaint(borderColor);
-            graphics.setStroke(new BasicStroke(1));
+            graphics.setStroke(strokeFactory.createBasicStroke( 1 ));
             graphics.draw(new RoundRectangle2D.Double(0.5, 0.5, width - 1, height - 1,
                 CORNER_RADIUS, CORNER_RADIUS));
         }
 
         // Paint the focus state
         if (colorChooserButton.isFocused()) {
-            BasicStroke dashStroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND,
-                BasicStroke.JOIN_ROUND, 1.0f, new float[] {0.0f, 2.0f}, 0.0f);
+            BasicStroke dashStroke = strokeFactory.createBasicStroke( 1.0f,
+                                                                      BasicStroke.CAP_ROUND,
+                                                                      BasicStroke.JOIN_ROUND,
+                                                                      1.0f,
+                                                                      new float[]{ 0.0f, 2.0f },
+                                                                      0.0f );
             graphics.setStroke(dashStroke);
             graphics.setColor(this.borderColor);
             graphics.draw(new RoundRectangle2D.Double(2.5, 2.5, Math.max(width - 5, 0),
@@ -325,14 +335,15 @@ public class TerraColorChooserButtonSkin extends ColorChooserButtonSkin {
             RenderingHints.VALUE_ANTIALIAS_OFF);
 
         // Paint the trigger
-        GeneralPath triggerIconShape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+        GraphicsSystem graphicsSystem = Platform.getInstalled().getGraphicsSystem();
+        GeneralPath triggerIconShape = graphicsSystem.getPathFactory().createGeneralPath( GeneralPath.WIND_EVEN_ODD );
         triggerIconShape.moveTo(0, 0);
         triggerIconShape.lineTo(3, 3);
         triggerIconShape.lineTo(6, 0);
         triggerIconShape.closePath();
 
-        Graphics2D triggerGraphics = (Graphics2D)graphics.create();
-        triggerGraphics.setStroke(new BasicStroke(0));
+        Graphics2D triggerGraphics = graphics.create();
+        triggerGraphics.setStroke(graphicsSystem.getStrokeFactory().createBasicStroke(0));
         triggerGraphics.setPaint(color);
 
         Bounds triggerBounds = new Bounds(Math.max(width - (padding.right + TRIGGER_WIDTH), 0),

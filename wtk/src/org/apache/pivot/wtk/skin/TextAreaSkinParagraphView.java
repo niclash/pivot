@@ -16,23 +16,20 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.text.CharSequenceCharacterIterator;
-import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TextArea;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.GlyphVector;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Shape;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
 class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
     private static class Row {
@@ -135,7 +132,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
             // Determine the selected and unselected areas
             Area selection = textAreaSkin.getSelection();
-            Area selectedArea = selection.createTransformedArea(AffineTransform.getTranslateInstance(-x, -y));
+            Area selectedArea = selection.createTransformedArea( AffineTransform.getTranslateInstance( -x, -y ));
             Area unselectedArea = new Area();
             unselectedArea.add(new Area(new Rectangle2D.Float(0, 0, width, height)));
             unselectedArea.subtract(new Area(selectedArea));
@@ -163,14 +160,14 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
         float ascent = lm.getAscent();
         float rowHeight = ascent + lm.getDescent();
 
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
 
         float rowY = 0;
         for (int i = 0, n = rows.getLength(); i < n; i++) {
             Row row = rows.get(i);
 
-            Rectangle2D textBounds = row.glyphVector.getLogicalBounds();
-            float rowWidth = (float)textBounds.getWidth();
+            Bounds textBounds = row.glyphVector.getLogicalBounds();
+            float rowWidth = (float)textBounds.toRectangle().getWidth();
             if (clipBounds.intersects(new Rectangle2D.Float(0, rowY, rowWidth, rowHeight))) {
                 if (selected) {
                     graphics.setPaint(focused && editable ?
@@ -182,7 +179,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
                 graphics.drawGlyphVector(row.glyphVector, 0, rowY + ascent);
             }
 
-            rowY += textBounds.getHeight();
+            rowY += textBounds.toRectangle().getHeight();
         }
     }
 
@@ -221,9 +218,9 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
                     lastWhitespaceIndex = i;
                 }
 
-                Rectangle2D characterBounds = font.getStringBounds(ci, i, i + 1,
+                Bounds characterBounds = font.getStringBounds(ci, i, i + 1,
                     fontRenderContext);
-                rowWidth += characterBounds.getWidth();
+                rowWidth += characterBounds.toRectangle().getWidth();
 
                 if (rowWidth > breakWidth) {
                     if (lastWhitespaceIndex == -1) {
@@ -263,9 +260,9 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
         GlyphVector glyphVector = font.createGlyphVector(fontRenderContext, line);
         rows.add(new Row(glyphVector, start));
 
-        Rectangle2D textBounds = glyphVector.getLogicalBounds();
-        width = Math.max(width, (float)textBounds.getWidth());
-        height += textBounds.getHeight();
+        Bounds textBounds = glyphVector.getLogicalBounds();
+        width = Math.max( width, (float) textBounds.toRectangle().getWidth() );
+        height += textBounds.toRectangle().getHeight();
     }
 
     public int getInsertionPoint(int x, int y) {
@@ -305,8 +302,8 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
     private int getRowInsertionPoint(int rowIndex, float x) {
         Row row = rows.get(rowIndex);
 
-        Rectangle2D glyphVectorBounds = row.glyphVector.getLogicalBounds();
-        float rowWidth = (float)glyphVectorBounds.getWidth();
+        Bounds glyphVectorBounds = row.glyphVector.getLogicalBounds();
+        float rowWidth = (float)glyphVectorBounds.toRectangle().getWidth();
 
         int index;
         if (x < 0) {
@@ -325,9 +322,9 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
             while (index < n) {
                 Shape glyphBounds = row.glyphVector.getGlyphLogicalBounds(index);
-                Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+                Bounds glyphBounds2D = glyphBounds.getBounds();
 
-                if (glyphBounds2D.contains(x, glyphBounds2D.getY())) {
+                if (glyphBounds2D.contains( x, glyphBounds2D.getY() )) {
                     // Determine the bias; if the user clicks on the right half of the
                     // character; select the next character
                     if (x - glyphBounds2D.getX() > glyphBounds2D.getWidth() / 2
@@ -382,7 +379,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
             rowIndex = rows.getLength() - 1;
             Row row = rows.get(rowIndex);
 
-            Rectangle2D glyphVectorBounds = row.glyphVector.getLogicalBounds();
+            Bounds glyphVectorBounds = row.glyphVector.getLogicalBounds();
             x = (int)Math.floor(glyphVectorBounds.getWidth());
             width = PARAGRAPH_TERMINATOR_WIDTH;
         } else {
@@ -391,7 +388,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
             Row row = rows.get(rowIndex);
 
             Shape glyphBounds = row.glyphVector.getGlyphLogicalBounds(index - row.offset);
-            Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+            Bounds glyphBounds2D = glyphBounds.getBounds();
             x = (int)Math.floor(glyphBounds2D.getX());
             width = (int)Math.ceil(glyphBounds2D.getWidth());
         }

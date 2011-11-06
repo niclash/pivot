@@ -16,10 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
@@ -31,7 +29,9 @@ import org.apache.pivot.wtk.FocusTraversalDirection;
 import org.apache.pivot.wtk.FocusTraversalPolicy;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Mouse;
-
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.Transparency;
 
 /**
  * Abstract base class for container skins.

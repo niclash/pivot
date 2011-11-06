@@ -16,15 +16,15 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Transparency;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Cursor;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.MenuBar;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.skin.MenuBarItemSkin;
 
 

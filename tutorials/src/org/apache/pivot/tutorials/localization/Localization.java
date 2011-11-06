@@ -16,8 +16,6 @@
  */
 package org.apache.pivot.tutorials.localization;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.util.Locale;
 
 import org.apache.pivot.beans.BXMLSerializer;
@@ -28,6 +26,8 @@ import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontFactory;
 
 public class Localization implements Application {
     private Window window = null;
@@ -46,7 +46,7 @@ public class Localization implements Application {
         // Search for a font that can support the sample string
         String sampleResource = (String)resources.get("firstName");
         if (font.canDisplayUpTo(sampleResource) != -1) {
-            Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+            Font[] fonts = FontFactory.getAllFonts();
 
             for (int i = 0; i < fonts.length; i++) {
                 if (fonts[i].canDisplayUpTo(sampleResource) == -1) {

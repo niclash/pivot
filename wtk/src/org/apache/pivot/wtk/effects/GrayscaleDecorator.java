@@ -16,17 +16,13 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.Transparency;
-import java.awt.color.ColorSpace;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.WritableRaster;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.WritableRaster;
 
 /**
  * Decorator that applies a grayscale conversion to a component.
@@ -54,7 +50,7 @@ public class GrayscaleDecorator implements Decorator {
 
         if (bufferedImage == null || bufferedImage.getWidth() < width
             || bufferedImage.getHeight() < height) {
-            ColorSpace gsColorSpace = ColorSpace.getInstance(ColorSpace.CS_GRAY);
+            ColorFactory.ColorSpace gsColorSpace = ColorFactory.ColorSpace.getInstance( ColorFactory.ColorSpace.CS_GRAY );
             ComponentColorModel ccm = new ComponentColorModel(gsColorSpace, true, false,
                 Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
             WritableRaster raster = ccm.createCompatibleWritableRaster(width, height);

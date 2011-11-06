@@ -16,17 +16,11 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Border;
@@ -36,8 +30,13 @@ import org.apache.pivot.wtk.CornerRadii;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
-import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
+import org.apache.pivot.wtk.graphics.font.FontRenderContext;
+import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
 /**
  * Border skin.
@@ -55,11 +54,11 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
 
     public BorderSkin() {
         Theme theme = Theme.getTheme();
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(ColorFactory.WHITE);
 
         font = theme.getFont().deriveFont(Font.BOLD);
-        color = Color.BLACK;
-        titleColor = Color.BLACK;
+        color = ColorFactory.BLACK;
+        titleColor = ColorFactory.BLACK;
         thickness = 1;
         padding = Insets.NONE;
         cornerRadii = CornerRadii.NONE;
@@ -148,7 +147,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         if (title != null
             && title.length() > 0) {
             FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D headingBounds = font.getStringBounds(title, fontRenderContext);
+            Bounds headingBounds = font.getStringBounds( title, fontRenderContext );
             preferredWidth = (int)Math.ceil(headingBounds.getWidth());
 
             LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
@@ -286,15 +285,15 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
                 fontRenderContext.getFractionalMetricsHint());
 
             // Note that we add one pixel to the string bounds for spacing
-            Rectangle2D titleBounds = font.getStringBounds(title, fontRenderContext);
-            titleBounds = new Rectangle2D.Double(padding.left + thickness,
-                (topThickness - titleBounds.getHeight()) / 2,
-                    titleBounds.getWidth() + 1, titleBounds.getHeight());
+            Bounds titleBounds = font.getStringBounds(title, fontRenderContext);
+            titleBounds = new Bounds(padding.left + thickness,
+                (int) (topThickness - titleBounds.toRectangle().getHeight()) / 2,
+                    (int) titleBounds.toRectangle().getWidth() + 1, (int) titleBounds.toRectangle().getHeight());
 
             graphics.setFont(font);
             graphics.setPaint(titleColor);
-            graphics.drawString(title, (int)titleBounds.getX(),
-                (int)(titleBounds.getY() + titleAscent));
+            graphics.drawString(title, (int)titleBounds.toRectangle().getX(),
+                (int)(titleBounds.toRectangle().getY() + titleAscent));
 
             Area titleClip = new Area(graphics.getClip());
             titleClip.subtract(new Area(titleBounds));

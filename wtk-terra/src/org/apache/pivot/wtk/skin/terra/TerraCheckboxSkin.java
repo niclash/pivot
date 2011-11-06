@@ -16,14 +16,10 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.BasicStroke;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.wtk.Button;
@@ -32,6 +28,12 @@ import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.GradientPaint;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.Paint;
+import org.apache.pivot.wtk.graphics.RenderingHints;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.CheckboxSkin;
 
 /**
@@ -180,13 +182,14 @@ public class TerraCheckboxSkin extends CheckboxSkin {
                 graphics.setColor(focusColor);
                 graphics.fillRect(0, 0, CHECKBOX_SIZE, CHECKBOX_SIZE);
             } else {
-                BasicStroke dashStroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND,
+                GraphicsSystem graphicsSystem = Platform.getInstalled().getGraphicsSystem();
+                BasicStroke dashStroke = graphicsSystem.getStrokeFactory().createBasicStroke(1.0f, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND, 1.0f, new float[] {0.0f, 2.0f}, 0.0f);
 
                 graphics.setStroke(dashStroke);
                 graphics.setColor(buttonBorderColor);
 
-                graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
                 Rectangle2D focusRectangle = new Rectangle2D.Double(CHECKBOX_SIZE + 1, 0.5,
@@ -227,7 +230,8 @@ public class TerraCheckboxSkin extends CheckboxSkin {
 
         if (state == Button.State.SELECTED) {
             graphics.setColor(buttonSelectionColor);
-            graphics.setStroke(new BasicStroke(2.5f));
+            GraphicsSystem graphicsSystem = Platform.getInstalled().getGraphicsSystem();
+            graphics.setStroke(graphicsSystem.getStrokeFactory().createBasicStroke(2.5f));
 
             // Draw a checkmark
             int n = CHECKMARK_SIZE / 2;

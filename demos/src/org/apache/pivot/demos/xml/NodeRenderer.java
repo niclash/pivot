@@ -16,12 +16,13 @@
  */
 package org.apache.pivot.demos.xml;
 
-import java.awt.Color;
-import java.awt.Font;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.TreeView;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.xml.Element;
 import org.apache.pivot.xml.TextNode;
 

@@ -16,12 +16,6 @@
  */
 package org.apache.pivot.wtk.effects;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
-
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 

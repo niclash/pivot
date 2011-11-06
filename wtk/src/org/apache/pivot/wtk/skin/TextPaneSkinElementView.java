@@ -16,18 +16,17 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.Color;
 import java.util.Iterator;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.text.Element;
 import org.apache.pivot.wtk.text.ElementListener;
 import org.apache.pivot.wtk.text.Node;
@@ -158,7 +157,7 @@ abstract class TextPaneSkinElementView extends TextPaneSkinNodeView
     public void paint(Graphics2D graphics) {
         // Determine the paint bounds
         Bounds paintBounds = new Bounds(0, 0, getWidth(), getHeight());
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             paintBounds = paintBounds.intersect(clipBounds);
         }
@@ -183,7 +182,7 @@ abstract class TextPaneSkinElementView extends TextPaneSkinNodeView
                 Area selection = getTextPaneSkin().getSelection();
                 if (selection != null) {
                     Area fillArea = new Area(new Rectangle(nodeViewBounds.x, nodeViewBounds.y, nodeViewBounds.width, nodeViewBounds.height));
-                    selection = selection.createTransformedArea(AffineTransform.getTranslateInstance(-skinX, -skinY));
+                    selection = selection.createTransformedArea( AffineTransform.getTranslateInstance( -skinX, -skinY ));
                     fillArea.subtract(selection);
                     nodeViewGraphics.setColor(styledBackgroundColor);
                     nodeViewGraphics.fill(fillArea);
