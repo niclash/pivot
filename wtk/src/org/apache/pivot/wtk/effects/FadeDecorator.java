@@ -18,12 +18,16 @@ package org.apache.pivot.wtk.effects;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
-
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.AlphaComposite;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that applies an opacity to a component.
  */
-public class FadeDecorator implements Decorator {
+public class FadeDecorator
+    implements Decorator {
     private float opacity;
 
     public FadeDecorator() {
@@ -49,7 +53,8 @@ public class FadeDecorator implements Decorator {
 
     @Override
     public Graphics2D prepare(Component component, Graphics2D graphics) {
-        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+        AlphaComposite composite = Platform.getInstalled().getGraphicsSystem().getColorFactoryProvider().getCompositeFactory().getSrcOver( opacity );
+        graphics.setComposite(composite);
         return graphics;
     }
 
@@ -65,6 +70,6 @@ public class FadeDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

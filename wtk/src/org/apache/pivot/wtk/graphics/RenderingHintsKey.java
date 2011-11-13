@@ -8,4 +8,9 @@ public class RenderingHintsKey
     {
         this.keyName = keyName;
     }
+
+    public String getKeyName()
+    {
+        return keyName;
+    }
 }

@@ -20,6 +20,7 @@ import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Alert;
 import org.apache.pivot.wtk.Component;
@@ -35,7 +36,7 @@ public class ComponentKeyListenerExample extends Window implements Bindable {
         textInput.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
             public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == Keyboard.KeyCode.S
+                if (keyCode == JavaAwtKeyCode.S
                     && Keyboard.isPressed(Keyboard.Modifier.CTRL)) {
                     Alert.alert("You pressed Control-S!", component.getWindow());
                 }

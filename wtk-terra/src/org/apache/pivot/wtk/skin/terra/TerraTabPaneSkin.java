@@ -16,6 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
@@ -23,7 +25,6 @@ import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Vote;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
@@ -36,7 +37,6 @@ import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.Panorama;
@@ -259,7 +259,7 @@ public class TerraTabPaneSkin extends ContainerSkin
 
             // Draw the border
             graphics.setPaint((tabButton.isSelected() || active) ? borderColor : inactiveBorderColor);
-            graphics.setStroke(new BasicStroke(1));
+            graphics.setStroke(Platform.getInstalled().getGraphicsSystem().getStrokeFactory().createBasicStroke(1));
 
             switch(tabOrientation) {
                 case HORIZONTAL: {
@@ -1396,18 +1396,18 @@ public class TerraTabPaneSkin extends ContainerSkin
 
     /**
      * Key presses have no effect if the event has already been consumed.<p>
-     * CommandModifier + {@link KeyCode#KEYPAD_1 KEYPAD_1} to
-     * {@link KeyCode#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
-     * {@link KeyCode#N1 1} to {@link KeyCode#N9 9} Select the (enabled) tab at
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_1 KEYPAD_1} to
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N1 1} to {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N9 9} Select the (enabled) tab at
      * index 0 to 8 respectively<p>
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
-        Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+        Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
         if (!consumed
             && Keyboard.isPressed(commandModifier)) {
             TabPane tabPane = (TabPane)getComponent();
@@ -1416,56 +1416,56 @@ public class TerraTabPaneSkin extends ContainerSkin
             int selectedIndex = -1;
 
             switch (keyCode) {
-                case Keyboard.KeyCode.KEYPAD_1:
-                case Keyboard.KeyCode.N1: {
+                case KEYPAD_1:
+                case N1: {
                     selectedIndex = 0;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_2:
-                case Keyboard.KeyCode.N2: {
+                case KEYPAD_2:
+                case N2: {
                     selectedIndex = 1;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_3:
-                case Keyboard.KeyCode.N3: {
+                case KEYPAD_3:
+                case N3: {
                     selectedIndex = 2;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_4:
-                case Keyboard.KeyCode.N4: {
+                case KEYPAD_4:
+                case N4: {
                     selectedIndex = 3;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_5:
-                case Keyboard.KeyCode.N5: {
+                case KEYPAD_5:
+                case N5: {
                     selectedIndex = 4;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_6:
-                case Keyboard.KeyCode.N6: {
+                case KEYPAD_6:
+                case N6: {
                     selectedIndex = 5;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_7:
-                case Keyboard.KeyCode.N7: {
+                case KEYPAD_7:
+                case N7: {
                     selectedIndex = 6;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_8:
-                case Keyboard.KeyCode.N8: {
+                case KEYPAD_8:
+                case N8: {
                     selectedIndex = 7;
                     break;
                 }
 
-                case Keyboard.KeyCode.KEYPAD_9:
-                case Keyboard.KeyCode.N9: {
+                case KEYPAD_9:
+                case N9: {
                     selectedIndex = 8;
                     break;
                 }
@@ -1654,12 +1654,14 @@ public class TerraTabPaneSkin extends ContainerSkin
                 selectedTab.setVisible(true);
                 selectedTab.requestFocus();
 
-                ApplicationContext.queueCallback(new Runnable(){
+                ApplicationContext.queueCallback( new Runnable()
+                {
                     @Override
-                    public void run() {
-                        button.scrollAreaToVisible(0, 0, button.getWidth(), button.getHeight());
+                    public void run()
+                    {
+                        button.scrollAreaToVisible( 0, 0, button.getWidth(), button.getHeight() );
                     }
-                });
+                } );
             }
 
             if (previousSelectedIndex != -1) {

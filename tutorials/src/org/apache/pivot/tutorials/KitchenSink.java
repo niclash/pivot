@@ -16,7 +16,8 @@
  */
 package org.apache.pivot.tutorials;
 
-import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
@@ -36,7 +37,6 @@ import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.ActivityIndicator;
 import org.apache.pivot.wtk.Alert;
 import org.apache.pivot.wtk.Application;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonGroup;
@@ -50,7 +50,6 @@ import org.apache.pivot.wtk.DropAction;
 import org.apache.pivot.wtk.DropTarget;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.ListView;
-import org.apache.pivot.wtk.LocalManifest;
 import org.apache.pivot.wtk.Manifest;
 import org.apache.pivot.wtk.Menu;
 import org.apache.pivot.wtk.MessageType;
@@ -677,7 +676,7 @@ public class KitchenSink implements Application, Application.AboutHandler {
                 DragSource imageDragSource = new DragSource() {
                     private Image image = null;
                     private Point offset = null;
-                    private LocalManifest content = null;
+                    private JavaAwtLocalManifest content = null;
 
                     @Override
                     public boolean beginDrag(Component component, int x, int y) {
@@ -686,7 +685,7 @@ public class KitchenSink implements Application, Application.AboutHandler {
 
                         if (image != null) {
                             imageView.setImage((Image)null);
-                            content = new LocalManifest();
+                            content = new JavaAwtLocalManifest();
                             content.putImage(image);
                             offset = new Point(x - (imageView.getWidth() - image.getWidth()) / 2,
                                 y - (imageView.getHeight() - image.getHeight()) / 2);
@@ -713,7 +712,7 @@ public class KitchenSink implements Application, Application.AboutHandler {
                     }
 
                     @Override
-                    public LocalManifest getContent() {
+                    public JavaAwtLocalManifest getContent() {
                         return content;
                     }
 

@@ -18,7 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Bounds;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;

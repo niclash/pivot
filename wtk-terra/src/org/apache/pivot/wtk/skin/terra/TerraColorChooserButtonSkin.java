@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import java.awt.geom.RoundRectangle2D;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;

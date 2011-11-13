@@ -62,7 +62,7 @@ public class ScriptApplication implements Application {
                     + " argument must start with a slash character.");
             }
 
-            ApplicationContext.applyStylesheet(stylesheet);
+            ApplicationContext.applyStylesheet( stylesheet );
         }
 
         // Load the file and open the window

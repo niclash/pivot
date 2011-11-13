@@ -21,6 +21,7 @@ import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.ListView;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.media.Image;
 
 /**
@@ -92,7 +93,7 @@ public class ListViewColorItemRenderer extends ListViewItemRenderer {
             String name = colorItem.getName();
 
             colorBadge.setColor(listView.isEnabled() ?
-                color : new Color(color.getRed(), color.getGreen(), color.getBlue(), 0x99));
+                color : ColorFactory.create(color.getRed(), color.getGreen(), color.getBlue(), 0x99));
             listItem.setText(name);
         }
 

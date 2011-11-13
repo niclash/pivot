@@ -18,8 +18,8 @@ package org.apache.pivot.wtk.content;
 
 import java.net.URL;
 
-import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.wtk.media.Image;
 
 /**

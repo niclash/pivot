@@ -16,12 +16,18 @@
  */
 package org.apache.pivot.wtk.effects;
 
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BufferedImage;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.GraphicsUtilities;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Raster;
+import org.apache.pivot.wtk.graphics.WritableRaster;
 
 /**
  * Decorator that adds a drop shadows to a component.
@@ -173,7 +179,7 @@ public class DropShadowDecorator implements Decorator {
                 || shadowImage.getWidth() != width + 2 * blurRadius
                 || shadowImage.getHeight() != height + 2 * blurRadius) {
                 // Recreate the shadow
-                BufferedImage rectangleImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                BufferedImage rectangleImage = Platform.getInstalled().getGraphicsSystem().newBufferedImage(width, height);
                 Graphics2D rectangleImageGraphics = rectangleImage.createGraphics();
                 rectangleImageGraphics.setColor(ColorFactory.BLACK);
                 rectangleImageGraphics.fillRect(0, 0, width, height);
@@ -204,7 +210,7 @@ public class DropShadowDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 
     /**
@@ -242,8 +248,7 @@ public class DropShadowDecorator implements Decorator {
 
         int aSum;
 
-        BufferedImage dst = new BufferedImage(dstWidth, dstHeight,
-            BufferedImage.TYPE_INT_ARGB);
+        BufferedImage dst = Platform.getInstalled().getGraphicsSystem().newBufferedImage(dstWidth, dstHeight);
 
         int[] dstBuffer = new int[dstWidth * dstHeight];
         int[] srcBuffer = new int[srcWidth * srcHeight];
@@ -375,7 +380,6 @@ public class DropShadowDecorator implements Decorator {
 
         WritableRaster dstRaster = dst.getRaster();
         dstRaster.setDataElements(0, 0, dstWidth, dstHeight, dstBuffer);
-
         return dst;
     }
 }

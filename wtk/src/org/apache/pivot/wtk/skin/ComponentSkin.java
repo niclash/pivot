@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
@@ -38,11 +39,11 @@ import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.MenuHandler;
 import org.apache.pivot.wtk.Mouse;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Skin;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Tooltip;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontFactory;
@@ -252,15 +253,15 @@ public abstract class ComponentSkin implements Skin, ComponentListener,
     }
 
     /**
-     * {@link KeyCode#TAB TAB} Transfers focus forwards<br>
-     * {@link KeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Transfers focus
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Transfers focus forwards<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Transfers focus
      * backwards
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.TAB
+        if (keyCode == Keyboard.Key.TAB
             && getComponent().isFocused()) {
             FocusTraversalDirection direction = (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) ?
                 FocusTraversalDirection.BACKWARD : FocusTraversalDirection.FORWARD;
@@ -282,7 +283,7 @@ public abstract class ComponentSkin implements Skin, ComponentListener,
     }
 
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         return false;
     }
 
@@ -381,9 +382,8 @@ public abstract class ComponentSkin implements Skin, ComponentListener,
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            font = FontFactory.decode( value );
+            font = Platform.getInstalled().getGraphicsSystem().getFontFactory().decode( value );
         }
-
         return font;
     }
 }

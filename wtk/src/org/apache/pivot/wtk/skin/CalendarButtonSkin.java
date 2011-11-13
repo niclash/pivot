@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import java.util.Locale;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.CalendarDate;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.Vote;
@@ -34,7 +35,6 @@ import org.apache.pivot.wtk.ContainerMouseListener;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.FocusTraversalDirection;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowStateListener;
@@ -65,11 +65,11 @@ public abstract class CalendarButtonSkin extends ButtonSkin
 
     private ComponentKeyListener calendarPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link KeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link KeyCode#ENTER ENTER} Choose the selected date.<br>
-         * {@link KeyCode#TAB TAB} Choose the selected date and transfer focus
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected date.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected date and transfer focus
          * forwards.<br>
-         * {@link KeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
          * selected date and transfer focus backwards.
          */
         @Override
@@ -77,16 +77,16 @@ public abstract class CalendarButtonSkin extends ButtonSkin
             CalendarButton calendarButton = (CalendarButton)getComponent();
 
             switch (keyCode) {
-                case Keyboard.KeyCode.ESCAPE: {
+                case JavaAwtKeyCode.ESCAPE: {
                     calendarPopup.close();
                     break;
                 }
 
-                case Keyboard.KeyCode.TAB:
-                case Keyboard.KeyCode.ENTER: {
+                case JavaAwtKeyCode.TAB:
+                case JavaAwtKeyCode.ENTER: {
                     calendarPopup.close();
 
-                    if (keyCode == Keyboard.KeyCode.TAB) {
+                    if (keyCode == JavaAwtKeyCode.TAB) {
                         FocusTraversalDirection direction = (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) ?
                             FocusTraversalDirection.BACKWARD : FocusTraversalDirection.FORWARD;
                         calendarButton.transferFocus(direction);
@@ -276,17 +276,17 @@ public abstract class CalendarButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
      * @see #keyReleased(Component, int,
      * org.apache.pivot.wtk.Keyboard.KeyLocation)
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = true;
             repaintComponent();
 
@@ -305,13 +305,13 @@ public abstract class CalendarButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the button.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = false;
             repaintComponent();
         } else {

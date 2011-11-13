@@ -16,6 +16,8 @@
  */
 package org.apache.pivot.wtk;
 
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
+
 /**
  * Interface representing a drag source.
  */
@@ -52,7 +54,7 @@ public interface DragSource {
     /**
      * Returns the drag content.
      */
-    public LocalManifest getContent();
+    public JavaAwtLocalManifest getContent();
 
     /**
      * Returns a visual representing the drag content.

@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.ColorChooser;
@@ -34,7 +34,6 @@ import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowStateListener;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 
 /**
@@ -72,29 +71,29 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
 
     private ComponentKeyListener colorChooserPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link KeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link KeyCode#ENTER ENTER} Choose the selected color.<br>
-         * {@link KeyCode#TAB TAB} Choose the selected color and transfer focus
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected color.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected color and transfer focus
          * forwards.<br>
-         * {@link KeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Choose the
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Choose the
          * selected color and transfer focus backwards.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode,
+        public boolean keyPressed(Component component, Keyboard.Key keyCode,
             Keyboard.KeyLocation keyLocation) {
             ColorChooserButton colorChooserButton = (ColorChooserButton)getComponent();
 
             switch (keyCode) {
-                case Keyboard.KeyCode.ESCAPE: {
+                case ESCAPE: {
                     colorChooserPopup.close();
                     break;
                 }
 
-                case Keyboard.KeyCode.TAB:
-                case Keyboard.KeyCode.ENTER: {
+                case TAB:
+                case ENTER: {
                     colorChooserPopup.close();
 
-                    if (keyCode == Keyboard.KeyCode.TAB) {
+                    if (keyCode == Keyboard.Key.TAB) {
                         FocusTraversalDirection direction = (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) ?
                             FocusTraversalDirection.BACKWARD : FocusTraversalDirection.FORWARD;
                         colorChooserButton.transferFocus(direction);
@@ -294,17 +293,16 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
     // ComponentKeyListener methods
 
     /**
-     * {@link KeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
-     * @see #keyReleased(Component, int,
-     * org.apache.pivot.wtk.Keyboard.KeyLocation)
+     * @see #keyReleased(Component, Keyboard.Key, org.apache.pivot.wtk.Keyboard.KeyLocation)
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = true;
             repaintComponent();
 
@@ -323,13 +321,13 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the button.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = false;
             repaintComponent();
         } else {

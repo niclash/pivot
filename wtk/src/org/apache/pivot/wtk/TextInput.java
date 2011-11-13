@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import org.apache.pivot.collections.LinkedList;
 import org.apache.pivot.json.JSON;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.validation.Validator;
@@ -498,7 +499,7 @@ public class TextInput extends Component {
         String selectedText = getSelectedText();
 
         if (selectedText.length() > 0) {
-            LocalManifest clipboardContent = new LocalManifest();
+            JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
             clipboardContent.putText(selectedText);
             Clipboard.setContent(clipboardContent);
         }

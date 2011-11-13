@@ -306,7 +306,7 @@ public class ScaleDecorator implements Decorator {
         graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
             fontRenderContext.getAntiAliasingHint());
         graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
@@ -360,6 +360,6 @@ public class ScaleDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return AffineTransform.getScaleInstance(scaleX, scaleY);
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newScaleTransform(scaleX,scaleY);
     }
 }

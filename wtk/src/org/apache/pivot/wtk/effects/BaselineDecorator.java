@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.effects;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -71,6 +72,6 @@ public class BaselineDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

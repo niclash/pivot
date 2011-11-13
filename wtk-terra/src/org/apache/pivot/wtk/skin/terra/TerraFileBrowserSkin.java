@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import java.io.File;
 import java.io.FileFilter;
@@ -68,7 +69,6 @@ import org.apache.pivot.wtk.TaskAdapter;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.VerticalAlignment;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.media.Image;
@@ -645,19 +645,19 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
         });
 
         /**
-         * {@link KeyCode#DOWN DOWN} Transfer focus to the file list and select
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Transfer focus to the file list and select
          * the first item.<br>
-         * {@link KeyCode#ESCAPE ESCAPE} Clear the search field.
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Clear the search field.
          */
         searchTextInput.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
-            public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+            public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
                 boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
-                if (keyCode == Keyboard.KeyCode.ESCAPE) {
+                if (keyCode == Keyboard.Key.ESCAPE) {
                     searchTextInput.setText("");
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.DOWN) {
+                } else if (keyCode == Keyboard.Key.DOWN) {
                     if (fileTableView.getTableData().getLength() > 0) {
                         fileTableView.setSelectedIndex(0);
                         fileTableView.requestFocus();
@@ -850,19 +850,19 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
     }
 
     /**
-     * {@link KeyCode#ENTER ENTER} Change into the selected directory if
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Change into the selected directory if
      * {@link #keyboardFolderTraversalEnabled} is true.<br>
-     * {@link KeyCode#DELETE DELETE} or {@link KeyCode#BACKSPACE BACKSPACE}
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DELETE DELETE} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#BACKSPACE BACKSPACE}
      * Change into the parent of the current directory.<br>
-     * {@link KeyCode#F5 F5} Refresh the file list.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#F5 F5} Refresh the file list.
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         FileBrowser fileBrowser = (FileBrowser)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.ENTER
+        if (keyCode == Keyboard.Key.ENTER
             && keyboardFolderTraversalEnabled) {
             Sequence<File> selectedFiles = fileBrowser.getSelectedFiles();
 
@@ -873,15 +873,15 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
                     consumed = true;
                 }
             }
-        } else if (keyCode == Keyboard.KeyCode.DELETE
-            || keyCode == Keyboard.KeyCode.BACKSPACE) {
+        } else if (keyCode == Keyboard.Key.DELETE
+            || keyCode == Keyboard.Key.BACKSPACE) {
             File rootDirectory = fileBrowser.getRootDirectory();
             File parentDirectory = rootDirectory.getParentFile();
             if (parentDirectory != null) {
                 fileBrowser.setRootDirectory(parentDirectory);
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.F5) {
+        } else if (keyCode == Keyboard.Key.F5) {
             refreshFileList();
             consumed = true;
         }
@@ -890,17 +890,17 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
     }
 
     /**
-     * CommandModifier + {@link KeyCode#F F} Transfers focus to the search
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#F F} Transfers focus to the search
      * TextInput.
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyReleased(component, keyCode, keyLocation);
 
         Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
-        if (keyCode == Keyboard.KeyCode.F
+        if (keyCode == Keyboard.Key.F
             && Keyboard.isPressed(commandModifier)) {
             searchTextInput.requestFocus();
             consumed = true;

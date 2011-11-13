@@ -16,6 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -29,7 +31,6 @@ import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Slider;
 import org.apache.pivot.wtk.Theme;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.graphics.RenderingHints;
@@ -214,13 +215,13 @@ public class TerraSliderSkin extends SliderSkin {
         }
 
         /**
-         * {@link KeyCode#LEFT LEFT} or {@link KeyCode#DOWN DOWN} Decrement
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Decrement
          * the slider's value.<br>
-         * {@link KeyCode#RIGHT RIGHT} or {@link KeyCode#UP UP} Increment
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increment
          * the slider's value.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
             Slider slider = (Slider)TerraSliderSkin.this.getComponent();
@@ -232,12 +233,12 @@ public class TerraSliderSkin extends SliderSkin {
             int value = slider.getValue();
             int increment = length / 10;
 
-            if (keyCode == Keyboard.KeyCode.LEFT
-                || keyCode == Keyboard.KeyCode.DOWN) {
+            if (keyCode == Keyboard.Key.LEFT
+                || keyCode == Keyboard.Key.DOWN) {
                 slider.setValue(Math.max(start, value - increment));
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.RIGHT
-                || keyCode == Keyboard.KeyCode.UP) {
+            } else if (keyCode == Keyboard.Key.RIGHT
+                || keyCode == Keyboard.Key.UP) {
                 slider.setValue(Math.min(end, value + increment));
                 consumed = true;
             }
@@ -344,7 +345,7 @@ public class TerraSliderSkin extends SliderSkin {
         }
     }
 
-    private static final BasicStroke dashStroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND,
+    private static final BasicStroke dashStroke = Platform.getInstalled().getGraphicsSystem().getStrokeFactory().createBasicStroke( 1.0f, BasicStroke.CAP_ROUND,
         BasicStroke.JOIN_ROUND, 1.0f, new float[] { 0.0f, 2.0f }, 0.0f);
 
     @Override

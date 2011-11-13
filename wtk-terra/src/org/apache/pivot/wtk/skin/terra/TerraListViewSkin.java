@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 
 import org.apache.pivot.collections.ArrayList;
@@ -29,7 +30,6 @@ import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.ListView;
 import org.apache.pivot.wtk.ListView.SelectMode;
@@ -40,6 +40,10 @@ import org.apache.pivot.wtk.ListViewSelectionListener;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.Theme;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.Transparency;
+import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 
 /**
@@ -297,7 +301,7 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
         int itemEnd = listData.getLength() - 1;
 
         // Ensure that we only paint items that are visible
-        Rectangle clipBounds = graphics.getClipBounds();
+        Bounds clipBounds = graphics.getClipBounds();
         if (clipBounds != null) {
             if (variableItemHeight) {
                 itemStart = getItemAt(clipBounds.y);
@@ -378,7 +382,7 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
             }
 
             // Paint the data
-            Graphics2D rendererGraphics = (Graphics2D)graphics.create(itemX, itemY,
+            Graphics2D rendererGraphics = graphics.create(itemX, itemY,
                 itemWidth, itemHeight);
 
             itemRenderer.render(item, itemIndex, listView, selected, checked, highlighted, disabled);
@@ -853,7 +857,7 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
                 ListView.SelectMode selectMode = listView.getSelectMode();
 
                 if (button == Mouse.Button.LEFT) {
-                    Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+                    Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
 
                     if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)
                         && selectMode == ListView.SelectMode.MULTI) {
@@ -985,26 +989,26 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
     }
 
     /**
-     * {@link KeyCode#UP UP} Selects the previous enabled list item when select
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled list item when select
      * mode is not {@link SelectMode#NONE}<br>
-     * {@link KeyCode#DOWN DOWN} Selects the next enabled list item when select
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled list item when select
      * mode is not {@link SelectMode#NONE}<p>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#UP UP} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increases the
      * selection size by including the previous enabled list item when select
      * mode is {@link SelectMode#MULTI}<br>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#DOWN DOWN} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Increases the
      * selection size by including the next enabled list item when select mode
      * is {@link SelectMode#MULTI}
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         ListView listView = (ListView)getComponent();
         ListView.SelectMode selectMode = listView.getSelectMode();
 
         switch (keyCode) {
-            case Keyboard.KeyCode.UP: {
+            case UP: {
                 if (selectMode != ListView.SelectMode.NONE) {
                     int index = listView.getFirstSelectedIndex();
                     int count = listView.getListData().getLength();
@@ -1037,7 +1041,7 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
                 break;
             }
 
-            case Keyboard.KeyCode.DOWN: {
+            case DOWN: {
                 if (selectMode != ListView.SelectMode.NONE) {
                     int index = listView.getLastSelectedIndex();
                     int count = listView.getListData().getLength();
@@ -1085,17 +1089,17 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} Toggles check mark selection when select
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Toggles check mark selection when select
      * mode is {@link SelectMode#SINGLE}
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyReleased(component, keyCode, keyLocation);
 
         ListView listView = (ListView)getComponent();
 
         switch (keyCode) {
-            case Keyboard.KeyCode.SPACE: {
+            case SPACE: {
                 if (listView.getCheckmarksEnabled()
                     && listView.getSelectMode() == ListView.SelectMode.SINGLE) {
                     int selectedIndex = listView.getSelectedIndex();

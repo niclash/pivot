@@ -99,11 +99,13 @@ public abstract class MenuItemSkin extends ButtonSkin implements Menu.ItemListen
         }
 
         if (menuItem.getMenu() != null) {
-            buttonPressCallback = ApplicationContext.scheduleCallback(new Runnable() {
-                public void run() {
+            buttonPressCallback = ApplicationContext.scheduleCallback( new Runnable()
+            {
+                public void run()
+                {
                     menuItem.press();
                 }
-            }, buttonPressInterval);
+            }, buttonPressInterval );
         }
     }
 

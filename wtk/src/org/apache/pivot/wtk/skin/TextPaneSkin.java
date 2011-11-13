@@ -16,13 +16,13 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Cursor;
@@ -239,7 +239,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
 
     @Override
     public int getBaseline(int width, int height) {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
         return margin.top + Math.round(ascent);
@@ -746,30 +746,30 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
     }
 
     @Override
-    public boolean keyPressed(final Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(final Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         final TextPane textPane = (TextPane)getComponent();
         Document document = textPane.getDocument();
 
-        Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+        Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
         if (document != null) {
-            if (keyCode == Keyboard.KeyCode.ENTER
+            if (keyCode == Keyboard.Key.ENTER
                 && textPane.isEditable()) {
                 textPane.insertParagraph();
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.DELETE
+            } else if (keyCode == Keyboard.Key.DELETE
                 && textPane.isEditable()) {
                 textPane.delete(false);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.BACKSPACE
+            } else if (keyCode == Keyboard.Key.BACKSPACE
                 && textPane.isEditable()) {
                 textPane.delete(true);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.LEFT) {
+            } else if (keyCode == Keyboard.Key.LEFT) {
                 int selectionStart = textPane.getSelectionStart();
                 int selectionLength = textPane.getSelectionLength();
 
@@ -812,7 +812,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 caretX = caret.x;
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.RIGHT) {
+            } else if (keyCode == Keyboard.Key.RIGHT) {
                 int selectionStart = textPane.getSelectionStart();
                 int selectionLength = textPane.getSelectionLength();
 
@@ -861,7 +861,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 }
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.UP) {
+            } else if (keyCode == Keyboard.Key.UP) {
                 int selectionStart = textPane.getSelectionStart();
 
                 int offset = getNextInsertionPoint(caretX, selectionStart, TextPane.ScrollDirection.UP);
@@ -882,7 +882,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 scrollCharacterToVisible(offset);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.DOWN) {
+            } else if (keyCode == Keyboard.Key.DOWN) {
                 int selectionStart = textPane.getSelectionStart();
                 int selectionLength = textPane.getSelectionLength();
 
@@ -939,28 +939,28 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
 
                 consumed = true;
             } else if (Keyboard.isPressed(commandModifier)
-                    && keyCode == Keyboard.KeyCode.TAB
+                    && keyCode == Keyboard.Key.TAB
                     && textPane.isEditable()) {
                     textPane.insert("\t");
                     showCaret(true);
 
                     consumed = true;
             } else if (Keyboard.isPressed(commandModifier)) {
-                if (keyCode == Keyboard.KeyCode.A) {
+                if (keyCode == Keyboard.Key.A) {
                     textPane.setSelection(0, document.getCharacterCount());
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.X
+                } else if (keyCode == Keyboard.Key.X
                     && textPane.isEditable()) {
                     textPane.cut();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.C) {
+                } else if (keyCode == Keyboard.Key.C) {
                     textPane.copy();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.V
+                } else if (keyCode == Keyboard.Key.V
                     && textPane.isEditable()) {
                     textPane.paste();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.Z
+                } else if (keyCode == Keyboard.Key.Z
                     && textPane.isEditable()) {
                     if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
                         textPane.redo();
@@ -970,7 +970,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.HOME) {
+            } else if (keyCode == Keyboard.Key.HOME) {
                 // Move the caret to the beginning of the text
                 if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
                     textPane.setSelection(0, textPane.getSelectionStart());
@@ -980,7 +980,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 scrollCharacterToVisible(0);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.END) {
+            } else if (keyCode == Keyboard.Key.END) {
                 // Move the caret to the end of the text
                 if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
                     int selectionStart = textPane.getSelectionStart();
@@ -1170,8 +1170,8 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
         if (show) {
             caretOn = true;
             scheduledBlinkCaretCallback =
-                ApplicationContext.scheduleRecurringCallback(blinkCaretCallback,
-                    Platform.getCursorBlinkRate());
+                ApplicationContext.scheduleRecurringCallback( blinkCaretCallback,
+                                                              Platform.getCursorBlinkRate() );
 
             // Run the callback once now to show the cursor immediately
             blinkCaretCallback.run();

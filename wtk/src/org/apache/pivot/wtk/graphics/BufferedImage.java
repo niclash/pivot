@@ -19,4 +19,8 @@ public interface BufferedImage
     WritableRaster getRaster();
 
     void flush();
+
+    BufferedImage blur( int blurMagnitude, float[] data );
+
+    BufferedImage toGrayScale( int width, int height );
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
@@ -40,7 +42,6 @@ import org.apache.pivot.wtk.Sheet;
 import org.apache.pivot.wtk.SheetStateListener;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Mouse.Button;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
@@ -209,7 +210,7 @@ public class TerraSheetSkin extends WindowSkin implements SheetStateListener {
                 rootOwner.moveToFront();
                 consumed = true;
 
-                Toolkit.getDefaultToolkit().beep();
+                Platform.getInstalled().getSoundSystem().beep();
             }
 
             return consumed;
@@ -489,19 +490,19 @@ public class TerraSheetSkin extends WindowSkin implements SheetStateListener {
     }
 
     /**
-     * {@link KeyCode#ENTER ENTER} Close the sheet with a 'result' of true.<br>
-     * {@link KeyCode#ESCAPE ESCAPE} Close the sheet with a 'result' of false.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Close the sheet with a 'result' of true.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the sheet with a 'result' of false.
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         Sheet sheet = (Sheet)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.ENTER) {
+        if (keyCode == Keyboard.Key.ENTER) {
             sheet.close(true);
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.ESCAPE) {
+        } else if (keyCode == Keyboard.Key.ESCAPE) {
             sheet.close(false);
             consumed = true;
         } else {

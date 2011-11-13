@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
@@ -30,7 +31,6 @@ import org.apache.pivot.wtk.Menu;
 import org.apache.pivot.wtk.MenuListener;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Menu.Item;
 import org.apache.pivot.wtk.Menu.Section;
 import org.apache.pivot.wtk.graphics.Graphics2D;
@@ -65,8 +65,7 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
         activeColor = theme.getColor(4);
         activeBackgroundColor = theme.getColor(14);
         marginColor = theme.getColor(11);
-        marginColor = new Color(marginColor.getRed(), marginColor.getGreen(),
-            marginColor.getBlue(), 228);
+        marginColor = ColorFactory.create(marginColor.getRed(), marginColor.getGreen(), marginColor.getBlue(), 228);
         margin = 20;
         separatorColor = theme.getColor(7);
         sectionSpacing = 7;
@@ -390,21 +389,21 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
     }
 
     /**
-     * {@link KeyCode#UP UP} Select the previous enabled menu item.<br>
-     * {@link KeyCode#DOWN DOWN} Select the next enabled menu item.<br>
-     * {@link KeyCode#LEFT LEFT} Close the current sub-menu.<br>
-     * {@link KeyCode#RIGHT RIGHT} Open the sub-menu of the current menu
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Select the previous enabled menu item.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Select the next enabled menu item.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Close the current sub-menu.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Open the sub-menu of the current menu
      * item.<br>
-     * {@link KeyCode#ENTER ENTER} 'presses' the active menu item if it
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} 'presses' the active menu item if it
      * does not have a sub-menu.
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         Menu menu = (Menu)component;
 
-        if (keyCode == Keyboard.KeyCode.UP) {
+        if (keyCode == Keyboard.Key.UP) {
             Menu.SectionSequence sections = menu.getSections();
             int sectionCount = sections.getLength();
 
@@ -450,7 +449,7 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
             }
 
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.DOWN) {
+        } else if (keyCode == Keyboard.Key.DOWN) {
             Menu.SectionSequence sections = menu.getSections();
             int sectionCount = sections.getLength();
 
@@ -490,14 +489,14 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
             }
 
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.LEFT) {
+        } else if (keyCode == Keyboard.Key.LEFT) {
             // Close the window if this is not a top-level menu
             if (menu.getItem() != null) {
                 Window window = menu.getWindow();
                 window.close();
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.RIGHT) {
+        } else if (keyCode == Keyboard.Key.RIGHT) {
             Menu.Item activeItem = menu.getActiveItem();
 
             // Press if the item has a sub-menu
@@ -506,7 +505,7 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
                 activeItem.press();
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.ENTER) {
+        } else if (keyCode == Keyboard.Key.ENTER) {
             Menu.Item activeItem = menu.getActiveItem();
 
             // Press if the item does not have a sub-menu
@@ -515,7 +514,7 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
                 activeItem.press();
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.TAB) {
+        } else if (keyCode == Keyboard.Key.TAB) {
             consumed = false;
         }
 
@@ -523,16 +522,16 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the active menu item if it does
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the active menu item if it does
      * not have a sub-menu.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyReleased(component, keyCode, keyLocation);
 
         Menu menu = (Menu)component;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             Menu.Item activeItem = menu.getActiveItem();
 
             // Press if the item does not have a sub-menu

@@ -16,7 +16,7 @@
  */
 package org.apache.pivot.tests;
 
-import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import java.io.IOException;
 
 import org.apache.pivot.collections.Map;
@@ -29,7 +29,6 @@ import org.apache.pivot.wtk.DropAction;
 import org.apache.pivot.wtk.DropTarget;
 import org.apache.pivot.wtk.Frame;
 import org.apache.pivot.wtk.ImageView;
-import org.apache.pivot.wtk.LocalManifest;
 import org.apache.pivot.wtk.Manifest;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Visual;
@@ -51,7 +50,7 @@ public class DragDropTest implements Application {
         DragSource imageDragSource = new DragSource() {
             private Image image = null;
             private Point offset = null;
-            private LocalManifest content = null;
+            private JavaAwtLocalManifest content = null;
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
@@ -60,7 +59,7 @@ public class DragDropTest implements Application {
 
                 if (image != null) {
                     imageView.setImage((Image)null);
-                    content = new LocalManifest();
+                    content = new JavaAwtLocalManifest();
                     content.putImage(image);
                     offset = new Point(x - (imageView.getWidth() - image.getWidth()) / 2,
                         y - (imageView.getHeight() - image.getHeight()) / 2);
@@ -87,7 +86,7 @@ public class DragDropTest implements Application {
             }
 
             @Override
-            public LocalManifest getContent() {
+            public JavaAwtLocalManifest getContent() {
                 return content;
             }
 

@@ -18,8 +18,8 @@ package org.apache.pivot.wtk.skin.terra;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
-import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Button;
@@ -96,17 +96,20 @@ public class TerraListButtonSkin extends ListButtonSkin {
 
             repaintComponent();
 
-            ApplicationContext.queueCallback(new Runnable() {
+            ApplicationContext.queueCallback( new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     int selectedIndex = listView.getSelectedIndex();
 
-                    if (selectedIndex >= 0) {
-                        Bounds itemBounds = listView.getItemBounds(selectedIndex);
-                        listView.scrollAreaToVisible(itemBounds);
+                    if( selectedIndex >= 0 )
+                    {
+                        Bounds itemBounds = listView.getItemBounds( selectedIndex );
+                        listView.scrollAreaToVisible( itemBounds );
                     }
                 }
-            });
+            } );
         }
 
         @Override

@@ -16,11 +16,10 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.Component;

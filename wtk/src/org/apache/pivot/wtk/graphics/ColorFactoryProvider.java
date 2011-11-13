@@ -27,4 +27,6 @@ public interface ColorFactoryProvider
     Color blue();
 
     Color lightGray();
+
+    CompositeFactory getCompositeFactory();
 }

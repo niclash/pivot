@@ -20,9 +20,9 @@ import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.concurrent.TaskExecutionException;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;

@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.effects;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.AlphaComposite;
 import org.apache.pivot.wtk.graphics.BufferedImage;
@@ -46,7 +47,7 @@ public class ReflectionDecorator implements Decorator {
         int width = component.getWidth();
         int height = component.getHeight();
 
-        componentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        componentImage = Platform.getInstalled().getGraphicsSystem().newBufferedImage(width, height);
         componentImageGraphics = componentImage.createGraphics();
 
         // Clear the image background
@@ -95,9 +96,8 @@ public class ReflectionDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        AffineTransform transform = AffineTransform.getScaleInstance(1.0, -1.0);
+        AffineTransform transform = Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newScaleTransform(1.0,-1.0);
         transform.translate(0, -(component.getHeight() * 2));
-
         return transform;
     }
 }

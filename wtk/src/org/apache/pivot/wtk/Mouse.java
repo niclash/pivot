@@ -16,6 +16,8 @@
  */
 package org.apache.pivot.wtk;
 
+import org.apache.pivot.ui.awt.DisplayHost;
+
 /**
  * Class representing the system mouse.
  */
@@ -160,7 +162,7 @@ public final class Mouse {
         Cursor cursor = null;
 
         Display display = capturer.getDisplay();
-        ApplicationContext.DisplayHost displayHost = display.getDisplayHost();
+        DisplayHost displayHost = display.getDisplayHost();
 
         int cursorID = displayHost.getCursor().getType();
         switch (cursorID) {
@@ -260,7 +262,7 @@ public final class Mouse {
         }
 
         Display display = capturer.getDisplay();
-        ApplicationContext.DisplayHost displayHost = display.getDisplayHost();
+        DisplayHost displayHost = display.getDisplayHost();
         displayHost.setCursor(getCursor(cursor));
     }
 
@@ -294,7 +296,7 @@ public final class Mouse {
 
         if (component != null) {
             Display display = component.getDisplay();
-            ApplicationContext.DisplayHost displayHost = display.getDisplayHost();
+            DisplayHost displayHost = display.getDisplayHost();
             displayHost.setCursor((cursor == null) ? java.awt.Cursor.getDefaultCursor() :
                 getCursor(cursor));
         }

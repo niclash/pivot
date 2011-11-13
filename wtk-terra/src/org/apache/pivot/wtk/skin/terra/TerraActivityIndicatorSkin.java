@@ -15,11 +15,11 @@
  * limitations under the License.
  */package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.ActivityIndicator;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.graphics.Graphics2D;
@@ -151,13 +151,15 @@ public class TerraActivityIndicatorSkin extends ActivityIndicatorSkin {
     @Override
     public void activeChanged(ActivityIndicator activityIndicator) {
         if (activityIndicator.isActive()) {
-            updateCallback = ApplicationContext.scheduleRecurringCallback(new Runnable() {
+            updateCallback = ApplicationContext.scheduleRecurringCallback( new Runnable()
+            {
                 @Override
-                public void run() {
-                    angle = (angle + 30) % 360;
+                public void run()
+                {
+                    angle = ( angle + 30 ) % 360;
                     repaintComponent();
                 }
-            }, 100);
+            }, 100 );
         } else {
             updateCallback.cancel();
             updateCallback = null;

@@ -1,19 +1,10 @@
 package org.apache.pivot.wtk.graphics.font;
 
-public class FontFactory
+public interface FontFactory
 {
-    public static Font create( String name, int style, int size )
-    {
-        return null;
-    }
+    Font create( String name, int style, int size );
 
-    public static Font decode( String fontName )
-    {
-        return null;
-    }
+    Font decode( String fontName );
 
-    public static Font[] getAllFonts()
-    {
-        return new Font[ 0 ];  //To change body of created methods use File | Settings | File Templates.
-    }
+    Font[] getAllFonts();
 }

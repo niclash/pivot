@@ -17,6 +17,7 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.collections.List;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Bounds;
@@ -28,7 +29,6 @@ import org.apache.pivot.wtk.ContainerMouseListener;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.FocusTraversalDirection;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonListener;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
@@ -65,19 +65,19 @@ public abstract class ListButtonSkin extends ButtonSkin
 
     private ComponentKeyListener listViewPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link KeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link KeyCode#ENTER ENTER} Choose the selected list item.<br>
-         * {@link KeyCode#TAB TAB} Choose the selected list item and transfer
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected list item.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected list item and transfer
          * focus forwards.<br>
-         * {@link KeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
          * selected list item and transfer focus backwards.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             ListButton listButton = (ListButton)getComponent();
 
             switch (keyCode) {
-                case Keyboard.KeyCode.ENTER: {
+                case ENTER: {
                     listViewPopup.close();
 
                     int index = listView.getSelectedIndex();
@@ -90,7 +90,7 @@ public abstract class ListButtonSkin extends ButtonSkin
                     break;
                 }
 
-                case Keyboard.KeyCode.TAB: {
+                case TAB: {
                     listViewPopup.close();
 
                     int index = listView.getSelectedIndex();
@@ -103,7 +103,7 @@ public abstract class ListButtonSkin extends ButtonSkin
                     break;
                 }
 
-                case Keyboard.KeyCode.ESCAPE: {
+                case ESCAPE: {
                     listViewPopup.close();
                     break;
                 }
@@ -292,21 +292,21 @@ public abstract class ListButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
      * state and opens the popup.<br>
-     * {@link KeyCode#UP UP} Selects the previous enabled list item.<br>
-     * {@link KeyCode#DOWN DOWN} Selects the next enabled list item.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled list item.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled list item.
      *
-     * @see #keyReleased(Component, int,
+     * @see #keyReleased(Component, Keyboard.Key,
      * org.apache.pivot.wtk.Keyboard.KeyLocation)
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         ListButton listButton = (ListButton)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = true;
             repaintComponent();
 
@@ -315,7 +315,7 @@ public abstract class ListButtonSkin extends ButtonSkin
             } else if (!listButton.isRepeatable()){
                 listViewPopup.open(component.getWindow());
             }
-        } else if (keyCode == Keyboard.KeyCode.UP) {
+        } else if (keyCode == Keyboard.Key.UP) {
             int index = listButton.getSelectedIndex();
 
             do {
@@ -327,7 +327,7 @@ public abstract class ListButtonSkin extends ButtonSkin
                 listButton.setSelectedIndex(index);
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.DOWN) {
+        } else if (keyCode == Keyboard.Key.DOWN) {
             if (Keyboard.isPressed(Keyboard.Modifier.ALT)) {
                 listViewPopup.open(component.getWindow());
 
@@ -354,15 +354,15 @@ public abstract class ListButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the button.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         ListButton listButton = (ListButton)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = false;
             repaintComponent();
 

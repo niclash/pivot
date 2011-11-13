@@ -35,13 +35,14 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.serialization.CSVSerializer;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.concurrent.Task;
 import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.web.GetQuery;
 import org.apache.pivot.wtk.Action;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
@@ -156,7 +157,7 @@ public class StockTrackerWindow extends Window implements Bindable {
 
         // Add action mapping to refresh the symbol table view
         Keyboard.Modifier commandModifier = Platform.getCommandModifier();
-        Keyboard.KeyStroke refreshKeystroke = new Keyboard.KeyStroke(Keyboard.KeyCode.R,
+        Keyboard.KeyStroke refreshKeystroke = new Keyboard.KeyStroke( JavaAwtKeyCode.R,
             commandModifier.getMask());
         getActionMappings().add(new ActionMapping(refreshKeystroke, refreshTableAction));
     }
@@ -196,10 +197,10 @@ public class StockTrackerWindow extends Window implements Bindable {
         stocksTableView.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
             public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == Keyboard.KeyCode.DELETE
-                    || keyCode == Keyboard.KeyCode.BACKSPACE) {
+                if (keyCode == JavaAwtKeyCode.DELETE
+                    || keyCode == JavaAwtKeyCode.BACKSPACE) {
                     removeSymbolsAction.perform(component);
-                } else if (keyCode == Keyboard.KeyCode.A
+                } else if (keyCode == JavaAwtKeyCode.A
                     && Keyboard.isPressed( Platform.getCommandModifier())) {
                     stocksTableView.selectAll();
                 }
@@ -219,7 +220,7 @@ public class StockTrackerWindow extends Window implements Bindable {
         symbolTextInput.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
             public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == Keyboard.KeyCode.ENTER) {
+                if (keyCode == JavaAwtKeyCode.ENTER) {
                     if (addSymbolAction.isEnabled()) {
                         addSymbolAction.perform(component);
                     }
@@ -260,12 +261,14 @@ public class StockTrackerWindow extends Window implements Bindable {
 
         refreshTable();
 
-        ApplicationContext.scheduleRecurringCallback(new Runnable() {
+        ApplicationContext.scheduleRecurringCallback( new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 refreshTable();
             }
-        }, REFRESH_INTERVAL);
+        }, REFRESH_INTERVAL );
 
         symbolTextInput.requestFocus();
     }

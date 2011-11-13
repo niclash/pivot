@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -30,7 +31,6 @@ import org.apache.pivot.wtk.MenuPopupStateListener;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.WindowStateListener;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 
 /**
  * Abstract base class for menu button skins.
@@ -167,17 +167,17 @@ public abstract class MenuButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
-     * @see #keyReleased(Component, int,
+     * @see #keyReleased(Component, Keyboard.Key,
      * org.apache.pivot.wtk.Keyboard.KeyLocation)
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = true;
             repaintComponent();
 
@@ -196,15 +196,15 @@ public abstract class MenuButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the button.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         MenuButton menuButton = (MenuButton)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             pressed = false;
             repaintComponent();
 

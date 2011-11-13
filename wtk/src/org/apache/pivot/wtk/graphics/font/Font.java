@@ -11,9 +11,9 @@ public interface Font
     int ITALIC = 2;
     int PLAIN = 0;
 
-    LineMetrics getLineMetrics( String title, FontRenderContext fontRenderContext );
+    LineMetrics getLineMetrics( String text, FontRenderContext fontRenderContext );
 
-    Bounds getStringBounds( String title, FontRenderContext fontRenderContext );
+    Bounds getStringBounds( String text, FontRenderContext fontRenderContext );
 
     String getName();
 
@@ -21,11 +21,11 @@ public interface Font
 
     int getStyle();
 
-    Font deriveFont( int bold );
+    Font deriveFont( int style );
 
     Bounds getMaxCharBounds( FontRenderContext fontRenderContext );
 
-    GlyphVector createGlyphVector( FontRenderContext fontRenderContext, int[] ints );
+    GlyphVector createGlyphVector( FontRenderContext fontRenderContext, int[] glyphCodes );
 
     int getMissingGlyphCode();
 
@@ -33,5 +33,5 @@ public interface Font
 
     int canDisplayUpTo( String sampleResource );
 
-    Font deriveFont( int plain, int fontSize );
+    Font deriveFont( int style, int fontSize );
 }

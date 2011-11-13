@@ -20,11 +20,11 @@ import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.concurrent.Task;
 import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.util.concurrent.TaskListener;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Meter;
@@ -48,12 +48,14 @@ public class Meters extends Window implements Bindable {
                     percentage++;
 
                     // Update the meter on the UI thread
-                    ApplicationContext.queueCallback(new Runnable() {
+                    ApplicationContext.queueCallback( new Runnable()
+                    {
                         @Override
-                        public void run() {
-                            meter.setPercentage((double)percentage / 100);
+                        public void run()
+                        {
+                            meter.setPercentage( (double) percentage / 100 );
                         }
-                    });
+                    } );
                 } catch(InterruptedException exception) {
                     throw new TaskExecutionException(exception);
                 }

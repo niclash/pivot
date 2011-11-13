@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.text;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.util.Iterator;
@@ -631,7 +632,7 @@ public abstract class Element extends Node
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            setFont( FontFactory.decode( font ));
+            setFont( Platform.getInstalled().getGraphicsSystem().getFontFactory().decode( font ));
         }
     }
 

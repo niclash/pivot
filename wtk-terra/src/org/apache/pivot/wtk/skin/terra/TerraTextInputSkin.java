@@ -16,14 +16,14 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.text.CharSequenceCharacterIterator;
 import org.apache.pivot.util.Vote;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Cursor;
@@ -32,7 +32,6 @@ import org.apache.pivot.wtk.FocusTraversalDirection;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
@@ -1042,7 +1041,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                 int selectionLength = textInput.getSelectionLength();
 
                 if (textInput.getCharacterCount() - selectionLength + 1 > textInput.getMaximumLength()) {
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 } else {
                     // NOTE We explicitly call getSelectionStart() twice here in case the remove
                     // event is vetoed
@@ -1056,64 +1055,64 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
     }
 
     /**
-     * {@link KeyCode#DELETE DELETE} Delete the character after the caret or
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DELETE DELETE} Delete the character after the caret or
      * the entire selection if there is one.<br>
-     * {@link KeyCode#BACKSPACE BACKSPACE} Delete the character before the
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#BACKSPACE BACKSPACE} Delete the character before the
      * caret or the entire selection if there is one.<p>
-     * {@link KeyCode#HOME HOME} Move the caret to the beginning of the text.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} Move the caret to the beginning of the text.
      * <br>
-     * {@link KeyCode#LEFT LEFT} + {@link Modifier#META META} Move the caret
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#META META} Move the caret
      * to the beginning of the text.<p>
-     * {@link KeyCode#HOME HOME} + {@link Modifier#SHIFT SHIFT} Select from
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} + {@link Modifier#SHIFT SHIFT} Select from
      * the caret to the beginning of the text.<br>
-     * {@link KeyCode#LEFT LEFT} + {@link Modifier#META META} +
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#META META} +
      * {@link Modifier#SHIFT SHIFT} Select from the caret to the beginning of
      * the text.<p>
-     * {@link KeyCode#END END} Move the caret to the end of the text.<br>
-     * {@link KeyCode#RIGHT RIGHT} + {@link Modifier#META META} Move the caret
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} Move the caret to the end of the text.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#META META} Move the caret
      * to the end of the text.<p>
-     * {@link KeyCode#END END} + {@link Modifier#SHIFT SHIFT} Select from the
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} + {@link Modifier#SHIFT SHIFT} Select from the
      * caret to the end of the text.<br>
-     * {@link KeyCode#RIGHT RIGHT} + {@link Modifier#META META} +
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#META META} +
      * {@link Modifier#SHIFT SHIFT} Select from the caret to the end of the
      * text.<p>
-     * {@link KeyCode#LEFT LEFT} Clear the selection and move the caret back
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Clear the selection and move the caret back
      * by one character.<br>
-     * {@link KeyCode#LEFT LEFT} + {@link Modifier#SHIFT SHIFT} Add the
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#SHIFT SHIFT} Add the
      * previous character to the selection.<br>
-     * {@link KeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} Clear the
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} Clear the
      * selection and move the caret to the beginning of the text.<br>
-     * {@link KeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} +
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} +
      * {@link Modifier#SHIFT SHIFT} Add all preceding text to the selection.
      * <p>
-     * {@link KeyCode#RIGHT RIGHT} Clear the selection and move the caret
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Clear the selection and move the caret
      * forward by one character.<br>
-     * {@link KeyCode#RIGHT RIGHT} + {@link Modifier#SHIFT SHIFT} Add the next
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#SHIFT SHIFT} Add the next
      * character to the selection.<br>
-     * {@link KeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} Clear the
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} Clear the
      * selection and move the caret to the end of the text.<br>
-     * {@link KeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} +
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} +
      * {@link Modifier#SHIFT SHIFT} Add all subsequent text to the selection.
      * <p>
-     * CommandModifier + {@link KeyCode#A A} Select all.<br>
-     * CommandModifier + {@link KeyCode#X X} Cut selection to clipboard (if
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#A A} Select all.<br>
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#X X} Cut selection to clipboard (if
      * not a password TextInput).<br>
-     * CommandModifier + {@link KeyCode#C C} Copy selection to clipboard (if
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#C C} Copy selection to clipboard (if
      * not a password TextInput).<br>
-     * CommandModifier + {@link KeyCode#V V} Paste from clipboard.<br>
-     * CommandModifier + {@link KeyCode#Z Z} Undo.
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#V V} Paste from clipboard.<br>
+     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#Z Z} Undo.
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         TextInput textInput = (TextInput)getComponent();
-        Keyboard.Modifier commandModifier = Platform.getCommandModifier();
-        Keyboard.Modifier wordNavigationModifier = Platform.getWordNavigationModifier();
+        Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
+        Keyboard.Modifier wordNavigationModifier = Platform.getInstalled().getWordNavigationModifier();
 
-        if (keyCode == Keyboard.KeyCode.DELETE && textInput.isEditable()) {
+        if (keyCode == Keyboard.Key.DELETE && textInput.isEditable()) {
             int index = textInput.getSelectionStart();
 
             if (index < textInput.getCharacterCount()) {
@@ -1122,7 +1121,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.BACKSPACE && textInput.isEditable()) {
+        } else if (keyCode == Keyboard.Key.BACKSPACE && textInput.isEditable()) {
             int index = textInput.getSelectionStart();
             int count = textInput.getSelectionLength();
 
@@ -1134,8 +1133,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                 textInput.removeText(index, count);
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.HOME
-            || (keyCode == Keyboard.KeyCode.LEFT
+        } else if (keyCode == Keyboard.Key.HOME
+            || (keyCode == Keyboard.Key.LEFT
                 && Keyboard.isPressed(Keyboard.Modifier.META))) {
             // Move the caret to the beginning of the text
             if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
@@ -1147,8 +1146,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             scrollCharacterToVisible(0);
 
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.END
-            || (keyCode == Keyboard.KeyCode.RIGHT
+        } else if (keyCode == Keyboard.Key.END
+            || (keyCode == Keyboard.Key.RIGHT
                 && Keyboard.isPressed(Keyboard.Modifier.META))) {
             // Move the caret to the end of the text
             int n = textInput.getCharacterCount();
@@ -1163,7 +1162,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             scrollCharacterToVisible(n);
 
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.LEFT) {
+        } else if (keyCode == Keyboard.Key.LEFT) {
             int selectionStart = textInput.getSelectionStart();
             int selectionLength = textInput.getSelectionLength();
 
@@ -1214,7 +1213,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
                 consumed = true;
             }
-        } else if (keyCode == Keyboard.KeyCode.RIGHT) {
+        } else if (keyCode == Keyboard.Key.RIGHT) {
             int selectionStart = textInput.getSelectionStart();
             int selectionLength = textInput.getSelectionLength();
 
@@ -1264,29 +1263,29 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                 consumed = true;
             }
         } else if (Keyboard.isPressed(commandModifier)) {
-            if (keyCode == Keyboard.KeyCode.A) {
+            if (keyCode == Keyboard.Key.A) {
                 textInput.setSelection(0, textInput.getCharacterCount());
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.X && textInput.isEditable()) {
+            } else if (keyCode == Keyboard.Key.X && textInput.isEditable()) {
                 if (textInput.isPassword()) {
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 } else {
                     textInput.cut();
                 }
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.C) {
+            } else if (keyCode == Keyboard.Key.C) {
                 if (textInput.isPassword()) {
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 } else {
                     textInput.copy();
                 }
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.V && textInput.isEditable()) {
+            } else if (keyCode == Keyboard.Key.V && textInput.isEditable()) {
                 textInput.paste();
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.Z && textInput.isEditable()) {
+            } else if (keyCode == Keyboard.Key.Z && textInput.isEditable()) {
                 if (!Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
                     textInput.undo();
                 }
@@ -1401,7 +1400,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
                 if (!validator.isValid(textBuilder.toString())) {
                     vote = Vote.DENY;
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 }
             }
         }
@@ -1432,7 +1431,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
                 if (!validator.isValid(textBuilder.toString())) {
                     vote = Vote.DENY;
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 }
             }
         }
@@ -1542,8 +1541,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
         if (show) {
             caretOn = true;
             scheduledBlinkCaretCallback =
-                ApplicationContext.scheduleRecurringCallback(blinkCaretCallback,
-                    Platform.getCursorBlinkRate());
+                ApplicationContext.scheduleRecurringCallback( blinkCaretCallback,
+                                                              Platform.getCursorBlinkRate() );
 
             // Run the callback once now to show the cursor immediately
             blinkCaretCallback.run();

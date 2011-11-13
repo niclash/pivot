@@ -29,8 +29,8 @@ import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.tutorials.explorer.tools.ComponentPropertyInspector;
 import org.apache.pivot.tutorials.explorer.tools.ComponentStyleInspector;
 import org.apache.pivot.tutorials.explorer.tools.EventLogger;
-import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonGroup;
@@ -298,12 +298,14 @@ public class ComponentExplorerWindow extends Window implements Bindable {
             }
 
             final Path path = initialSelectedPath;
-            ApplicationContext.queueCallback(new Runnable() {
+            ApplicationContext.queueCallback( new Runnable()
+            {
                 @Override
-                public void run() {
-                    treeView.scrollAreaToVisible(treeView.getNodeBounds(path));
+                public void run()
+                {
+                    treeView.scrollAreaToVisible( treeView.getNodeBounds( path ) );
                 }
-            });
+            } );
         }
 
         treeView.requestFocus();

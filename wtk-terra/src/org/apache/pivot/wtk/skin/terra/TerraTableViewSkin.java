@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 
@@ -29,7 +30,6 @@ import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
@@ -1188,7 +1188,7 @@ public class TerraTableViewSkin extends ComponentSkin implements TableView.Skin,
             TableView.SelectMode selectMode = tableView.getSelectMode();
 
             if (button == Mouse.Button.LEFT) {
-                Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+                Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
 
                 if (Keyboard.isPressed(Keyboard.Modifier.SHIFT)
                     && selectMode == TableView.SelectMode.MULTI) {
@@ -1297,26 +1297,26 @@ public class TerraTableViewSkin extends ComponentSkin implements TableView.Skin,
     }
 
     /**
-     * {@link KeyCode#UP UP} Selects the previous enabled row when select mode
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled row when select mode
      * is not {@link SelectMode#NONE}<br>
-     * {@link KeyCode#DOWN DOWN} Selects the next enabled row when select mode
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled row when select mode
      * is not {@link SelectMode#NONE}<p>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#UP UP} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increases the
      * selection size by including the previous enabled row when select mode
      * is {@link SelectMode#MULTI}<br>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#DOWN DOWN} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Increases the
      * selection size by including the next enabled row when select mode is
      * {@link SelectMode#MULTI}
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         TableView tableView = (TableView)getComponent();
         TableView.SelectMode selectMode = tableView.getSelectMode();
 
         switch (keyCode) {
-            case Keyboard.KeyCode.UP: {
+            case UP: {
                 if (selectMode != TableView.SelectMode.NONE) {
                     int index = tableView.getFirstSelectedIndex();
 
@@ -1340,7 +1340,7 @@ public class TerraTableViewSkin extends ComponentSkin implements TableView.Skin,
                 break;
             }
 
-            case Keyboard.KeyCode.DOWN: {
+            case DOWN: {
                 if (selectMode != TableView.SelectMode.NONE) {
                     int index = tableView.getLastSelectedIndex();
                     int count = tableView.getTableData().getLength();

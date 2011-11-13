@@ -16,11 +16,11 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.RadioButton;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 
 /**
  * Abstract base class for radio button skins.
@@ -44,7 +44,7 @@ public abstract class RadioButtonSkin extends ButtonSkin {
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} 'presses' the button.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
      */
     @Override
     public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
@@ -52,7 +52,7 @@ public abstract class RadioButtonSkin extends ButtonSkin {
 
         RadioButton radioButton = (RadioButton)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == JavaAwtKeyCode.SPACE) {
             radioButton.press();
         } else {
             consumed = super.keyReleased(component, keyCode, keyLocation);

@@ -16,15 +16,16 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
@@ -43,6 +44,7 @@ import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;
+import org.apache.pivot.wtk.graphics.geom.Rectangle;
 
 /**
  * Text area skin.
@@ -56,7 +58,8 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
             if (selection == null) {
                 TextArea textArea = (TextArea) getComponent();
-                textArea.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textArea.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
     }
@@ -105,7 +108,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
     }
 
     private int caretX = 0;
-    private Rectangle caret = new Rectangle();
+    private Rectangle caret = Platform.getInstalled().getGraphicsSystem().newRectangle();
     private Area selection = null;
 
     private boolean caretOn = false;
@@ -247,7 +250,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
         }
 
         updateSelection();
-        caretX = caret.x;
+        caretX = caret.getBounds().x;
 
         if (textArea.isFocused()) {
             scrollCharacterToVisible(textArea.getSelectionStart());
@@ -259,7 +262,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
     @Override
     public int getBaseline(int width, int height) {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
 
         return Math.round(margin.top + lm.getAscent());
@@ -491,15 +494,15 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
         this.font = font;
 
         int missingGlyphCode = font.getMissingGlyphCode();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
         GlyphVector missingGlyphVector = font.createGlyphVector(fontRenderContext,
             new int[] {missingGlyphCode});
         Bounds textBounds = missingGlyphVector.getLogicalBounds();
 
         Bounds maxCharBounds = font.getMaxCharBounds(fontRenderContext);
-        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.toRectangle().getWidth()),
-            (int)Math.ceil( maxCharBounds.toRectangle().getHeight() ));
+        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.getWidth()),
+            (int)Math.ceil( maxCharBounds.getHeight() ));
 
         invalidateComponent();
     }
@@ -742,15 +745,15 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
             this.lineWidth = lineWidth;
 
             int missingGlyphCode = font.getMissingGlyphCode();
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
             GlyphVector missingGlyphVector = font.createGlyphVector(fontRenderContext,
                 new int[] {missingGlyphCode});
             Bounds textBounds = missingGlyphVector.getLogicalBounds();
 
             Bounds maxCharBounds = font.getMaxCharBounds(fontRenderContext);
-            averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.toRectangle().getWidth()),
-                (int)Math.ceil(maxCharBounds.toRectangle().getHeight()));
+            averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.getWidth()),
+                (int)Math.ceil(maxCharBounds.getHeight()));
 
             invalidateComponent();
         }
@@ -841,7 +844,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 }
             }
 
-            caretX = caret.x;
+            caretX = caret.getBounds().x;
 
             // Set focus to the text input
             textArea.requestFocus();
@@ -887,7 +890,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     int selectionLength = textArea.getSelectionLength();
 
                     if (textArea.getCharacterCount() - selectionLength + 1 > textArea.getMaximumLength()) {
-                        Toolkit.getDefaultToolkit().beep();
+                        Platform.getInstalled().getSoundSystem().beep();
                     } else {
                         int selectionStart = textArea.getSelectionStart();
                         textArea.removeText(selectionStart, selectionLength);
@@ -903,15 +906,15 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
     }
 
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         if (paragraphViews.getLength() > 0) {
             TextArea textArea = (TextArea)getComponent();
-            Keyboard.Modifier commandModifier = Platform.getCommandModifier();
-            Keyboard.Modifier wordNavigationModifier = Platform.getWordNavigationModifier();
+            Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
+            Keyboard.Modifier wordNavigationModifier = Platform.getInstalled().getWordNavigationModifier();
 
-            if (keyCode == Keyboard.KeyCode.ENTER
+            if (keyCode == Keyboard.Key.ENTER
                 && acceptsEnter
                 && textArea.isEditable()
                 && Keyboard.getModifiers() == 0) {
@@ -920,7 +923,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 textArea.insertText("\n", index);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.DELETE
+            } else if (keyCode == Keyboard.Key.DELETE
                 && textArea.isEditable()) {
                 int index = textArea.getSelectionStart();
 
@@ -930,7 +933,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.BACKSPACE
+            } else if (keyCode == Keyboard.Key.BACKSPACE
                 && textArea.isEditable()) {
                 int index = textArea.getSelectionStart();
                 int count = textArea.getSelectionLength();
@@ -943,7 +946,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     textArea.removeText(index, count);
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.TAB
+            } else if (keyCode == Keyboard.Key.TAB
                 && Keyboard.isPressed(Keyboard.Modifier.CTRL)
                 && textArea.isEditable()) {
                 int selectionLength = textArea.getSelectionLength();
@@ -954,7 +957,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 }
 
                 if (textArea.getCharacterCount() - selectionLength + tabWidth > textArea.getMaximumLength()) {
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 } else {
                     int selectionStart = textArea.getSelectionStart();
                     textArea.removeText(selectionStart, selectionLength);
@@ -964,8 +967,8 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 showCaret(true);
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.HOME
-                || (keyCode == Keyboard.KeyCode.LEFT
+            } else if (keyCode == Keyboard.Key.HOME
+                || (keyCode == Keyboard.Key.LEFT
                     && Keyboard.isPressed(Keyboard.Modifier.META))) {
                 // Move the caret to the beginning of the line
                 int selectionStart = textArea.getSelectionStart();
@@ -980,12 +983,12 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     textArea.setSelection(rowOffset, selectionLength);
                     scrollCharacterToVisible(rowOffset);
 
-                    caretX = caret.x;
+                    caretX = caret.getBounds().x;
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.END
-                || (keyCode == Keyboard.KeyCode.RIGHT
+            } else if (keyCode == Keyboard.Key.END
+                || (keyCode == Keyboard.Key.RIGHT
                     && Keyboard.isPressed(Keyboard.Modifier.META))) {
                 // Move the caret to the end of the line
                 int selectionStart = textArea.getSelectionStart();
@@ -1011,14 +1014,14 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     textArea.setSelection(selectionStart, selectionLength);
                     scrollCharacterToVisible(selectionStart + selectionLength);
 
-                    caretX = caret.x;
+                    caretX = caret.getBounds().x;
                     if (selection != null) {
-                        caretX += selection.getBounds2D().getWidth();
+                        caretX += selection.getBounds().getWidth();
                     }
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.LEFT) {
+            } else if (keyCode == Keyboard.Key.LEFT) {
                 int selectionStart = textArea.getSelectionStart();
                 int selectionLength = textArea.getSelectionLength();
 
@@ -1067,11 +1070,11 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     textArea.setSelection(selectionStart, selectionLength);
                     scrollCharacterToVisible(selectionStart);
 
-                    caretX = caret.x;
+                    caretX = caret.getBounds().x;
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.RIGHT) {
+            } else if (keyCode == Keyboard.Key.RIGHT) {
                 int selectionStart = textArea.getSelectionStart();
                 int selectionLength = textArea.getSelectionLength();
 
@@ -1118,14 +1121,14 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                     textArea.setSelection(selectionStart, selectionLength);
                     scrollCharacterToVisible(selectionStart + selectionLength);
 
-                    caretX = caret.x;
+                    caretX = caret.getBounds().x;
                     if (selection != null) {
-                        caretX += selection.getBounds2D().getWidth();
+                        caretX += selection.getBounds().getWidth();
                     }
 
                     consumed = true;
                 }
-            } else if (keyCode == Keyboard.KeyCode.UP) {
+            } else if (keyCode == Keyboard.Key.UP) {
                 int selectionStart = textArea.getSelectionStart();
 
                 int index = getNextInsertionPoint(caretX, selectionStart, TextArea.ScrollDirection.UP);
@@ -1144,7 +1147,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 }
 
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.DOWN) {
+            } else if (keyCode == Keyboard.Key.DOWN) {
                 int selectionStart = textArea.getSelectionStart();
                 int selectionLength = textArea.getSelectionLength();
 
@@ -1197,21 +1200,21 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
 
                 consumed = true;
             } else if (Keyboard.isPressed(commandModifier)) {
-                if (keyCode == Keyboard.KeyCode.A) {
+                if (keyCode == Keyboard.Key.A) {
                     textArea.setSelection(0, textArea.getCharacterCount());
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.X
+                } else if (keyCode == Keyboard.Key.X
                     && textArea.isEditable()) {
                     textArea.cut();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.C) {
+                } else if (keyCode == Keyboard.Key.C) {
                     textArea.copy();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.V
+                } else if (keyCode == Keyboard.Key.V
                     && textArea.isEditable()) {
                     textArea.paste();
                     consumed = true;
-                } else if (keyCode == Keyboard.KeyCode.Z
+                } else if (keyCode == Keyboard.Key.Z
                     && textArea.isEditable()) {
                     if (!Keyboard.isPressed(Keyboard.Modifier.SHIFT)) {
                         textArea.undo();
@@ -1305,10 +1308,11 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
         if (textArea.isValid()) {
             if (selection == null) {
                 // Repaint previous caret bounds
-                textArea.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textArea.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             } else {
                 // Repaint previous selection bounds
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textArea.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
 
@@ -1320,13 +1324,14 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
                 showCaret(false);
 
                 // Repaint current selection bounds
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textArea.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
     }
 
     private void updateSelection() {
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
         TextArea textArea = (TextArea)getComponent();
 
         if (paragraphViews.getLength() > 0) {
@@ -1334,8 +1339,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
             int selectionStart = textArea.getSelectionStart();
 
             Bounds leadingSelectionBounds = getCharacterBounds(selectionStart);
-            caret = leadingSelectionBounds.toRectangle();
-            caret.width = 1;
+            caret = graphicsFactory.newRectangle(leadingSelectionBounds.x, leadingSelectionBounds.y, 1, leadingSelectionBounds.height );
 
             // Update the selection
             int selectionLength = textArea.getSelectionLength();
@@ -1343,41 +1347,44 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
             if (selectionLength > 0) {
                 int selectionEnd = selectionStart + selectionLength - 1;
                 Bounds trailingSelectionBounds = getCharacterBounds(selectionEnd);
-                selection = new Area();
+                selection = graphicsFactory.newArea();
 
                 int firstRowIndex = getRowAt(selectionStart);
                 int lastRowIndex = getRowAt(selectionEnd);
 
                 if (firstRowIndex == lastRowIndex) {
-                    selection.add(new Area(new Rectangle(leadingSelectionBounds.x,
-                        leadingSelectionBounds.y, trailingSelectionBounds.x
-                            + trailingSelectionBounds.width - leadingSelectionBounds.x,
-                        trailingSelectionBounds.y + trailingSelectionBounds.height
-                            - leadingSelectionBounds.y)));
+                    selection.add(graphicsFactory.newArea(
+                        leadingSelectionBounds.x,
+                        leadingSelectionBounds.y,
+                        trailingSelectionBounds.x + trailingSelectionBounds.width - leadingSelectionBounds.x,
+                        trailingSelectionBounds.y + trailingSelectionBounds.height - leadingSelectionBounds.y ));
                 } else {
                     int width = getWidth();
 
-                    selection.add(new Area(new Rectangle(leadingSelectionBounds.x,
-                        leadingSelectionBounds.y, width - margin.right - leadingSelectionBounds.x,
-                        leadingSelectionBounds.height)));
+                    selection.add(graphicsFactory.newArea( leadingSelectionBounds.x,
+                                                           leadingSelectionBounds.y, width - margin.right - leadingSelectionBounds.x,
+                                                           leadingSelectionBounds.height ));
 
                     if (lastRowIndex - firstRowIndex > 0) {
-                        selection.add(new Area(new Rectangle(margin.left, leadingSelectionBounds.y
-                            + leadingSelectionBounds.height, width - (margin.left + margin.right),
-                            trailingSelectionBounds.y
-                                - (leadingSelectionBounds.y + leadingSelectionBounds.height))));
+                        selection.add(graphicsFactory.newArea(
+                            margin.left,
+                            leadingSelectionBounds.y + leadingSelectionBounds.height,
+                            width - (margin.left + margin.right),
+                            trailingSelectionBounds.y - (leadingSelectionBounds.y + leadingSelectionBounds.height)));
                     }
 
-                    selection.add(new Area(new Rectangle(margin.left, trailingSelectionBounds.y,
+                    selection.add(graphicsFactory.newArea(
+                        margin.left,
+                        trailingSelectionBounds.y,
                         trailingSelectionBounds.x + trailingSelectionBounds.width - margin.left,
-                        trailingSelectionBounds.height)));
+                        trailingSelectionBounds.height));
                 }
             } else {
                 selection = null;
             }
         } else {
             // Clear the caret and the selection
-            caret = new Rectangle();
+            caret = graphicsFactory.newRectangle();
             selection = null;
         }
     }
@@ -1390,7 +1397,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
         if (show) {
             caretOn = true;
             scheduledBlinkCaretCallback = ApplicationContext.scheduleRecurringCallback(
-                blinkCaretCallback, Platform.getCursorBlinkRate());
+                blinkCaretCallback, Platform.getInstalled().getCursorBlinkRate() );
 
             // Run the callback once now to show the cursor immediately
             blinkCaretCallback.run();

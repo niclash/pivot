@@ -16,11 +16,10 @@
  */
 package org.apache.pivot.tests;
 
-import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.wtk.ApplicationContext;
 
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.wtk.Application;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentListener;
 import org.apache.pivot.wtk.DesktopApplicationContext;
@@ -132,15 +131,17 @@ public class WindowTest implements Application {
                 dialog.setPreferredSize(280, 100);
                 dialog.open(dialogOwner);
 
-                ApplicationContext.queueCallback(new Runnable() {
+                ApplicationContext.queueCallback( new Runnable()
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         Dialog dialog2 = new Dialog();
-                        dialog2.setTitle("Dialog 2");
-                        dialog2.setPreferredSize(220, 80);
-                        dialog2.open(dialog);
+                        dialog2.setTitle( "Dialog 2" );
+                        dialog2.setPreferredSize( 220, 80 );
+                        dialog2.open( dialog );
                     }
-                });
+                } );
             }
         });
     }

@@ -20,6 +20,7 @@ import java.awt.Font;
 import java.io.IOException;
 
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.DesktopApplicationContext;
@@ -30,7 +31,6 @@ import org.apache.pivot.wtk.DropTarget;
 import org.apache.pivot.wtk.Frame;
 import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.Label;
-import org.apache.pivot.wtk.LocalManifest;
 import org.apache.pivot.wtk.Manifest;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.VerticalAlignment;
@@ -48,11 +48,11 @@ public class NativeDragDropTest implements Application {
         label.getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
 
         label.setDragSource(new DragSource() {
-            private LocalManifest content = null;
+            private JavaAwtLocalManifest content = null;
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
-                content = new LocalManifest();
+                content = new JavaAwtLocalManifest();
                 content.putText(label.getText());
                 return true;
             }
@@ -68,7 +68,7 @@ public class NativeDragDropTest implements Application {
             }
 
             @Override
-            public LocalManifest getContent() {
+            public JavaAwtLocalManifest getContent() {
                 return content;
             }
 

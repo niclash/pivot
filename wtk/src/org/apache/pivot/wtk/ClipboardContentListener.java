@@ -16,9 +16,11 @@
  */
 package org.apache.pivot.wtk;
 
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
+
 /**
  * Clipboard content listener interface.
  */
 public interface ClipboardContentListener {
-    public void contentChanged(LocalManifest previousContent);
+    public void contentChanged(JavaAwtLocalManifest previousContent);
 }

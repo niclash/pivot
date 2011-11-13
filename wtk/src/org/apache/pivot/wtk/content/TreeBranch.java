@@ -24,10 +24,10 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ListListener;
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.util.concurrent.TaskExecutionException;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.media.Image;
 
 /**

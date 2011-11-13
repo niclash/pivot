@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
@@ -44,7 +44,6 @@ import org.apache.pivot.wtk.SuggestionPopupStateListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
@@ -109,9 +108,9 @@ public class TerraSuggestionPopupSkin extends WindowSkin
 
     private ComponentKeyListener textInputKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link KeyCode#DOWN DOWN} Transfer focus to the suggestion list and
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Transfer focus to the suggestion list and
          * select the first suggestion if no others are selected.<br>
-         * {@link KeyCode#ESCAPE ESCAPE} Close the popup with a 'result' of
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup with a 'result' of
          * false.
          */
         @Override
@@ -121,7 +120,7 @@ public class TerraSuggestionPopupSkin extends WindowSkin
 
             SuggestionPopup suggestionPopup = (SuggestionPopup)getComponent();
 
-            if (keyCode == Keyboard.KeyCode.DOWN) {
+            if (keyCode == JavaAwtKeyCode.DOWN) {
                 if (listView.getSelectedIndex() == -1
                     && listView.getListData().getLength() > 0) {
                     listView.setSelectedIndex(0);
@@ -129,7 +128,7 @@ public class TerraSuggestionPopupSkin extends WindowSkin
 
                 suggestionPopup.requestFocus();
                 consumed = true;
-            } else if (keyCode == Keyboard.KeyCode.ESCAPE) {
+            } else if (keyCode == JavaAwtKeyCode.ESCAPE) {
                 suggestionPopup.close(false);
                 consumed = true;
             }
@@ -150,9 +149,9 @@ public class TerraSuggestionPopupSkin extends WindowSkin
 
     private ComponentKeyListener listViewKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link KeyCode#TAB TAB} Close the suggestion popup with a 'result' of
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Close the suggestion popup with a 'result' of
          * true, and transfer focus forwards from the TextInput.<br>
-         * {@link KeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Close the
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Close the
          * suggestion popup with a 'result' of true, and transfer focus backwards
          * from the TextInput.<br>
          */
@@ -162,7 +161,7 @@ public class TerraSuggestionPopupSkin extends WindowSkin
             TextInput textInput = suggestionPopup.getTextInput();
 
             switch (keyCode) {
-                case Keyboard.KeyCode.TAB: {
+                case JavaAwtKeyCode.TAB: {
                     returnFocusToTextInput = false;
                     suggestionPopup.close(true);
 
@@ -294,9 +293,9 @@ public class TerraSuggestionPopupSkin extends WindowSkin
     }
 
     /**
-     * {@link KeyCode#ENTER ENTER} Close the suggestion popup with a 'result' of
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Close the suggestion popup with a 'result' of
      * true.<br>
-     * {@link KeyCode#ESCAPE ESCAPE} Close the suggestion popup with a 'result'
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the suggestion popup with a 'result'
      * of false.
      */
     @Override
@@ -304,12 +303,12 @@ public class TerraSuggestionPopupSkin extends WindowSkin
         SuggestionPopup suggestionPopup = (SuggestionPopup)getComponent();
 
         switch (keyCode) {
-            case Keyboard.KeyCode.ENTER: {
+            case JavaAwtKeyCode.ENTER: {
                 suggestionPopup.close(true);
                 break;
             }
 
-            case Keyboard.KeyCode.ESCAPE: {
+            case JavaAwtKeyCode.ESCAPE: {
                 suggestionPopup.close(false);
                 break;
             }

@@ -32,11 +32,13 @@ import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.immutable.ImmutableMap;
 
 import netscape.javascript.JSObject;
+import org.apache.pivot.ui.awt.DisplayHost;
 
 /**
  * Application context used to execute applications in a web browser.
  */
-public final class BrowserApplicationContext extends ApplicationContext {
+public final class BrowserApplicationContext extends ApplicationContext
+{
     /**
      * Applet used to host applications in a web browser.
      * <p>

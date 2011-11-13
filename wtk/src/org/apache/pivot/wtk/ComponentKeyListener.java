@@ -30,12 +30,12 @@ public interface ComponentKeyListener {
         }
 
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             return false;
         }
 
         @Override
-        public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             return false;
         }
     }
@@ -63,7 +63,7 @@ public interface ComponentKeyListener {
      * <tt>true</tt> to consume the event; <tt>false</tt> to allow it to
      * propagate.
      */
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation);
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation);
 
     /**
      * Called when a key has been released.
@@ -76,5 +76,5 @@ public interface ComponentKeyListener {
      * <tt>true</tt> to consume the event; <tt>false</tt> to allow it to
      * propagate.
      */
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation);
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation);
 }

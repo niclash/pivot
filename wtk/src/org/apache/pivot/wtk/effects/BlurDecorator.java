@@ -18,7 +18,10 @@ package org.apache.pivot.wtk.effects;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
-
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.BufferedImage;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that applies a blur to a component.
@@ -76,7 +79,7 @@ public class BlurDecorator implements Decorator {
         if (bufferedImage == null
             || bufferedImage.getWidth() != width
             || bufferedImage.getHeight() != height) {
-            bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            bufferedImage = Platform.getInstalled().getGraphicsSystem().newBufferedImage(width, height);
         }
 
         bufferedImageGraphics = bufferedImage.createGraphics();
@@ -97,10 +100,7 @@ public class BlurDecorator implements Decorator {
             kernel[i] = 1f / n;
         }
 
-        ConvolveOp blur = new ConvolveOp(new Kernel(blurMagnitude, blurMagnitude,
-            kernel), ConvolveOp.EDGE_NO_OP, null);
-        bufferedImage = blur.filter(bufferedImage, null);
-
+        bufferedImage = bufferedImage.blur( 0, kernel );
         graphics.drawImage(bufferedImage, 0, 0, null);
 
         bufferedImage = null;
@@ -114,6 +114,6 @@ public class BlurDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

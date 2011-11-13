@@ -16,11 +16,10 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.GraphicsUtilities;
@@ -87,12 +86,14 @@ public class TerraScrollBarSkin extends ContainerSkin
             this.stopValue = stopValue;
 
             // Wait a timeout period, then begin rapidly scrolling
-            scheduledScrollCallback = ApplicationContext.scheduleRecurringCallback(new Runnable() {
+            scheduledScrollCallback = ApplicationContext.scheduleRecurringCallback( new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     scroll();
                 }
-            }, 400, 30);
+            }, 400, 30 );
 
             // We initially scroll once to register that we've started
             scroll();

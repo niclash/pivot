@@ -6,6 +6,10 @@ import org.apache.pivot.wtk.graphics.SoundSystem;
 public class JavaAwtSoundSystem
     implements SoundSystem
 {
+    JavaAwtSoundSystem()
+    {
+    }
+
     @Override
     public void beep()
     {

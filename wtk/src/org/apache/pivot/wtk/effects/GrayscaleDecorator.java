@@ -18,11 +18,10 @@ package org.apache.pivot.wtk.effects;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.BufferedImage;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 import org.apache.pivot.wtk.graphics.Graphics2D;
-import org.apache.pivot.wtk.graphics.WritableRaster;
 
 /**
  * Decorator that applies a grayscale conversion to a component.
@@ -50,11 +49,7 @@ public class GrayscaleDecorator implements Decorator {
 
         if (bufferedImage == null || bufferedImage.getWidth() < width
             || bufferedImage.getHeight() < height) {
-            ColorFactory.ColorSpace gsColorSpace = ColorFactory.ColorSpace.getInstance( ColorFactory.ColorSpace.CS_GRAY );
-            ComponentColorModel ccm = new ComponentColorModel(gsColorSpace, true, false,
-                Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
-            WritableRaster raster = ccm.createCompatibleWritableRaster(width, height);
-            bufferedImage = new BufferedImage(ccm, raster, ccm.isAlphaPremultiplied(), null);
+            bufferedImage = bufferedImage.toGrayScale( width, height );
         }
 
         bufferedImageGraphics = bufferedImage.createGraphics();
@@ -83,6 +78,6 @@ public class GrayscaleDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

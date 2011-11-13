@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -201,7 +202,7 @@ public class TerraRadioButtonSkin extends RadioButtonSkin {
         Color buttonBorderColor = null;
         Color buttonSelectionColor = null;
 
-        Ellipse buttonBackgroundCircle = new Ellipse.Double(1, 1,
+        Ellipse buttonBackgroundCircle = Platform.getInstalled().getGraphicsSystem().newEllipse(1, 1,
             BUTTON_DIAMETER - 3, BUTTON_DIAMETER - 3);
 
         if (enabled) {

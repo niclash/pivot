@@ -713,7 +713,7 @@ public abstract class Container extends Component
                 Component component = getComponentAt(x, y);
 
                 long currentTime = System.currentTimeMillis();
-                int multiClickInterval = Platform.getMultiClickInterval();
+                int multiClickInterval = Platform.getInstalled().getMultiClickInterval();
                 if (mouseDownComponent == component
                     && currentTime - mouseDownTime < multiClickInterval) {
                     mouseClickCount++;
@@ -871,7 +871,7 @@ public abstract class Container extends Component
             if (threadName.startsWith("AWT-EventQueue-")) {
                 return;
             }
-            if (!java.awt.EventQueue.isDispatchThread()) {
+            if (!Platform.getInstalled().getGraphicsSystem().isDispatchThread()) {
                 throw new IllegalStateException("this method can only be called from the AWT event dispatch thread");
             }
         }

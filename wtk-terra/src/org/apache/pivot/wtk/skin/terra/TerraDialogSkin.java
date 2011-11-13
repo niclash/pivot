@@ -15,6 +15,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -28,7 +29,6 @@ import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Window;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.graphics.GradientFactory;
 import org.apache.pivot.wtk.graphics.StrokeFactory;
 
@@ -123,19 +123,19 @@ public class TerraDialogSkin extends TerraFrameSkin
     }
 
     /**
-     * {@link KeyCode#ENTER ENTER} Close the dialog with a 'result' of true.<br>
-     * {@link KeyCode#ESCAPE ESCAPE} Close the dialog with a 'result' of false.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Close the dialog with a 'result' of true.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the dialog with a 'result' of false.
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         Dialog dialog = (Dialog)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.ENTER) {
+        if (keyCode == Keyboard.Key.ENTER) {
             dialog.close(true);
             consumed = true;
-        } else if (keyCode == Keyboard.KeyCode.ESCAPE) {
+        } else if (keyCode == Keyboard.Key.ESCAPE) {
             dialog.close(false);
             consumed = true;
         } else {

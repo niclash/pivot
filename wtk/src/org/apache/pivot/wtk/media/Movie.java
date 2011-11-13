@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.media;
 
-import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.Visual;
 
@@ -153,8 +153,8 @@ public abstract class Movie implements Visual {
             throw new IllegalStateException("Movie is already playing.");
         }
 
-        scheduledCallback = ApplicationContext.scheduleRecurringCallback(nextFrameCallback,
-            (int)((1 / (double)frameRate) * 1000));
+        scheduledCallback = ApplicationContext.scheduleRecurringCallback( nextFrameCallback,
+                                                                          (int) ( ( 1 / (double) frameRate ) * 1000 ) );
 
         movieListeners.movieStarted(this);
     }

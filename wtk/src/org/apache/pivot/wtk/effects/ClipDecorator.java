@@ -19,8 +19,10 @@ package org.apache.pivot.wtk.effects;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Point;
-
+import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Decorator that adds a rectangular region to the current clip.
@@ -99,6 +101,6 @@ public class ClipDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

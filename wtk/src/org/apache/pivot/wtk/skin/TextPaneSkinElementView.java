@@ -17,7 +17,7 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.graphics.AffineTransform;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import java.util.Iterator;
 

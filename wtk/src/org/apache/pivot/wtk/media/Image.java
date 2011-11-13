@@ -37,7 +37,8 @@ import org.apache.pivot.wtk.graphics.BufferedImage;
  * Abstract base class for images. An image is either a bitmapped "picture"
  * or a vector "drawing".
  */
-public abstract class Image implements Visual {
+public abstract class Image
+    implements Visual {
     /**
      * Image listener list.
      */

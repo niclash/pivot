@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pivot.wtk;
+package org.apache.pivot.ui.awt;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -28,6 +28,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.pivot.io.FileList;
+import org.apache.pivot.wtk.Manifest;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.media.Picture;
 
@@ -35,7 +36,9 @@ import org.apache.pivot.wtk.media.Picture;
 /**
  * Manifest class that acts as a proxy to remote clipboard or drag/drop data.
  */
-public class RemoteManifest implements Manifest {
+public class JavaAwtRemoteManifest
+    implements Manifest
+{
     private Transferable transferable;
 
     private DataFlavor textDataFlavor = null;
@@ -46,7 +49,7 @@ public class RemoteManifest implements Manifest {
     private static final String URI_LIST_MIME_TYPE = "text/uri-list";
     private static final String FILE_URI_SCHEME = "file";
 
-    RemoteManifest(Transferable transferable) {
+    JavaAwtRemoteManifest( Transferable transferable ) {
         assert(transferable != null);
         this.transferable = transferable;
 
@@ -90,7 +93,8 @@ public class RemoteManifest implements Manifest {
     public Image getImage() throws IOException {
         Image image = null;
         try {
-            image = new Picture((BufferedImage)transferable.getTransferData(imageDataFlavor));
+            BufferedImage transferData = (BufferedImage) transferable.getTransferData( imageDataFlavor );
+            image = new Picture( new JavaAwtBufferedImage( transferData) );
         } catch (UnsupportedFlavorException exception) {
             // No-op
         }

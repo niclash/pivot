@@ -86,6 +86,6 @@ public class TaskAdapter<T> implements TaskListener<T> {
 
     @Override
     public void executeFailed(Task<T> task) {
-        ApplicationContext.queueCallback(new ExecuteFailedCallback(task));
+        ApplicationContext.queueCallback( new ExecuteFailedCallback( task ) );
     }
 }

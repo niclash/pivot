@@ -28,6 +28,7 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.LinkedList;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 
@@ -906,7 +907,7 @@ public class TextArea extends Component {
         String selectedText = getSelectedText();
 
         if (selectedText.length() > 0) {
-            LocalManifest clipboardContent = new LocalManifest();
+            JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
             clipboardContent.putText(selectedText);
             Clipboard.setContent(clipboardContent);
         }

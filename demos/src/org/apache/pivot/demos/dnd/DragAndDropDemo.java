@@ -23,6 +23,7 @@ import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.io.FileList;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
@@ -34,7 +35,6 @@ import org.apache.pivot.wtk.DropTarget;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.ListView;
-import org.apache.pivot.wtk.LocalManifest;
 import org.apache.pivot.wtk.Manifest;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.PushButton;
@@ -57,13 +57,13 @@ public class DragAndDropDemo extends Window implements Bindable {
     public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
         // Text
         label.setDragSource(new DragSource() {
-            private LocalManifest content = null;
+            private JavaAwtLocalManifest content = null;
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
                 String text = label.getText();
                 if (text != null) {
-                    content = new LocalManifest();
+                    content = new JavaAwtLocalManifest();
                     content.putText(label.getText());
                 }
 
@@ -81,7 +81,7 @@ public class DragAndDropDemo extends Window implements Bindable {
             }
 
             @Override
-            public LocalManifest getContent() {
+            public JavaAwtLocalManifest getContent() {
                 return content;
             }
 
@@ -155,7 +155,7 @@ public class DragAndDropDemo extends Window implements Bindable {
             @Override
             public void buttonPressed(Button button) {
                 String text = label.getText();
-                LocalManifest clipboardContent = new LocalManifest();
+                JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
                 clipboardContent.putText(text);
                 Clipboard.setContent(clipboardContent);
             }
@@ -179,14 +179,14 @@ public class DragAndDropDemo extends Window implements Bindable {
 
         // Images
         imageView.setDragSource(new DragSource() {
-            private LocalManifest content = null;
+            private JavaAwtLocalManifest content = null;
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
                 Image image = imageView.getImage();
 
                 if (image != null) {
-                    content = new LocalManifest();
+                    content = new JavaAwtLocalManifest();
                     content.putImage(image);
                 }
 
@@ -204,7 +204,7 @@ public class DragAndDropDemo extends Window implements Bindable {
             }
 
             @Override
-            public LocalManifest getContent() {
+            public JavaAwtLocalManifest getContent() {
                 return content;
             }
 
@@ -279,7 +279,7 @@ public class DragAndDropDemo extends Window implements Bindable {
             public void buttonPressed(Button button) {
                 Image image = imageView.getImage();
                 if (image != null) {
-                    LocalManifest clipboardContent = new LocalManifest();
+                    JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
                     clipboardContent.putImage(image);
                     Clipboard.setContent(clipboardContent);
                 }
@@ -306,7 +306,7 @@ public class DragAndDropDemo extends Window implements Bindable {
         listView.setListData(new FileList());
 
         listView.setDragSource(new DragSource() {
-            private LocalManifest content = null;
+            private JavaAwtLocalManifest content = null;
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
@@ -314,7 +314,7 @@ public class DragAndDropDemo extends Window implements Bindable {
                 FileList fileList = (FileList)listView.getListData();
 
                 if (fileList.getLength() > 0) {
-                    content = new LocalManifest();
+                    content = new JavaAwtLocalManifest();
                     content.putFileList(fileList);
                 }
 
@@ -332,7 +332,7 @@ public class DragAndDropDemo extends Window implements Bindable {
             }
 
             @Override
-            public LocalManifest getContent() {
+            public JavaAwtLocalManifest getContent() {
                 return content;
             }
 

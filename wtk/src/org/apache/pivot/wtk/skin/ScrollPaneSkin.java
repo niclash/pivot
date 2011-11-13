@@ -16,9 +16,10 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.ui.awt.DisplayHost;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.DesktopApplicationContext;
@@ -32,7 +33,6 @@ import org.apache.pivot.wtk.ScrollPane;
 import org.apache.pivot.wtk.ScrollPaneListener;
 import org.apache.pivot.wtk.Viewport;
 import org.apache.pivot.wtk.ViewportListener;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.ScrollPane.Corner;
 import org.apache.pivot.wtk.ScrollPane.ScrollBarPolicy;
 import org.apache.pivot.wtk.graphics.Graphics2D;
@@ -419,18 +419,18 @@ public class ScrollPaneSkin extends ContainerSkin
 
     /**
      * Key presses have no effect if the event has already been consumed.<p>
-     * {@link KeyCode#UP UP} Scroll up a single scroll unit.<br>
-     * {@link KeyCode#DOWN DOWN} Scroll down a single scroll unit.<br>
-     * {@link KeyCode#LEFT LEFT} Scroll left a single scroll unit.<br>
-     * {@link KeyCode#RIGHT RIGHT} Scroll right a single scroll unit.<br>
-     * {@link KeyCode#PAGE_UP PAGE_UP} Scroll up a single scroll block.<br>
-     * {@link KeyCode#PAGE_DOWN PAGE_DOWN} Scroll down a single scroll block.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Scroll up a single scroll unit.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Scroll down a single scroll unit.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Scroll left a single scroll unit.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Scroll right a single scroll unit.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#PAGE_UP PAGE_UP} Scroll up a single scroll block.<br>
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#PAGE_DOWN PAGE_DOWN} Scroll down a single scroll block.
      *
      * @see ScrollBar#getBlockIncrement()
      * @see ScrollBar#getUnitIncrement()
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         if (!consumed) {
@@ -439,42 +439,42 @@ public class ScrollPaneSkin extends ContainerSkin
             int scrollTop = scrollPane.getScrollTop();
             int scrollLeft = scrollPane.getScrollLeft();
 
-            if (keyCode == Keyboard.KeyCode.UP) {
+            if (keyCode == Keyboard.Key.UP) {
                 int newScrollTop = Math.max(scrollTop -
                     verticalScrollBar.getUnitIncrement(), 0);
 
                 scrollPane.setScrollTop(newScrollTop);
 
                 consumed = (newScrollTop != scrollTop);
-            } else if (keyCode == Keyboard.KeyCode.DOWN) {
+            } else if (keyCode == Keyboard.Key.DOWN) {
                 int newScrollTop = Math.min(scrollTop +
                     verticalScrollBar.getUnitIncrement(), getMaxScrollTop());
 
                 scrollPane.setScrollTop(newScrollTop);
 
                 consumed = (newScrollTop != scrollTop);
-            } else if (keyCode == Keyboard.KeyCode.LEFT) {
+            } else if (keyCode == Keyboard.Key.LEFT) {
                 int newScrollLeft = Math.max(scrollLeft -
                     horizontalScrollBar.getUnitIncrement(), 0);
 
                 scrollPane.setScrollLeft(newScrollLeft);
 
                 consumed = (newScrollLeft != scrollLeft);
-            } else if (keyCode == Keyboard.KeyCode.RIGHT) {
+            } else if (keyCode == Keyboard.Key.RIGHT) {
                 int newScrollLeft = Math.min(scrollLeft +
                     horizontalScrollBar.getUnitIncrement(), getMaxScrollLeft());
 
                 scrollPane.setScrollLeft(newScrollLeft);
 
                 consumed = (newScrollLeft != scrollLeft);
-            } else if (keyCode == Keyboard.KeyCode.PAGE_UP) {
+            } else if (keyCode == Keyboard.Key.PAGE_UP) {
                 int increment = verticalScrollBar.getBlockIncrement();
                 int newScrollTop = Math.max(scrollTop - increment, 0);
 
                 scrollPane.setScrollTop(newScrollTop);
 
                 consumed = (newScrollTop != scrollTop);
-            } else if (keyCode == Keyboard.KeyCode.PAGE_DOWN) {
+            } else if (keyCode == Keyboard.Key.PAGE_DOWN) {
                 int increment = verticalScrollBar.getBlockIncrement();
                 int newScrollTop = Math.min(scrollTop + increment, getMaxScrollTop());
 
@@ -899,7 +899,7 @@ public class ScrollPaneSkin extends ContainerSkin
             // see http://people.apache.org/~tvolkert/tests/scrolling/
 
             ScrollPane scrollPane = (ScrollPane)getComponent();
-            ApplicationContext.DisplayHost displayHost = scrollPane.getDisplay().getDisplayHost();
+            DisplayHost displayHost = scrollPane.getDisplay().getDisplayHost();
 
             optimizeScrolling = (displayHost.getScale() == 1
                 && (DesktopApplicationContext.isActive()

@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AlphaComposite;
 import org.apache.pivot.wtk.graphics.Color;
@@ -34,7 +35,6 @@ import org.apache.pivot.wtk.Checkbox;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.GraphicsUtilities;
 import org.apache.pivot.wtk.Keyboard;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 import org.apache.pivot.wtk.Mouse;
 import org.apache.pivot.wtk.Orientation;
@@ -46,7 +46,9 @@ import org.apache.pivot.wtk.TreeViewListener;
 import org.apache.pivot.wtk.TreeViewNodeListener;
 import org.apache.pivot.wtk.TreeViewNodeStateListener;
 import org.apache.pivot.wtk.TreeViewSelectionListener;
+import org.apache.pivot.wtk.graphics.CompositeFactory;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.graphics.font.Font;
@@ -698,8 +700,9 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
                             RenderingHints.VALUE_ANTIALIAS_ON);
                         if (!treeView.isEnabled()
                             || disabled) {
-                            branchControlGraphics.setComposite
-                                ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.5f ));
+                            GraphicsSystem graphicsSystem = Platform.getInstalled().getGraphicsSystem();
+                            CompositeFactory compositeFactory = graphicsSystem.getColorFactoryProvider().getCompositeFactory();
+                            branchControlGraphics.setComposite( compositeFactory.getSrcOver( 0.5f ) );
                         }
                         branchControlGraphics.setPaint(branchControlColor);
                         branchControlGraphics.fill(shape);
@@ -1630,7 +1633,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
                         TreeView.SelectMode selectMode = treeView.getSelectMode();
 
                         if (button == Mouse.Button.LEFT) {
-                            Keyboard.Modifier commandModifier = Platform.getCommandModifier();
+                            Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
 
                             if (Keyboard.isPressed(commandModifier)
                                 && selectMode == TreeView.SelectMode.MULTI) {
@@ -1755,26 +1758,26 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
     }
 
     /**
-     * {@link KeyCode#UP UP} Selects the previous enabled node when select mode
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled node when select mode
      * is not {@link SelectMode#NONE}<br>
-     * {@link KeyCode#DOWN DOWN} Selects the next enabled node when select mode
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled node when select mode
      * is not {@link SelectMode#NONE}<p>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#UP UP} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increases the
      * selection size by including the previous enabled node when select  mode
      * is {@link SelectMode#MULTI}<br>
-     * {@link Modifier#SHIFT SHIFT} + {@link KeyCode#DOWN DOWN} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Increases the
      * selection size by including the next enabled node when select mode is
      * {@link SelectMode#MULTI}
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         TreeView treeView = (TreeView)getComponent();
         TreeView.SelectMode selectMode = treeView.getSelectMode();
 
         switch (keyCode) {
-        case Keyboard.KeyCode.UP: {
+        case UP: {
             if (selectMode != TreeView.SelectMode.NONE) {
                 Path firstSelectedPath = treeView.getFirstSelectedPath();
 
@@ -1808,7 +1811,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
             break;
         }
 
-        case Keyboard.KeyCode.DOWN: {
+        case DOWN: {
             if (selectMode != TreeView.SelectMode.NONE) {
                 Path lastSelectedPath = treeView.getLastSelectedPath();
 
@@ -1843,7 +1846,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
             break;
         }
 
-        case Keyboard.KeyCode.LEFT: {
+        case LEFT: {
             if (showBranchControls) {
                 Sequence<Path> paths = treeView.getSelectedPaths();
 
@@ -1867,7 +1870,7 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
             break;
         }
 
-        case Keyboard.KeyCode.RIGHT: {
+        case RIGHT: {
             if (showBranchControls) {
                 Sequence<Path> paths = treeView.getSelectedPaths();
 
@@ -1904,16 +1907,16 @@ public class TerraTreeViewSkin extends ComponentSkin implements TreeView.Skin,
     }
 
     /**
-     * {@link KeyCode#SPACE SPACE} toggles check mark selection when select
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} toggles check mark selection when select
      * mode is {@link SelectMode#SINGLE}
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         TreeView treeView = (TreeView)getComponent();
 
-        if (keyCode == Keyboard.KeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             if (treeView.getCheckmarksEnabled()
                 && treeView.getSelectMode() == TreeView.SelectMode.SINGLE) {
                 Path selectedPath = treeView.getSelectedPath();

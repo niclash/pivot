@@ -16,10 +16,10 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.wtk.graphics.ColorFactory;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.ApplicationContext;
 
 import org.apache.pivot.util.Vote;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -37,10 +37,11 @@ import org.apache.pivot.wtk.Panorama;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
+import org.apache.pivot.wtk.graphics.Color;
+import org.apache.pivot.wtk.graphics.ColorFactory;
 import org.apache.pivot.wtk.skin.WindowSkin;
 
 /**
@@ -138,7 +139,7 @@ public class TerraMenuPopupSkin extends WindowSkin implements MenuPopupListener,
         setBackgroundColor((Color)null);
 
         panorama = new Panorama();
-        panorama.getStyles().put("buttonBackgroundColor", Color.WHITE);
+        panorama.getStyles().put("buttonBackgroundColor", ColorFactory.WHITE);
 
         border = new Border(panorama);
 
@@ -201,13 +202,13 @@ public class TerraMenuPopupSkin extends WindowSkin implements MenuPopupListener,
     }
 
     /**
-     * {@link KeyCode#ESCAPE ESCAPE} Close the menu popup.
+     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the menu popup.
      */
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
-        if (keyCode == Keyboard.KeyCode.ESCAPE) {
+        if (keyCode == Keyboard.Key.ESCAPE) {
             MenuPopup menuPopup = (MenuPopup)getComponent();
             menuPopup.close();
         }
@@ -236,7 +237,7 @@ public class TerraMenuPopupSkin extends WindowSkin implements MenuPopupListener,
         panorama.setScrollTop(0);
 
         if (menuPopup.isContextMenu()) {
-            ApplicationContext.queueCallback(new RepositionCallback());
+            ApplicationContext.queueCallback( new RepositionCallback() );
         }
     }
 

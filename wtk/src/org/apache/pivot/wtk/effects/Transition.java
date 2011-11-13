@@ -287,8 +287,8 @@ public abstract class Transition {
         startTime = System.currentTimeMillis();
         currentTime = startTime;
 
-        transitionCallback = ApplicationContext.scheduleRecurringCallback(updateCallback,
-            getInterval());
+        transitionCallback = ApplicationContext.scheduleRecurringCallback( updateCallback,
+                                                                           getInterval() );
 
         update();
     }

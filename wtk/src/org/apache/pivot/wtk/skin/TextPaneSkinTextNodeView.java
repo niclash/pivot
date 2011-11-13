@@ -17,7 +17,7 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.Platform;
-import org.apache.pivot.wtk.graphics.Area;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import java.text.CharacterIterator;
 
@@ -28,7 +28,7 @@ import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TextPane;
 import org.apache.pivot.wtk.graphics.GlyphVector;
 import org.apache.pivot.wtk.graphics.Graphics2D;
-import org.apache.pivot.wtk.graphics.Shape;
+import org.apache.pivot.wtk.graphics.geom.Shape;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;

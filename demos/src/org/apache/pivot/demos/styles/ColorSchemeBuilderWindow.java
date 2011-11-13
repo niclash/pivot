@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.demos.styles;
 
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +39,6 @@ import org.apache.pivot.wtk.ColorChooserButtonSelectionListener;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.HorizontalAlignment;
 import org.apache.pivot.wtk.Label;
-import org.apache.pivot.wtk.LocalManifest;
 import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Spinner;
@@ -49,7 +49,6 @@ import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.content.NumericSpinnerData;
 import org.apache.pivot.wtk.content.SpinnerItemRenderer;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 import org.apache.pivot.wtk.skin.terra.TerraTheme;
 
 public class ColorSchemeBuilderWindow extends Window implements Bindable {
@@ -243,7 +242,7 @@ public class ColorSchemeBuilderWindow extends Window implements Bindable {
                 color.getBlue()));
         }
 
-        LocalManifest clipboardContent = new LocalManifest();
+        JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
 
         try {
             clipboardContent.putText(JSONSerializer.toString(colors));

@@ -18,9 +18,9 @@ package org.apache.pivot.tests;
 
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Application;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonGroup;
 import org.apache.pivot.wtk.ButtonGroupListener;
@@ -91,12 +91,14 @@ public class CardPaneTest implements Application {
 
         frame.open(display);
 
-        ApplicationContext.queueCallback(new Runnable() {
+        ApplicationContext.queueCallback( new Runnable()
+        {
             @Override
-            public void run() {
-                sheet.open(frame);
+            public void run()
+            {
+                sheet.open( frame );
             }
-        });
+        } );
     }
 
     @Override

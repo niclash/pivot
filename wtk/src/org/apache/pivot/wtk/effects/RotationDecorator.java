@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.effects;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.Graphics2D;
 
@@ -99,7 +100,8 @@ public class RotationDecorator implements Decorator {
      */
     @Override
     public AffineTransform getTransform(Component component) {
-        return AffineTransform.getRotateInstance(theta, component.getWidth() * 0.5,
-            component.getHeight() * 0.5);
+        double x = component.getWidth() * 0.5;
+        double y = component.getHeight() * 0.5;
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newRotateTransform(theta, x, y);
     }
 }

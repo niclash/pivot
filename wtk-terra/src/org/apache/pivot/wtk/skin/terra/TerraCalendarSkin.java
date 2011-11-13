@@ -16,8 +16,8 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -49,7 +49,6 @@ import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.SpinnerSelectionListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.Theme;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 import org.apache.pivot.wtk.content.NumericSpinnerData;
 import org.apache.pivot.wtk.content.SpinnerItemRenderer;
@@ -223,23 +222,23 @@ public class TerraCalendarSkin extends CalendarSkin {
         }
 
         /**
-         * {@link KeyCode#ENTER ENTER} 'presses' the button.<br>
-         * {@link KeyCode#UP UP}, {@link KeyCode#DOWN DOWN},
-         * {@link KeyCode#LEFT LEFT} & {@link KeyCode#RIGHT RIGHT} Navigate
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} 'presses' the button.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP}, {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN},
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Navigate
          * around the date grid.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             DateButton dateButton = (DateButton)getComponent();
 
-            if (keyCode == Keyboard.KeyCode.ENTER) {
+            if (keyCode == Keyboard.Key.ENTER) {
                 dateButton.press();
-            } else if (keyCode == Keyboard.KeyCode.UP
-                || keyCode == Keyboard.KeyCode.DOWN
-                || keyCode == Keyboard.KeyCode.LEFT
-                || keyCode == Keyboard.KeyCode.RIGHT) {
+            } else if (keyCode == Keyboard.Key.UP
+                || keyCode == Keyboard.Key.DOWN
+                || keyCode == Keyboard.Key.LEFT
+                || keyCode == Keyboard.Key.RIGHT) {
                 CalendarDate date = (CalendarDate)dateButton.getButtonData();
 
                 Calendar calendar = (Calendar)TerraCalendarSkin.this.getComponent();
@@ -249,7 +248,7 @@ public class TerraCalendarSkin extends CalendarSkin {
 
                 Component nextButton;
                 switch (keyCode) {
-                    case Keyboard.KeyCode.UP: {
+                    case UP: {
                         do {
                             rowIndex--;
                             if (rowIndex < 0) {
@@ -264,7 +263,7 @@ public class TerraCalendarSkin extends CalendarSkin {
                         break;
                     }
 
-                    case Keyboard.KeyCode.DOWN: {
+                    case DOWN: {
                         do {
                             rowIndex++;
                             if (rowIndex > 5) {
@@ -279,7 +278,7 @@ public class TerraCalendarSkin extends CalendarSkin {
                         break;
                     }
 
-                    case Keyboard.KeyCode.LEFT: {
+                    case LEFT: {
                         TablePane.Row row = calendarTablePane.getRows().get(rowIndex + 2);
 
                         do {
@@ -295,7 +294,7 @@ public class TerraCalendarSkin extends CalendarSkin {
                         break;
                     }
 
-                    case Keyboard.KeyCode.RIGHT: {
+                    case RIGHT: {
                         TablePane.Row row = calendarTablePane.getRows().get(rowIndex + 2);
 
                         do {
@@ -321,15 +320,15 @@ public class TerraCalendarSkin extends CalendarSkin {
         }
 
         /**
-         * {@link KeyCode#SPACE SPACE} 'presses' the button.
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
          */
         @Override
-        public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             DateButton dateButton = (DateButton)getComponent();
 
-            if (keyCode == Keyboard.KeyCode.SPACE) {
+            if (keyCode == Keyboard.Key.SPACE) {
                 dateButton.press();
                 consumed = true;
             } else {

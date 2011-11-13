@@ -1,4 +1,4 @@
-package org.apache.pivot.wtk.graphics;
+package org.apache.pivot.wtk.graphics.geom;
 
 import org.apache.pivot.wtk.Bounds;
 

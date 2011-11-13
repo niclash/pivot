@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import org.apache.pivot.beans.DefaultProperty;
 import org.apache.pivot.collections.LinkedList;
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.ui.awt.JavaAwtLocalManifest;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.text.ComponentNode;
@@ -573,7 +574,7 @@ public class TextPane extends Container {
             }
 
             if (selectedText != null) {
-                LocalManifest clipboardContent = new LocalManifest();
+                JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
                 clipboardContent.putText(selectedText);
                 Clipboard.setContent(clipboardContent);
             }
@@ -591,7 +592,7 @@ public class TextPane extends Container {
         String selectedText = getSelectedText();
 
         if (selectedText != null) {
-            LocalManifest clipboardContent = new LocalManifest();
+            JavaAwtLocalManifest clipboardContent = new JavaAwtLocalManifest();
             clipboardContent.putText(selectedText);
             Clipboard.setContent(clipboardContent);
         }

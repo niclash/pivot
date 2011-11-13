@@ -20,6 +20,7 @@
  */
 package org.apache.pivot.wtk.effects;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.BufferedImage;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -79,10 +80,8 @@ public class SaturationDecorator implements Decorator {
             height = clipBounds.height;
         }
 
-        componentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
+        componentImage = Platform.getInstalled().getGraphicsSystem().newBufferedImage(width, height);
         this.graphics = graphics;
-
         componentGraphics = componentImage.createGraphics();
         componentGraphics.translate(-x, -y);
         componentGraphics.setClip(graphics.getClip());
@@ -150,6 +149,6 @@ public class SaturationDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

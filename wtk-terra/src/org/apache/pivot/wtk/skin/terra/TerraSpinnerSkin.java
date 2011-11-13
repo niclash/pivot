@@ -16,13 +16,15 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Dimensions;
@@ -34,7 +36,6 @@ import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.SpinnerListener;
 import org.apache.pivot.wtk.SpinnerSelectionListener;
 import org.apache.pivot.wtk.Theme;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.graphics.RenderingHints;
@@ -82,12 +83,14 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
             this.direction = direction;
 
             // Wait a timeout period, then begin rapidly spinning
-            scheduledSpinnerCallback = ApplicationContext.scheduleRecurringCallback(new Runnable() {
+            scheduledSpinnerCallback = ApplicationContext.scheduleRecurringCallback( new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     spin();
                 }
-            }, 400, 30);
+            }, 400, 30 );
 
             // We initially spin once to register that we've started
             spin();
@@ -223,14 +226,14 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
             Spinner.ItemRenderer itemRenderer = spinner.getItemRenderer();
             itemRenderer.render(spinner.getSelectedItem(), spinner);
 
-            Graphics2D contentGraphics = (Graphics2D)graphics.create();
+            Graphics2D contentGraphics = graphics.create();
             itemRenderer.setSize(width, height);
             itemRenderer.paint(contentGraphics);
             contentGraphics.dispose();
 
             // Paint the focus state
             if (spinnerContent.isFocused()) {
-                BasicStroke dashStroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND,
+                BasicStroke dashStroke = Platform.getInstalled().getGraphicsSystem().getStrokeFactory().createBasicStroke(1.0f, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND, 1.0f, new float[] {0.0f, 2.0f}, 0.0f);
 
                 graphics.setStroke(dashStroke);
@@ -257,12 +260,11 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
         }
 
         /**
-         * {@link KeyCode#UP UP} Select the previous spinner item.<br>
-         * {@link KeyCode#DOWN DOWN} Select the next spinner item.
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Select the previous spinner item.<br>
+         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Select the next spinner item.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode,
-            Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             Spinner spinner = (Spinner)TerraSpinnerSkin.this.getComponent();
@@ -273,13 +275,13 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
             int selectedIndex = spinner.getSelectedIndex();
             int newSelectedIndex = selectedIndex;
 
-            if (keyCode == Keyboard.KeyCode.UP) {
+            if (keyCode == Keyboard.Key.UP) {
                 if (selectedIndex < count - 1) {
                     newSelectedIndex++;
                 } else if (circular) {
                     newSelectedIndex = 0;
                 }
-            } else if (keyCode == Keyboard.KeyCode.DOWN) {
+            } else if (keyCode == Keyboard.Key.DOWN) {
                 if (selectedIndex > 0) {
                     newSelectedIndex--;
                 } else if (circular) {
@@ -485,7 +487,7 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
 
         @Override
         public void paint(Graphics2D graphics) {
-            graphics.setStroke(new BasicStroke(0));
+            graphics.setStroke(Platform.getInstalled().getGraphicsSystem().getStrokeFactory().createBasicStroke(0));
             graphics.setPaint(buttonColor);
         }
     }

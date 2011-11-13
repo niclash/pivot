@@ -212,6 +212,6 @@ public abstract class Theme {
             }
         }
 
-        return FontFactory.create( name, style, size );
+        return Platform.getInstalled().getGraphicsSystem().getFontFactory().create( name, style, size );
     }
 }

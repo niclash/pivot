@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin.terra;
 
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
@@ -819,14 +820,14 @@ public class TerraFrameSkin extends WindowSkin implements FrameListener {
     }
 
     @Override
-    public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyPressed(component, keyCode, keyLocation);
 
         Frame frame = (Frame)component;
         MenuBar menuBar = frame.getMenuBar();
 
         if (menuBar != null
-            && keyCode == Keyboard.KeyCode.SPACE
+            && keyCode == Keyboard.Key.SPACE
             && Keyboard.isPressed(Keyboard.Modifier.ALT)) {
             MenuBar.Item activeItem = menuBar.getActiveItem();
             MenuBar.ItemSequence items = menuBar.getItems();

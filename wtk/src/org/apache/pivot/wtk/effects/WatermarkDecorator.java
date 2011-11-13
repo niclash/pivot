@@ -20,14 +20,15 @@ import java.net.URL;
 
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
-import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.graphics.AffineTransform;
@@ -314,10 +315,9 @@ public class WatermarkDecorator implements Decorator {
         double sinTheta = Math.sin(theta);
         double cosTheta = Math.cos(theta);
 
-        Graphics2D watermarkGraphics = (Graphics2D)graphics.create();
+        Graphics2D watermarkGraphics = graphics.create();
         watermarkGraphics.clipRect(0, 0, component.getWidth(), component.getHeight());
-        watermarkGraphics.setComposite( AlphaComposite.getInstance
-            ( AlphaComposite.SRC_OVER, opacity ));
+        watermarkGraphics.setComposite( Platform.getInstalled().getGraphicsSystem().getColorFactoryProvider().getCompositeFactory().getSrcOver(opacity) );
         watermarkGraphics.rotate(theta);
 
         // Calculate the separation in between each repetition of the watermark
@@ -356,6 +356,6 @@ public class WatermarkDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return new AffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().newAffineTransform();
     }
 }

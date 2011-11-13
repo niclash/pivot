@@ -299,12 +299,14 @@ class EventLoggerSkin extends ContainerSkin implements EventLogger.Skin, EventLo
         List<Object> tableData = (List<Object>)firedEventsTableView.getTableData();
         final int rowIndex = tableData.add(row);
 
-        ApplicationContext.queueCallback(new Runnable() {
+        ApplicationContext.queueCallback( new Runnable()
+        {
             @Override
-            public void run() {
-                Bounds rowBounds = firedEventsTableView.getRowBounds(rowIndex);
-                firedEventsTableView.scrollAreaToVisible(rowBounds);
+            public void run()
+            {
+                Bounds rowBounds = firedEventsTableView.getRowBounds( rowIndex );
+                firedEventsTableView.scrollAreaToVisible( rowBounds );
             }
-        });
+        } );
     }
 }

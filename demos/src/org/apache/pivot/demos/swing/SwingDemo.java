@@ -37,9 +37,11 @@ import javax.swing.border.EmptyBorder;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.ui.awt.DisplayHost;
 import org.apache.pivot.wtk.Window;
 
-public class SwingDemo extends ApplicationContext {
+public class SwingDemo extends ApplicationContext
+{
     public static class HostApplet extends JApplet {
         private static final long serialVersionUID = 0;
 
@@ -143,7 +145,7 @@ public class SwingDemo extends ApplicationContext {
         desktop.add(internalFrame);
 
         // Create the display host
-        ApplicationContext.DisplayHost displayHost = new ApplicationContext.DisplayHost();
+        DisplayHost displayHost = new DisplayHost();
         internalFrame.add(displayHost);
 
         // Add the display to the display list

@@ -16,15 +16,14 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
-import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.Sequence;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentMouseListener;
@@ -385,8 +384,8 @@ public class TerraFormSkin extends ContainerSkin
                 };
 
                 scheduledHideFlagMessageCallback =
-                    ApplicationContext.scheduleCallback(hideFlagMessageCallback,
-                        HIDE_POPUP_MESSAGE_DELAY);
+                    ApplicationContext.scheduleCallback( hideFlagMessageCallback,
+                                                         HIDE_POPUP_MESSAGE_DELAY );
             }
 
             @Override

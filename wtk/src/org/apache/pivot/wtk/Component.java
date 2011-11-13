@@ -29,12 +29,13 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
+import org.apache.pivot.ui.awt.DisplayHost;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.effects.Decorator;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.Graphics2D;
-import org.apache.pivot.wtk.graphics.Shape;
+import org.apache.pivot.wtk.graphics.geom.Shape;
 
 /**
  * Top level abstract base class for all components. In MVC terminology, a
@@ -119,8 +120,8 @@ public abstract class Component implements ConstrainedVisual {
     /**
      * User data dictionary implementation.
      */
-    public final class UserDataDictionary implements
-        Dictionary<String, Object>, Iterable<String> {
+    public final class UserDataDictionary
+        implements Dictionary<String, Object>, Iterable<String> {
         private UserDataDictionary() {
         }
 
@@ -2391,7 +2392,7 @@ public abstract class Component implements ConstrainedVisual {
         if (isFocusable()) {
             setFocusedComponent(this);
 
-            ApplicationContext.DisplayHost displayHost = getDisplay().getDisplayHost();
+            DisplayHost displayHost = getDisplay().getDisplayHost();
             if (!displayHost.isFocusOwner()) {
                 displayHost.requestFocusInWindow();
             }
@@ -2740,14 +2741,16 @@ public abstract class Component implements ConstrainedVisual {
                 triggerTooltipCallback = null;
             }
 
-            triggerTooltipCallback = ApplicationContext.scheduleCallback(new Runnable() {
+            triggerTooltipCallback = ApplicationContext.scheduleCallback( new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     Point mouseLocation = getMouseLocation();
-                    componentTooltipListeners.tooltipTriggered(Component.this,
-                        mouseLocation.x, mouseLocation.y);
+                    componentTooltipListeners.tooltipTriggered( Component.this,
+                                                                mouseLocation.x, mouseLocation.y );
                 }
-            }, tooltipDelay);
+            }, tooltipDelay );
 
             consumed = componentMouseListeners.mouseMove(this, x, y);
         }

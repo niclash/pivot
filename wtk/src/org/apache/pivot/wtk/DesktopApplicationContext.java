@@ -36,6 +36,7 @@ import java.util.prefs.Preferences;
 import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.collections.immutable.ImmutableMap;
+import org.apache.pivot.ui.awt.DisplayHost;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.media.Picture;
 
@@ -43,7 +44,8 @@ import org.apache.pivot.wtk.media.Picture;
  * Application context used to execute applications in a native frame
  * window.
  */
-public final class DesktopApplicationContext extends ApplicationContext {
+public final class DesktopApplicationContext extends ApplicationContext
+{
     /**
      * Display listener interface.
      */

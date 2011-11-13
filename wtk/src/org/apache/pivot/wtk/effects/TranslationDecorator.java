@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.effects;
 
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.Graphics2D;
@@ -25,7 +26,8 @@ import org.apache.pivot.wtk.graphics.Graphics2D;
 /**
  * Decorator that translates the paint origin of its component.
  */
-public class TranslationDecorator implements Decorator {
+public class TranslationDecorator
+    implements Decorator {
     private int x;
     private int y;
     private boolean clip;
@@ -118,6 +120,6 @@ public class TranslationDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return AffineTransform.getTranslateInstance(x, y);
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newTranslateTransform( x, y );
     }
 }

@@ -22,9 +22,9 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Group;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.ImmutableIterator;
-import org.apache.pivot.wtk.Keyboard.KeyCode;
 import org.apache.pivot.wtk.Keyboard.KeyLocation;
 import org.apache.pivot.wtk.Keyboard.Modifier;
 
@@ -33,12 +33,12 @@ import org.apache.pivot.wtk.Keyboard.Modifier;
  * group and modified focus navigation that treats the group as a single
  * focusable entity.<br/><br/>
  *
- * {@link KeyCode#UP UP} & {@link KeyCode#LEFT LEFT} Select the previous
+ * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Select the previous
  * button<br/>
- * {@link KeyCode#DOWN DOWN} & {@link KeyCode#RIGHT RIGHT} Select the next
+ * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Select the next
  * button<br/>
- * {@link KeyCode#HOME HOME} Select the first button<br/>
- * {@link KeyCode#END END} Select the last button<br/><br/>
+ * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} Select the first button<br/>
+ * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} Select the last button<br/><br/>
  *
  * (Note that only {@link Component#isFocusable() focusable} buttons are
  * considered when searching for a Button to select)<br/><br/>
@@ -49,7 +49,7 @@ import org.apache.pivot.wtk.Keyboard.Modifier;
  * This search will always behave as if the <code>circular</code> property were
  * set.<br/><br/>
  *
- * By default, {@link KeyCode#TAB TAB} and {@link KeyCode#TAB SHIFT+TAB}
+ * By default, {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} and {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB SHIFT+TAB}
  * key presses will transfer focus out of the group (forwards or backwards
  * respectively).
  * This is managed by the {@link #setIntraGroupFocusTransferEnabled(boolean)
@@ -123,7 +123,7 @@ public class RadioButtonGroup extends ButtonGroup {
              * transfer away from it.
              */
             if (!intraGroupFocusTransferEnabled) {
-                if (keyCode == KeyCode.TAB) {
+                if (keyCode == JavaAwtKeyCode.TAB) {
                     if (modifiers == 0) {
                         Button lastFocusableButton = get(findPrevious(buttonOrder.getLength()));
                         lastFocusableButton.transferFocus(FocusTraversalDirection.FORWARD);
@@ -141,13 +141,13 @@ public class RadioButtonGroup extends ButtonGroup {
                 RadioButtonGroup radioButtonGroup = RadioButtonGroup.this;
                 Button selectedButton = radioButtonGroup.getSelection();
                 handled = true;
-                if (keyCode == Keyboard.KeyCode.HOME) {
+                if (keyCode == JavaAwtKeyCode.HOME) {
                     radioButtonGroup.selectFirstButton();
-                } else if (keyCode == Keyboard.KeyCode.END) {
+                } else if (keyCode == JavaAwtKeyCode.END) {
                     radioButtonGroup.selectLastButton();
-                } else if (keyCode == Keyboard.KeyCode.LEFT || keyCode == Keyboard.KeyCode.UP) {
+                } else if (keyCode == JavaAwtKeyCode.LEFT || keyCode == JavaAwtKeyCode.UP) {
                     radioButtonGroup.selectPreviousButton(selectedButton);
-                } else if (keyCode == Keyboard.KeyCode.RIGHT || keyCode == Keyboard.KeyCode.DOWN) {
+                } else if (keyCode == JavaAwtKeyCode.RIGHT || keyCode == JavaAwtKeyCode.DOWN) {
                     radioButtonGroup.selectNextButton(selectedButton);
                 } else {
                     handled = false;

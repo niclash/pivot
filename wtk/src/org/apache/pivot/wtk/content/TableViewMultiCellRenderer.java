@@ -23,12 +23,14 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.wtk.Dimensions;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 
 /**
  * Table cell renderer that supports dynamic rendering based on the type of
  * content being rendered.
  */
-public class TableViewMultiCellRenderer implements TableView.CellRenderer {
+public class TableViewMultiCellRenderer
+    implements TableView.CellRenderer {
     /**
      * Internal style dictionary that supports no styles.
      */

@@ -1,6 +1,6 @@
 package org.apache.pivot.wtk.graphics;
 
-import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.geom.Shape;
 
 public interface AffineTransform
 {
@@ -8,7 +8,9 @@ public interface AffineTransform
 
     int getType();
 
-    Shape createTransformedShape( Bounds area );
+    Shape createTransformedShape( Shape shape );
 
     boolean isIdentity();
+
+    void translate( int translateX, int translateY );
 }
