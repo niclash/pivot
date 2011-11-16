@@ -16,7 +16,9 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import java.util.Iterator;
@@ -168,21 +170,23 @@ abstract class TextPaneSkinElementView extends TextPaneSkinNodeView
     }
 
     protected final void paintChild(Graphics2D graphics, Bounds paintBounds, TextPaneSkinNodeView nodeView) {
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
         Bounds nodeViewBounds = nodeView.getBounds();
 
         // Only paint node views that intersect the current clip rectangle
         if (nodeViewBounds.intersects(paintBounds)) {
             // Create a copy of the current graphics context and
             // translate to the node view's coordinate system
-            Graphics2D nodeViewGraphics = (Graphics2D)graphics.create();
+            Graphics2D nodeViewGraphics = graphics.create();
 
             Color styledBackgroundColor = getStyledBackgroundColor();
             if (styledBackgroundColor != null) {
                 // don't paint over the selection background
                 Area selection = getTextPaneSkin().getSelection();
                 if (selection != null) {
-                    Area fillArea = new Area(new Rectangle(nodeViewBounds.x, nodeViewBounds.y, nodeViewBounds.width, nodeViewBounds.height));
-                    selection = selection.createTransformedArea( AffineTransform.getTranslateInstance( -skinX, -skinY ));
+                    Area fillArea = graphicsFactory.newArea(nodeViewBounds.x, nodeViewBounds.y, nodeViewBounds.width, nodeViewBounds.height);
+                    AffineTransform transform = graphicsFactory.getAffineTransformFactory().newTranslateTransform( -skinX, -skinY );
+                    selection = selection.createTransformedArea( transform );
                     fillArea.subtract(selection);
                     nodeViewGraphics.setColor(styledBackgroundColor);
                     nodeViewGraphics.fill(fillArea);

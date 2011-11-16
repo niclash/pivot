@@ -16,9 +16,11 @@
  */
 package org.apache.pivot.wtk.media;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AlphaComposite;
 import org.apache.pivot.wtk.graphics.BufferedImage;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.graphics.Transparency;
 
@@ -95,12 +97,11 @@ public class Picture extends Image {
 
         if (previousWidth != width
             || previousHeight != height) {
-            int type = bufferedImage.getType();
 
             float scaleX = ((float)width / (float)previousWidth);
             float scaleY = ((float)height / (float)previousHeight);
-
-            BufferedImage bufferedImage = new BufferedImage(width, height, type);
+            GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+            BufferedImage bufferedImage = graphicsFactory.newBufferedImage(width, height);
             Graphics2D bufferedImageGraphics = bufferedImage.getGraphics();
 
             // Clear the background

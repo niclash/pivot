@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 
@@ -1297,14 +1296,14 @@ public class TerraTableViewSkin extends ComponentSkin implements TableView.Skin,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled row when select mode
+     * {@link Keyboard.Key#UP UP} Selects the previous enabled row when select mode
      * is not {@link SelectMode#NONE}<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled row when select mode
+     * {@link Keyboard.Key#DOWN DOWN} Selects the next enabled row when select mode
      * is not {@link SelectMode#NONE}<p>
-     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link Keyboard.Key#UP UP} Increases the
      * selection size by including the previous enabled row when select mode
      * is {@link SelectMode#MULTI}<br>
-     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link Keyboard.Key#DOWN DOWN} Increases the
      * selection size by including the next enabled row when select mode is
      * {@link SelectMode#MULTI}
      */

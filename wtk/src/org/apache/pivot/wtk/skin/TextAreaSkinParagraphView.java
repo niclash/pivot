@@ -23,6 +23,7 @@ import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.graphics.AffineTransform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.GlyphVector;
 import org.apache.pivot.wtk.graphics.Graphics2D;
@@ -31,7 +32,8 @@ import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;
 
-class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
+class TextAreaSkinParagraphView
+    implements TextArea.ParagraphListener {
     private static class Row {
         public final GlyphVector glyphVector;
         public final int offset;
@@ -47,8 +49,8 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
     private int x = 0;
     private int y = 0;
-    private float width = 0;
-    private float height = 0;
+    private int width = 0;
+    private int height = 0;
 
     private int breakWidth = Integer.MAX_VALUE;
 
@@ -124,6 +126,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
         int paragraphOffset = paragraph.getOffset();
         Span characterRange = new Span(paragraphOffset, paragraphOffset
             + paragraph.getCharacters().length() - 1);
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
 
         if (selectionLength > 0
             && characterRange.intersects(selectionRange)) {
@@ -132,10 +135,12 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
             // Determine the selected and unselected areas
             Area selection = textAreaSkin.getSelection();
-            Area selectedArea = selection.createTransformedArea( AffineTransform.getTranslateInstance( -x, -y ));
-            Area unselectedArea = new Area();
-            unselectedArea.add(new Area(new Rectangle2D.Float(0, 0, width, height)));
-            unselectedArea.subtract(new Area(selectedArea));
+            AffineTransform transform = graphicsFactory.getAffineTransformFactory().newTranslateTransform( -x, -y );
+            Area selectedArea = selection.createTransformedArea( transform );
+            Area unselectedArea = graphicsFactory.newArea();
+            unselectedArea.add(graphicsFactory.newArea(0, 0, width, height));
+            Bounds selectedAreaBounds = selectedArea.getBounds();
+            unselectedArea.subtract(graphicsFactory.newArea( selectedAreaBounds.x, selectedAreaBounds.y,selectedAreaBounds.width, selectedAreaBounds.height ));
 
             // Paint the unselected text
             Graphics2D unselectedGraphics = (Graphics2D)graphics.create();
@@ -155,20 +160,20 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
     private void paint(Graphics2D graphics, boolean focused, boolean editable, boolean selected) {
         Font font = textAreaSkin.getFont();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
-        float rowHeight = ascent + lm.getDescent();
+        int rowHeight = (int) (ascent + lm.getDescent());
 
         Bounds clipBounds = graphics.getClipBounds();
 
-        float rowY = 0;
+        int rowY = 0;
         for (int i = 0, n = rows.getLength(); i < n; i++) {
             Row row = rows.get(i);
 
             Bounds textBounds = row.glyphVector.getLogicalBounds();
-            float rowWidth = (float)textBounds.toRectangle().getWidth();
-            if (clipBounds.intersects(new Rectangle2D.Float(0, rowY, rowWidth, rowHeight))) {
+            int rowWidth = textBounds.width;
+            if (clipBounds.intersects(new Bounds(0, rowY, rowWidth, rowHeight))) {
                 if (selected) {
                     graphics.setPaint(focused && editable ?
                         textAreaSkin.getSelectionColor() : textAreaSkin.getInactiveSelectionColor());
@@ -179,7 +184,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
                 graphics.drawGlyphVector(row.glyphVector, 0, rowY + ascent);
             }
 
-            rowY += textBounds.toRectangle().getHeight();
+            rowY += textBounds.height;
         }
     }
 
@@ -197,7 +202,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
             // Re-layout glyphs and recalculate size
             Font font = textAreaSkin.getFont();
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
             CharSequence characters = paragraph.getCharacters();
             int n = characters.length();
@@ -220,7 +225,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
 
                 Bounds characterBounds = font.getStringBounds(ci, i, i + 1,
                     fontRenderContext);
-                rowWidth += characterBounds.toRectangle().getWidth();
+                rowWidth += characterBounds.width;
 
                 if (rowWidth > breakWidth) {
                     if (lastWhitespaceIndex == -1) {
@@ -261,13 +266,13 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
         rows.add(new Row(glyphVector, start));
 
         Bounds textBounds = glyphVector.getLogicalBounds();
-        width = Math.max( width, (float) textBounds.toRectangle().getWidth() );
-        height += textBounds.toRectangle().getHeight();
+        width = Math.max( width, textBounds.width);
+        height += textBounds.height;
     }
 
     public int getInsertionPoint(int x, int y) {
         Font font = textAreaSkin.getFont();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float rowHeight = lm.getAscent() + lm.getDescent();
 
@@ -299,11 +304,11 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
             || i >= n) ? -1 : getRowInsertionPoint(i, x);
     }
 
-    private int getRowInsertionPoint(int rowIndex, float x) {
+    private int getRowInsertionPoint(int rowIndex, int x) {
         Row row = rows.get(rowIndex);
 
         Bounds glyphVectorBounds = row.glyphVector.getLogicalBounds();
-        float rowWidth = (float)glyphVectorBounds.toRectangle().getWidth();
+        float rowWidth = (float)glyphVectorBounds.width;
 
         int index;
         if (x < 0) {
@@ -394,7 +399,7 @@ class TextAreaSkinParagraphView implements TextArea.ParagraphListener {
         }
 
         Font font = textAreaSkin.getFont();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float rowHeight = lm.getAscent() + lm.getDescent();
 

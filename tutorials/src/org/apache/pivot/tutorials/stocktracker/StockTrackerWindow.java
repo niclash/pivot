@@ -35,7 +35,6 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSON;
 import org.apache.pivot.serialization.CSVSerializer;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.util.Resources;
@@ -156,8 +155,8 @@ public class StockTrackerWindow extends Window implements Bindable {
         symbols.add("IBM");
 
         // Add action mapping to refresh the symbol table view
-        Keyboard.Modifier commandModifier = Platform.getCommandModifier();
-        Keyboard.KeyStroke refreshKeystroke = new Keyboard.KeyStroke( JavaAwtKeyCode.R,
+        Keyboard.Modifier commandModifier = Platform.getInstalled().getCommandModifier();
+        Keyboard.KeyStroke refreshKeystroke = new Keyboard.KeyStroke( Keyboard.Key.R,
             commandModifier.getMask());
         getActionMappings().add(new ActionMapping(refreshKeystroke, refreshTableAction));
     }
@@ -196,12 +195,12 @@ public class StockTrackerWindow extends Window implements Bindable {
 
         stocksTableView.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
-            public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == JavaAwtKeyCode.DELETE
-                    || keyCode == JavaAwtKeyCode.BACKSPACE) {
+            public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
+                if (keyCode == Keyboard.Key.DELETE
+                    || keyCode == Keyboard.Key.BACKSPACE) {
                     removeSymbolsAction.perform(component);
-                } else if (keyCode == JavaAwtKeyCode.A
-                    && Keyboard.isPressed( Platform.getCommandModifier())) {
+                } else if (keyCode == Keyboard.Key.A
+                    && Keyboard.isPressed( Platform.getInstalled().getCommandModifier())) {
                     stocksTableView.selectAll();
                 }
 
@@ -219,8 +218,8 @@ public class StockTrackerWindow extends Window implements Bindable {
 
         symbolTextInput.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
-            public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == JavaAwtKeyCode.ENTER) {
+            public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
+                if (keyCode == Keyboard.Key.ENTER) {
                     if (addSymbolAction.isEnabled()) {
                         addSymbolAction.perform(component);
                     }

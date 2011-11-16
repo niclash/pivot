@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 
@@ -776,13 +775,13 @@ public class TerraAccordionSkin extends ContainerSkin
 
     /**
      * Key presses have no effect if the event has already been consumed.<p>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_1 KEYPAD_1} to
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N1 1} to {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N9 9} Select the (enabled) pane at
+     * CommandModifier + {@link Keyboard.Key#KEYPAD_1 KEYPAD_1} to
+     * {@link Keyboard.Key#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
+     * {@link Keyboard.Key#N1 1} to {@link Keyboard.Key#N9 9} Select the (enabled) pane at
      * index 0 to 8 respectively<p>
-     * {@link Modifier#ALT ALT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Select the next enabled
+     * {@link Modifier#ALT ALT} + {@link Keyboard.Key#UP UP} Select the next enabled
      * panel.<br>
-     * {@link Modifier#ALT ALT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Select the previous
+     * {@link Modifier#ALT ALT} + {@link Keyboard.Key#DOWN DOWN} Select the previous
      * enabled panel.
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()

@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
@@ -260,8 +259,8 @@ public class TerraSpinnerSkin extends ContainerSkin implements Spinner.Skin,
         }
 
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Select the previous spinner item.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Select the next spinner item.
+         * {@link Keyboard.Key#UP UP} Select the previous spinner item.<br>
+         * {@link Keyboard.Key#DOWN DOWN} Select the next spinner item.
          */
         @Override
         public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

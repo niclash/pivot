@@ -75,17 +75,17 @@ public interface Application {
             }
 
             @Override
-            public void keyPressed(int keyCode, KeyLocation keyLocation) {
+            public void keyPressed(Keyboard.Key  keyCode, KeyLocation keyLocation) {
             }
 
             @Override
-            public void keyReleased(int keyCode, KeyLocation keyLocation) {
+            public void keyReleased(Keyboard.Key  keyCode, KeyLocation keyLocation) {
             }
         }
 
         public void keyTyped(char character);
-        public void keyPressed(int keyCode, Keyboard.KeyLocation keyLocation);
-        public void keyReleased(int keyCode, Keyboard.KeyLocation keyLocation);
+        public void keyPressed(Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation);
+        public void keyReleased(Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation);
     }
 
     /**

@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin.terra;
 
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 
@@ -47,6 +48,8 @@ import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;
+import org.apache.pivot.wtk.graphics.geom.Rectangle;
+import org.apache.pivot.wtk.graphics.geom.Shape;
 import org.apache.pivot.wtk.skin.ComponentSkin;
 import org.apache.pivot.wtk.validation.Validator;
 
@@ -62,7 +65,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
             if (caret != null) {
                 TextInput textInput = (TextInput)getComponent();
-                textInput.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textInput.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
     }
@@ -106,8 +110,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
     private GlyphVector glyphVector = null;
 
     private int anchor = -1;
-    private Bounds caret = new Bounds();
-    private Bounds selection = null;
+    private Rectangle caret = Platform.getInstalled().getGraphicsSystem().newRectangle();
+    private Rectangle selection = null;
 
     private int scrollLeft = 0;
 
@@ -206,7 +210,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
     @Override
     public int getBaseline(int width, int height) {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
         float textHeight = lm.getHeight();
@@ -238,7 +242,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
             CharSequenceCharacterIterator ci = new CharSequenceCharacterIterator(characters);
 
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             glyphVector = font.createGlyphVector(fontRenderContext, ci);
 
             Bounds textBounds = glyphVector.getLogicalBounds();
@@ -290,8 +294,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             borderColor = disabledBorderColor;
             bevelColor = disabledBevelColor;
         }
-
-        graphics.setStroke(new BasicStroke());
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+        graphics.setStroke(graphicsFactory.getStrokeFactory().createBasicStroke());
 
         // Paint the background
         graphics.setColor(backgroundColor);
@@ -302,7 +306,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
         GraphicsUtilities.drawLine(graphics, 0, 0, width, Orientation.HORIZONTAL);
 
         // Paint the content
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
         float textHeight = lm.getHeight();
@@ -348,15 +352,15 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                         (height - textHeight) / 2 + ascent);
                 } else {
                     // Paint the unselected text
-                    Area unselectedArea = new Area();
-                    unselectedArea.add(new Area(new Rectangle(0, 0, width, height)));
-                    unselectedArea.subtract(new Area(selection));
+                    Area unselectedArea = graphicsFactory.newArea();
+                    unselectedArea.add(graphicsFactory.newArea(0, 0, width, height));
+                    Bounds bounds = selection.getBounds();
+                    unselectedArea.subtract(graphicsFactory.newArea(bounds.x, bounds.y,bounds.width,bounds.height));
 
-                    Graphics2D textGraphics = (Graphics2D)graphics.create();
+                    Graphics2D textGraphics = graphics.create();
                     textGraphics.setColor(color);
                     textGraphics.clip(unselectedArea);
-                    textGraphics.drawGlyphVector(glyphVector, padding.left - scrollLeft + 1,
-                        (height - textHeight) / 2 + ascent);
+                    textGraphics.drawGlyphVector(glyphVector, padding.left - scrollLeft + 1, (height - textHeight) / 2 + ascent);
                     textGraphics.dispose();
 
                     // Paint the selection
@@ -376,7 +380,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
 
                     Graphics2D selectedTextGraphics = graphics.create();
                     selectedTextGraphics.setColor(selectionColor);
-                    selectedTextGraphics.clip(selection.getBounds());
+                    selectedTextGraphics.clip(selection);
                     selectedTextGraphics.drawGlyphVector(glyphVector, padding.left - scrollLeft + 1,
                         (height - textHeight) / 2 + ascent);
                     selectedTextGraphics.dispose();
@@ -406,7 +410,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             // Translate to glyph coordinates
             x -= (padding.left - scrollLeft + 1);
 
-            Rectangle2D textBounds = glyphVector.getLogicalBounds();
+            Bounds textBounds = glyphVector.getLogicalBounds();
 
             if (x < 0) {
                 offset = 0;
@@ -417,10 +421,10 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
                 int i = 0;
                 while (i < n) {
                     Shape glyphBounds = glyphVector.getGlyphLogicalBounds(i);
-                    Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+                    Bounds glyphBounds2D = glyphBounds.getBounds();
 
-                    float glyphX = (float)glyphBounds2D.getX();
-                    float glyphWidth = (float)glyphBounds2D.getWidth();
+                    float glyphX = glyphBounds2D.x;
+                    float glyphWidth = glyphBounds2D.width;
                     if (x >= glyphX
                         && x < glyphX + glyphWidth) {
 
@@ -449,14 +453,14 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             int x, width;
             if (index < glyphVector.getNumGlyphs()) {
                 Shape glyphBounds = glyphVector.getGlyphLogicalBounds(index);
-                Rectangle2D glyphBounds2D = glyphBounds.getBounds2D();
+                Bounds glyphBounds2D = glyphBounds.getBounds();
 
-                x = (int)Math.floor(glyphBounds2D.getX());
-                width = (int)Math.ceil(glyphBounds2D.getWidth());
+                x = (int)Math.floor(glyphBounds2D.x);
+                width = (int)Math.ceil(glyphBounds2D.width);
             } else {
                 // This is the terminator character
-                Rectangle2D glyphVectorBounds = glyphVector.getLogicalBounds();
-                x = (int)Math.floor(glyphVectorBounds.getWidth());
+                Bounds glyphVectorBounds = glyphVector.getLogicalBounds();
+                x = (int)Math.floor(glyphVectorBounds.width);
                 width = 0;
             }
 
@@ -500,15 +504,15 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
         this.font = font;
 
         int missingGlyphCode = font.getMissingGlyphCode();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
         GlyphVector missingGlyphVector = font.createGlyphVector(fontRenderContext,
             new int[] {missingGlyphCode});
-        Rectangle2D textBounds = missingGlyphVector.getLogicalBounds();
+        Bounds textBounds = missingGlyphVector.getLogicalBounds();
 
-        Rectangle2D maxCharBounds = font.getMaxCharBounds(fontRenderContext);
-        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.getWidth()),
-            (int)Math.ceil(maxCharBounds.getHeight()));
+        Bounds maxCharBounds = font.getMaxCharBounds(fontRenderContext);
+        averageCharacterSize = new Dimensions((int)Math.ceil(textBounds.width),
+            (int)Math.ceil(maxCharBounds.height));
 
         invalidateComponent();
     }
@@ -1055,52 +1059,52 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DELETE DELETE} Delete the character after the caret or
+     * {@link Keyboard.Key#DELETE DELETE} Delete the character after the caret or
      * the entire selection if there is one.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#BACKSPACE BACKSPACE} Delete the character before the
+     * {@link Keyboard.Key#BACKSPACE BACKSPACE} Delete the character before the
      * caret or the entire selection if there is one.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} Move the caret to the beginning of the text.
+     * {@link Keyboard.Key#HOME HOME} Move the caret to the beginning of the text.
      * <br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#META META} Move the caret
+     * {@link Keyboard.Key#LEFT LEFT} + {@link Modifier#META META} Move the caret
      * to the beginning of the text.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} + {@link Modifier#SHIFT SHIFT} Select from
+     * {@link Keyboard.Key#HOME HOME} + {@link Modifier#SHIFT SHIFT} Select from
      * the caret to the beginning of the text.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#META META} +
+     * {@link Keyboard.Key#LEFT LEFT} + {@link Modifier#META META} +
      * {@link Modifier#SHIFT SHIFT} Select from the caret to the beginning of
      * the text.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} Move the caret to the end of the text.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#META META} Move the caret
+     * {@link Keyboard.Key#END END} Move the caret to the end of the text.<br>
+     * {@link Keyboard.Key#RIGHT RIGHT} + {@link Modifier#META META} Move the caret
      * to the end of the text.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} + {@link Modifier#SHIFT SHIFT} Select from the
+     * {@link Keyboard.Key#END END} + {@link Modifier#SHIFT SHIFT} Select from the
      * caret to the end of the text.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#META META} +
+     * {@link Keyboard.Key#RIGHT RIGHT} + {@link Modifier#META META} +
      * {@link Modifier#SHIFT SHIFT} Select from the caret to the end of the
      * text.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Clear the selection and move the caret back
+     * {@link Keyboard.Key#LEFT LEFT} Clear the selection and move the caret back
      * by one character.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#SHIFT SHIFT} Add the
+     * {@link Keyboard.Key#LEFT LEFT} + {@link Modifier#SHIFT SHIFT} Add the
      * previous character to the selection.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} Clear the
+     * {@link Keyboard.Key#LEFT LEFT} + {@link Modifier#CTRL CTRL} Clear the
      * selection and move the caret to the beginning of the text.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} + {@link Modifier#CTRL CTRL} +
+     * {@link Keyboard.Key#LEFT LEFT} + {@link Modifier#CTRL CTRL} +
      * {@link Modifier#SHIFT SHIFT} Add all preceding text to the selection.
      * <p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Clear the selection and move the caret
+     * {@link Keyboard.Key#RIGHT RIGHT} Clear the selection and move the caret
      * forward by one character.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#SHIFT SHIFT} Add the next
+     * {@link Keyboard.Key#RIGHT RIGHT} + {@link Modifier#SHIFT SHIFT} Add the next
      * character to the selection.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} Clear the
+     * {@link Keyboard.Key#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} Clear the
      * selection and move the caret to the end of the text.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} +
+     * {@link Keyboard.Key#RIGHT RIGHT} + {@link Modifier#CTRL CTRL} +
      * {@link Modifier#SHIFT SHIFT} Add all subsequent text to the selection.
      * <p>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#A A} Select all.<br>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#X X} Cut selection to clipboard (if
+     * CommandModifier + {@link Keyboard.Key#A A} Select all.<br>
+     * CommandModifier + {@link Keyboard.Key#X X} Cut selection to clipboard (if
      * not a password TextInput).<br>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#C C} Copy selection to clipboard (if
+     * CommandModifier + {@link Keyboard.Key#C C} Copy selection to clipboard (if
      * not a password TextInput).<br>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#V V} Paste from clipboard.<br>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#Z Z} Undo.
+     * CommandModifier + {@link Keyboard.Key#V V} Paste from clipboard.<br>
+     * CommandModifier + {@link Keyboard.Key#Z Z} Undo.
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()
      */
@@ -1469,12 +1473,13 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
         if (textInput.isValid()) {
             // Repaint any previous caret bounds
             if (caret != null) {
-                textInput.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textInput.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
 
             // Repaint any previous selection bounds
             if (selection != null) {
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textInput.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
 
@@ -1484,8 +1489,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             } else {
                 updateSelection();
                 showCaret(false);
-
-                Rectangle bounds = selection.getBounds();
+                Bounds bounds = selection.getBounds();
                 textInput.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
@@ -1510,8 +1514,8 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             if (n == 0) {
                 x = padding.left - scrollLeft + 1;
             } else {
-                Rectangle2D textBounds = glyphVector.getLogicalBounds();
-                x = (int)Math.ceil(textBounds.getWidth()) + (padding.left - scrollLeft + 1);
+                Bounds textBounds = glyphVector.getLogicalBounds();
+                x = (int)Math.ceil(textBounds.width) + (padding.left - scrollLeft + 1);
             }
 
             int y = padding.top + 1;
@@ -1519,13 +1523,13 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             leadingSelectionBounds = new Bounds(x, y, 0, height - (padding.top + padding.bottom + 2));
         }
 
-        caret = leadingSelectionBounds.toRectangle();
-        caret.width = 1;
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+        caret = graphicsFactory.newRectangle( leadingSelectionBounds.x, leadingSelectionBounds.y, 1, leadingSelectionBounds.height);
 
         if (selectionLength > 0) {
             Bounds trailingSelectionBounds = getCharacterBounds(selectionStart
                 + selectionLength - 1);
-            selection = new Rectangle(leadingSelectionBounds.x, leadingSelectionBounds.y,
+            selection = graphicsFactory.newRectangle(leadingSelectionBounds.x, leadingSelectionBounds.y,
                 trailingSelectionBounds.x + trailingSelectionBounds.width - leadingSelectionBounds.x,
                 trailingSelectionBounds.y + trailingSelectionBounds.height - leadingSelectionBounds.y);
         } else {
@@ -1542,7 +1546,7 @@ public class TerraTextInputSkin extends ComponentSkin implements TextInput.Skin,
             caretOn = true;
             scheduledBlinkCaretCallback =
                 ApplicationContext.scheduleRecurringCallback( blinkCaretCallback,
-                                                              Platform.getCursorBlinkRate() );
+                                                              Platform.getInstalled().getCursorBlinkRate() );
 
             // Run the callback once now to show the cursor immediately
             blinkCaretCallback.run();

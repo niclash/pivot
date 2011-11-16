@@ -171,7 +171,7 @@ public class WatermarkDecorator implements Decorator {
                 throw new IllegalArgumentException(exception);
             }
         } else {
-            setFont( FontFactory.decode( font ));
+            setFont( Platform.getInstalled().getGraphicsSystem().getFontFactory().decode( font ));
         }
     }
 
@@ -356,6 +356,6 @@ public class WatermarkDecorator implements Decorator {
 
     @Override
     public AffineTransform getTransform(Component component) {
-        return Platform.getInstalled().getGraphicsSystem().newAffineTransform();
+        return Platform.getInstalled().getGraphicsSystem().getAffineTransformFactory().newAffineTransform();
     }
 }

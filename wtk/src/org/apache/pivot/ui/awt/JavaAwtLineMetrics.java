@@ -28,4 +28,28 @@ public class JavaAwtLineMetrics
     {
         return delegate.getAscent();
     }
+
+    @Override
+    public float getDescent()
+    {
+        return delegate.getDescent();
+    }
+
+    @Override
+    public float getLeading()
+    {
+        return delegate.getLeading();
+    }
+
+    @Override
+    public float getStrikethroughOffset()
+    {
+        return delegate.getStrikethroughOffset();
+    }
+
+    @Override
+    public float getUnderlineOffset()
+    {
+        return delegate.getUnderlineOffset();
+    }
 }

@@ -1,8 +1,6 @@
 package org.apache.pivot.wtk.graphics;
 
-import org.apache.pivot.ui.awt.JavaAwtGraphicsSystem;
-
-public class ColorFactory
+public final class ColorFactory
 {
     public static Color WHITE;
     public static Color RED;
@@ -12,7 +10,7 @@ public class ColorFactory
     public static Color LIGHT_GRAY;
 
 
-    private static GraphicsSystem system = new JavaAwtGraphicsSystem();
+    private static GraphicsSystem system;
 
     public static void setSystem( GraphicsSystem system )
     {

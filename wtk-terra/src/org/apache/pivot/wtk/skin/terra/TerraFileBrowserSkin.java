@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import java.io.File;
 import java.io.FileFilter;
@@ -645,9 +644,9 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
         });
 
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Transfer focus to the file list and select
+         * {@link Keyboard.Key#DOWN DOWN} Transfer focus to the file list and select
          * the first item.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Clear the search field.
+         * {@link Keyboard.Key#ESCAPE ESCAPE} Clear the search field.
          */
         searchTextInput.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
@@ -850,11 +849,11 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Change into the selected directory if
+     * {@link Keyboard.Key#ENTER ENTER} Change into the selected directory if
      * {@link #keyboardFolderTraversalEnabled} is true.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DELETE DELETE} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#BACKSPACE BACKSPACE}
+     * {@link Keyboard.Key#DELETE DELETE} or {@link Keyboard.Key#BACKSPACE BACKSPACE}
      * Change into the parent of the current directory.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#F5 F5} Refresh the file list.
+     * {@link Keyboard.Key#F5 F5} Refresh the file list.
      */
     @Override
     public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
@@ -890,7 +889,7 @@ public class TerraFileBrowserSkin extends FileBrowserSkin {
     }
 
     /**
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#F F} Transfers focus to the search
+     * CommandModifier + {@link Keyboard.Key#F F} Transfers focus to the search
      * TextInput.
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()

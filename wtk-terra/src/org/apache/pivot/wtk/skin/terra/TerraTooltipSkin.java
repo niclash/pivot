@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
+import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.util.Vote;
@@ -35,6 +36,7 @@ import org.apache.pivot.wtk.Window;
 import org.apache.pivot.wtk.effects.DropShadowDecorator;
 import org.apache.pivot.wtk.effects.Transition;
 import org.apache.pivot.wtk.effects.TransitionListener;
+import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.skin.WindowSkin;
 
 /**
@@ -78,7 +80,7 @@ public class TerraTooltipSkin extends WindowSkin {
          * Close the Tooltip.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             fade = false;
             Tooltip tooltip = (Tooltip)getComponent();
             tooltip.close();
@@ -105,7 +107,7 @@ public class TerraTooltipSkin extends WindowSkin {
 
         setBackgroundColor(theme.getColor(19));
 
-        borderColor = Color.BLACK;
+        borderColor = ColorFactory.BLACK;
         padding = new Insets(2);
     }
 

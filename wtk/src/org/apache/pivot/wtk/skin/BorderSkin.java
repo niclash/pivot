@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -82,9 +83,9 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         String title = border.getTitle();
         if (title != null
             && title.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
-            Rectangle2D headingBounds = font.getStringBounds(title, fontRenderContext);
-            preferredWidth = (int)Math.ceil(headingBounds.getWidth());
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
+            Bounds headingBounds = font.getStringBounds(title, fontRenderContext);
+            preferredWidth = (int)Math.ceil(headingBounds.width);
 
             LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
             topThickness = Math.max((int)Math.ceil(lm.getHeight()), topThickness);
@@ -115,7 +116,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         String title = border.getTitle();
         if (title != null
             && title.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
             topThickness = Math.max((int)Math.ceil(lm.getHeight()), topThickness);
         }
@@ -146,7 +147,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         String title = border.getTitle();
         if (title != null
             && title.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             Bounds headingBounds = font.getStringBounds( title, fontRenderContext );
             preferredWidth = (int)Math.ceil(headingBounds.getWidth());
 
@@ -180,7 +181,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
             String title = border.getTitle();
             if (title != null
                 && title.length() > 0) {
-                FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+                FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
                 LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
                 topThickness = Math.max((int)Math.ceil(lm.getHeight()), topThickness);
             }
@@ -212,7 +213,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         String title = border.getTitle();
         if (title != null
             && title.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
             topThickness = Math.max((int)Math.ceil(lm.getHeight()), topThickness);
         }
@@ -240,7 +241,7 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
         String title = border.getTitle();
         if (title != null
             && title.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(title, fontRenderContext);
             titleAscent = lm.getAscent();
             topThickness = Math.max((int)Math.ceil(lm.getHeight()), topThickness);
@@ -276,9 +277,10 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
             }
         }
 
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
         // Draw the title
         if (title != null) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 fontRenderContext.getAntiAliasingHint());
             graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
@@ -287,16 +289,16 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
             // Note that we add one pixel to the string bounds for spacing
             Bounds titleBounds = font.getStringBounds(title, fontRenderContext);
             titleBounds = new Bounds(padding.left + thickness,
-                (int) (topThickness - titleBounds.toRectangle().getHeight()) / 2,
-                    (int) titleBounds.toRectangle().getWidth() + 1, (int) titleBounds.toRectangle().getHeight());
+                (int) (topThickness - titleBounds.height) / 2,
+                    (int) titleBounds.width + 1, (int) titleBounds.height);
 
             graphics.setFont(font);
             graphics.setPaint(titleColor);
-            graphics.drawString(title, (int)titleBounds.toRectangle().getX(),
-                (int)(titleBounds.toRectangle().getY() + titleAscent));
-
-            Area titleClip = new Area(graphics.getClip());
-            titleClip.subtract(new Area(titleBounds));
+            graphics.drawString(title, (int)titleBounds.x,
+                (int)(titleBounds.y + titleAscent));
+            Bounds clip = graphics.getClip();
+            Area titleClip = graphicsFactory.newArea( clip.x, clip.y, clip.width, clip.height );
+            titleClip.subtract(graphicsFactory.newArea(titleBounds.x, titleBounds.y, titleBounds.width, titleBounds.height));
             graphics.clip(titleClip);
         }
 
@@ -308,8 +310,8 @@ public class BorderSkin extends ContainerSkin implements BorderListener {
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
-                graphics.setStroke(new BasicStroke(thickness));
-                graphics.draw(new RoundRectangle2D.Double(0.5 * thickness, 0.5 * topThickness,
+                graphics.setStroke(graphicsFactory.getStrokeFactory().createBasicStroke(thickness));
+                graphics.draw(graphicsFactory.newRoundRectangle(0.5 * thickness, 0.5 * topThickness,
                     strokeWidth, strokeHeight, cornerRadius, cornerRadius));
 
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

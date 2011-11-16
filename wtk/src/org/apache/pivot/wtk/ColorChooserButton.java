@@ -176,7 +176,7 @@ public class ColorChooserButton extends Button {
             throw new IllegalArgumentException("selectedColor is null.");
         }
 
-        setSelectedColor(Color.decode(selectedColor));
+        setSelectedColor(ColorFactory.decode(selectedColor));
     }
 
     /**
@@ -249,7 +249,7 @@ public class ColorChooserButton extends Button {
                 selectedColor = (Color)value;
             } else if (selectedColorBindMapping == null) {
                 if (value != null) {
-                    selectedColor = Color.decode(value.toString());
+                    selectedColor = ColorFactory.decode(value.toString());
                 }
             } else {
                 selectedColor = selectedColorBindMapping.toColor(value);

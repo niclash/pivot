@@ -523,7 +523,7 @@ public class TextInput extends Component {
 
             if (text != null) {
                 if ((characters.length() + text.length()) > maximumLength) {
-                    Toolkit.getDefaultToolkit().beep();
+                    Platform.getInstalled().getSoundSystem().beep();
                 } else {
                     removeText(selectionStart, selectionLength);
                     insertText(text, selectionStart);

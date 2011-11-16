@@ -16,6 +16,7 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.AlphaComposite;
 import org.apache.pivot.wtk.graphics.Color;
 
@@ -29,6 +30,7 @@ import org.apache.pivot.wtk.ImageViewListener;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.graphics.Composite;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.media.Image;
 import org.apache.pivot.wtk.media.ImageListener;
@@ -245,7 +247,9 @@ public class ImageViewSkin extends ComponentSkin implements ImageViewListener {
             }
 
             if (opacity < alpha) {
-                imageGraphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+                AlphaComposite alphaComposite = graphicsFactory.getColorFactoryProvider().getCompositeFactory().getSrcOver( opacity );
+                imageGraphics.setComposite(alphaComposite);
             }
 
             image.paint(imageGraphics);

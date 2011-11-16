@@ -37,11 +37,13 @@ import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.graphics.GlyphVector;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.PrintGraphics;
 import org.apache.pivot.wtk.graphics.Transparency;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;
+import org.apache.pivot.wtk.graphics.geom.Shape;
 
 /**
  * Label skin.
@@ -89,7 +91,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
         int preferredWidth;
         if (text != null
             && text.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
             preferredWidth = (int)Math.ceil(stringBounds.getWidth());
         } else {
@@ -108,7 +110,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
 
         float preferredHeight;
         if (text != null) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics("", fontRenderContext);
             float lineHeight = lm.getHeight();
 
@@ -132,7 +134,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                     }
 
                     Bounds characterBounds = font.getStringBounds(text, i, i + 1, fontRenderContext);
-                    lineWidth += characterBounds.toRectangle().getWidth();
+                    lineWidth += characterBounds.width;
 
                     if (lineWidth > width
                         && lastWhitespaceIndex != -1) {
@@ -161,13 +163,13 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
         Label label = (Label)getComponent();
         String text = label.getText();
 
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
         int preferredWidth;
         if (text != null
             && text.length() > 0) {
             Bounds stringBounds = font.getStringBounds(text, fontRenderContext);
-            preferredWidth = (int)Math.ceil(stringBounds.toRectangle().getWidth());
+            preferredWidth = (int)Math.ceil(stringBounds.width);
         } else {
             preferredWidth = 0;
         }
@@ -182,7 +184,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
 
     @Override
     public int getBaseline(int width, int height) {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
 
@@ -226,7 +228,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
             int n = text.length();
 
             if (n > 0) {
-                FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+                FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
                 if (wrapText) {
                     int width = getWidth() - (padding.left + padding.right);
@@ -248,7 +250,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                         }
 
                         Bounds characterBounds = font.getStringBounds(ci, i, i + 1, fontRenderContext);
-                        lineWidth += characterBounds.toRectangle().getWidth();
+                        lineWidth += characterBounds.width;
 
                         if (lineWidth > width
                             && lastWhitespaceIndex != -1) {
@@ -296,7 +298,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
             graphics.setFont(font);
             graphics.setPaint(color);
 
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics("", fontRenderContext);
             float ascent = lm.getAscent();
             float lineHeight = lm.getHeight();
@@ -323,7 +325,7 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                 GlyphVector glyphVector = glyphVectors.get(i);
 
                 Bounds textBounds = glyphVector.getLogicalBounds();
-                float lineWidth = (float)textBounds.toRectangle().getWidth();
+                float lineWidth = (float)textBounds.width;
 
                 float x = 0;
                 switch (horizontalAlignment) {
@@ -355,26 +357,27 @@ public class LabelSkin extends ComponentSkin implements LabelListener {
                     graphics.drawGlyphVector(glyphVector, x, y + ascent);
                 }
 
+                GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
                 // Draw the text decoration
                 if (textDecoration != null) {
-                    graphics.setStroke(new BasicStroke());
+                    graphics.setStroke(graphicsFactory.getStrokeFactory().createBasicStroke());
 
                     float offset = 0;
 
                     switch (textDecoration) {
-                        case UNDERLINE: {
+                    case UNDERLINE: {
                             offset = y + ascent + 2;
                             break;
                         }
 
-                        case STRIKETHROUGH: {
+                    case STRIKETHROUGH: {
                             offset = y + lineHeight / 2 + 1;
                             break;
                         }
                     }
 
-                    Line2D line = new Line2D.Float(x, offset, x + lineWidth, offset);
-                    graphics.draw(line);
+                    Shape line = graphicsFactory.newLine( x, offset, x + lineWidth, offset);
+                    graphics.draw( line );
                 }
 
                 y += textBounds.getHeight();

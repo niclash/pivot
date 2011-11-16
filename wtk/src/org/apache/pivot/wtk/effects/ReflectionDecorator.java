@@ -26,6 +26,8 @@ import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.Paint;
 
 /**
  * Decorator that paints a reflection of a component.
@@ -67,12 +69,12 @@ public class ReflectionDecorator implements Decorator {
         // Draw the reflection
         int width = componentImage.getWidth();
         int height = componentImage.getHeight();
-
-        GradientPaint mask = new GradientPaint(0, height / 4f, ColorFactory.create( 1.0f, 1.0f, 1.0f, 0.0f ),
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+        Paint mask = graphicsFactory.newGradientPaint(0, height / 4f, ColorFactory.create( 1.0f, 1.0f, 1.0f, 0.0f ),
             0, height, ColorFactory.create(1.0f, 1.0f, 1.0f, 0.5f));
         componentImageGraphics.setPaint(mask);
-
-        componentImageGraphics.setComposite(AlphaComposite.DstIn);
+        AlphaComposite dstIn = graphicsFactory.getColorFactoryProvider().getCompositeFactory().getDstIn();
+        componentImageGraphics.setComposite(dstIn);
         componentImageGraphics.fillRect(0, 0, width, height);
 
         componentImageGraphics.dispose();

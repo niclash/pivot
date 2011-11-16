@@ -89,4 +89,6 @@ public interface Graphics2D
     public void draw( Shape shapeToDraw);
 
     void transform( AffineTransform transform );
+
+    void clip( Bounds selection );
 }

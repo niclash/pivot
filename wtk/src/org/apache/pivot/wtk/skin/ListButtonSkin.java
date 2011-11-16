@@ -17,7 +17,6 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.collections.List;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Bounds;
@@ -65,11 +64,11 @@ public abstract class ListButtonSkin extends ButtonSkin
 
     private ComponentKeyListener listViewPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected list item.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected list item and transfer
+         * {@link Keyboard.Key#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link Keyboard.Key#ENTER ENTER} Choose the selected list item.<br>
+         * {@link Keyboard.Key#TAB TAB} Choose the selected list item and transfer
          * focus forwards.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
+         * {@link Keyboard.Key#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
          * selected list item and transfer focus backwards.
          */
         @Override
@@ -292,10 +291,10 @@ public abstract class ListButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link Keyboard.Key#SPACE SPACE} Repaints the component to reflect the pressed
      * state and opens the popup.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled list item.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled list item.
+     * {@link Keyboard.Key#UP UP} Selects the previous enabled list item.<br>
+     * {@link Keyboard.Key#DOWN DOWN} Selects the next enabled list item.
      *
      * @see #keyReleased(Component, Keyboard.Key,
      * org.apache.pivot.wtk.Keyboard.KeyLocation)
@@ -354,7 +353,7 @@ public abstract class ListButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
      */
     @Override
     public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

@@ -19,7 +19,6 @@ package org.apache.pivot.wtk.content;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.BindType;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.CardPane;
@@ -371,13 +370,13 @@ public class TableViewRowEditor extends Window implements TableView.RowEditor {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed;
 
-        if (keyCode == JavaAwtKeyCode.ENTER) {
+        if (keyCode == Keyboard.Key.ENTER) {
             endEdit(true);
             consumed = true;
-        } else if (keyCode == JavaAwtKeyCode.ESCAPE) {
+        } else if (keyCode == Keyboard.Key.ESCAPE) {
             endEdit(false);
             consumed = true;
         } else {

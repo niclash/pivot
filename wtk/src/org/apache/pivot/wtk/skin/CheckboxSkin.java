@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Checkbox;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Keyboard;
@@ -44,15 +43,15 @@ public abstract class CheckboxSkin extends ButtonSkin {
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
      */
     @Override
-    public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         Checkbox checkbox = (Checkbox)getComponent();
 
-        if (keyCode == JavaAwtKeyCode.SPACE) {
+        if (keyCode == Keyboard.Key.SPACE) {
             checkbox.press();
         } else {
             consumed = super.keyReleased(component, keyCode, keyLocation);

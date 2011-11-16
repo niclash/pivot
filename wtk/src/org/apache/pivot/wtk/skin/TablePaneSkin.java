@@ -16,6 +16,9 @@
  */
 package org.apache.pivot.wtk.skin;
 
+import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.StrokeFactory;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
@@ -625,9 +628,10 @@ public class TablePaneSkin extends ContainerSkin implements TablePane.Skin,
         // Paint the grid lines
         if ((showHorizontalGridLines && verticalSpacing > 0)
             || (showVerticalGridLines && horizontalSpacing > 0)) {
-            Graphics2D gridGraphics = (Graphics2D)graphics.create();
-
-            gridGraphics.setStroke(new BasicStroke());
+            Graphics2D gridGraphics = graphics.create();
+            GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+            StrokeFactory strokeFactory = graphicsFactory.getStrokeFactory();
+            gridGraphics.setStroke(strokeFactory.createBasicStroke());
             gridGraphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -661,7 +665,8 @@ public class TablePaneSkin extends ContainerSkin implements TablePane.Skin,
                             }
 
                             if (gridClip == null) {
-                                gridClip = new Area(graphics.getClip());
+                                Bounds clip = graphics.getClip();
+                                gridClip = graphicsFactory.newArea( clip.x, clip.y, clip.width, clip.height );
                             }
 
                             if (horizontalSpacing > 1) {
@@ -674,9 +679,8 @@ public class TablePaneSkin extends ContainerSkin implements TablePane.Skin,
                                 rowY -= (int)((verticalSpacing * 0.5f) - 0.5f);
                             }
 
-                            Rectangle2D.Float bounds = new Rectangle2D.Float(columnX, rowY,
-                                columnWidth, rowHeight);
-                            gridClip.subtract(new Area(bounds));
+                            Bounds bounds = new Bounds(columnX, rowY, columnWidth, rowHeight);
+                            gridClip.subtract(graphicsFactory.newArea(bounds.x, bounds.y, bounds.width, bounds.height));
                         }
                     }
 

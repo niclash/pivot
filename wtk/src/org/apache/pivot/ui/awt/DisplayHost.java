@@ -1168,8 +1168,7 @@ public class DisplayHost extends java.awt.Component
                             if( component instanceof Container )
                             {
                                 Container container = (Container) component;
-                                component = container.getComponentAt( componentX,
-                                                                      componentY );
+                                component = container.getComponentAt( componentX, componentY );
 
                                 if( component != null )
                                 {

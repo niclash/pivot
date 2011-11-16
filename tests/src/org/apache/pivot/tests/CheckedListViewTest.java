@@ -20,7 +20,6 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.json.JSONSerializer;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
@@ -47,8 +46,8 @@ public class CheckedListViewTest implements Application {
         listView.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
             @SuppressWarnings("unchecked")
-            public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == JavaAwtKeyCode.DELETE) {
+            public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
+                if (keyCode == Keyboard.Key.DELETE) {
                     List<Object> listData = (List<Object>)listView.getListData();
 
                     Sequence<Span> selectedRanges = listView.getSelectedRanges();

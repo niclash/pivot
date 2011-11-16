@@ -22,7 +22,6 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Group;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Sequence;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.wtk.Keyboard.KeyLocation;
@@ -33,12 +32,12 @@ import org.apache.pivot.wtk.Keyboard.Modifier;
  * group and modified focus navigation that treats the group as a single
  * focusable entity.<br/><br/>
  *
- * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Select the previous
+ * {@link Keyboard.Key#UP UP} & {@link Keyboard.Key#LEFT LEFT} Select the previous
  * button<br/>
- * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Select the next
+ * {@link Keyboard.Key#DOWN DOWN} & {@link Keyboard.Key#RIGHT RIGHT} Select the next
  * button<br/>
- * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#HOME HOME} Select the first button<br/>
- * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#END END} Select the last button<br/><br/>
+ * {@link Keyboard.Key#HOME HOME} Select the first button<br/>
+ * {@link Keyboard.Key#END END} Select the last button<br/><br/>
  *
  * (Note that only {@link Component#isFocusable() focusable} buttons are
  * considered when searching for a Button to select)<br/><br/>
@@ -49,7 +48,7 @@ import org.apache.pivot.wtk.Keyboard.Modifier;
  * This search will always behave as if the <code>circular</code> property were
  * set.<br/><br/>
  *
- * By default, {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} and {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB SHIFT+TAB}
+ * By default, {@link Keyboard.Key#TAB TAB} and {@link Keyboard.Key#TAB SHIFT+TAB}
  * key presses will transfer focus out of the group (forwards or backwards
  * respectively).
  * This is managed by the {@link #setIntraGroupFocusTransferEnabled(boolean)
@@ -110,8 +109,7 @@ public class RadioButtonGroup extends ButtonGroup {
          * Handle TAB & SHIFT+TAB focus traversal, HOME, END & arrow keys
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, KeyLocation keyLocation) {
-            int modifiers = Keyboard.getModifiers();
+        public boolean keyPressed(Component component, Keyboard.Key  keyCode, KeyLocation keyLocation) {
             boolean handled = false;
 
             /*
@@ -123,12 +121,12 @@ public class RadioButtonGroup extends ButtonGroup {
              * transfer away from it.
              */
             if (!intraGroupFocusTransferEnabled) {
-                if (keyCode == JavaAwtKeyCode.TAB) {
-                    if (modifiers == 0) {
+                if (keyCode == Keyboard.Key.TAB) {
+                    if (Keyboard.isNoModifiers()) {
                         Button lastFocusableButton = get(findPrevious(buttonOrder.getLength()));
                         lastFocusableButton.transferFocus(FocusTraversalDirection.FORWARD);
                         handled = true;
-                    } else if (modifiers == Modifier.SHIFT.getMask()) {
+                    } else if (Keyboard.isPressed( Modifier.SHIFT) ) {
                         Button firstFocusableButton = get(findNext(NO_SELECTION_INDEX));
                         firstFocusableButton.transferFocus(FocusTraversalDirection.BACKWARD);
                         handled = true;
@@ -137,17 +135,17 @@ public class RadioButtonGroup extends ButtonGroup {
             }
 
             // Navigation/selection within the group
-            if (!handled && modifiers == 0) {
+            if (!handled && Keyboard.isNoModifiers()) {
                 RadioButtonGroup radioButtonGroup = RadioButtonGroup.this;
                 Button selectedButton = radioButtonGroup.getSelection();
                 handled = true;
-                if (keyCode == JavaAwtKeyCode.HOME) {
+                if (keyCode == Keyboard.Key .HOME) {
                     radioButtonGroup.selectFirstButton();
-                } else if (keyCode == JavaAwtKeyCode.END) {
+                } else if (keyCode == Keyboard.Key .END) {
                     radioButtonGroup.selectLastButton();
-                } else if (keyCode == JavaAwtKeyCode.LEFT || keyCode == JavaAwtKeyCode.UP) {
+                } else if (keyCode == Keyboard.Key .LEFT || keyCode == Keyboard.Key .UP) {
                     radioButtonGroup.selectPreviousButton(selectedButton);
-                } else if (keyCode == JavaAwtKeyCode.RIGHT || keyCode == JavaAwtKeyCode.DOWN) {
+                } else if (keyCode == Keyboard.Key .RIGHT || keyCode == Keyboard.Key .DOWN) {
                     radioButtonGroup.selectNextButton(selectedButton);
                 } else {
                     handled = false;
@@ -163,13 +161,12 @@ public class RadioButtonGroup extends ButtonGroup {
          */
         @Override
         public boolean keyTyped(Component component, char character) {
-            int modifiers = Keyboard.getModifiers();
             boolean handled = false;
 
             // We are only interested when a key is typed with no modifier, or
             // just SHIFT (which is used to reverse the search direction)
-            boolean noModifiersPressed = (modifiers == 0);
-            boolean shiftPressed = (modifiers == Modifier.SHIFT.getMask());
+            boolean noModifiersPressed = Keyboard.isNoModifiers();
+            boolean shiftPressed = Keyboard.isPressed( Modifier.SHIFT );
             if (noModifiersPressed || shiftPressed) {
                 RadioButtonGroup radioButtonGroup = RadioButtonGroup.this;
                 Button selectedButton = radioButtonGroup.getSelection();

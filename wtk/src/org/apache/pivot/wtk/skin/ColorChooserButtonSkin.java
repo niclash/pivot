@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
 
 import org.apache.pivot.util.Vote;
@@ -71,11 +70,11 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
 
     private ComponentKeyListener colorChooserPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected color.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected color and transfer focus
+         * {@link Keyboard.Key#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link Keyboard.Key#ENTER ENTER} Choose the selected color.<br>
+         * {@link Keyboard.Key#TAB TAB} Choose the selected color and transfer focus
          * forwards.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Choose the
+         * {@link Keyboard.Key#TAB TAB} + {@link Modifier#SHIFT SHIFT} Choose the
          * selected color and transfer focus backwards.
          */
         @Override
@@ -293,7 +292,7 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
     // ComponentKeyListener methods
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link Keyboard.Key#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
      * @see #keyReleased(Component, Keyboard.Key, org.apache.pivot.wtk.Keyboard.KeyLocation)
@@ -321,7 +320,7 @@ public abstract class ColorChooserButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
      */
     @Override
     public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

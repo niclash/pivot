@@ -300,4 +300,11 @@ public class JavaAwtGraphics
         java.awt.geom.AffineTransform awtTransform = ( (JavaAwtAffineTransform) transform ).getDelegate();
         delegate.transform( awtTransform );
     }
+
+    @Override
+    public void clip( Bounds selection )
+    {
+        Rectangle rect = new Rectangle( selection.x, selection.y, selection.width, selection.height );
+        delegate.clip( rect );
+    }
 }

@@ -917,7 +917,7 @@ public class TextAreaSkin extends ComponentSkin implements TextArea.Skin, TextAr
             if (keyCode == Keyboard.Key.ENTER
                 && acceptsEnter
                 && textArea.isEditable()
-                && Keyboard.getModifiers() == 0) {
+                && Keyboard.isNoModifiers()) {
                 int index = textArea.getSelectionStart();
                 textArea.removeText(index, textArea.getSelectionLength());
                 textArea.insertText("\n", index);

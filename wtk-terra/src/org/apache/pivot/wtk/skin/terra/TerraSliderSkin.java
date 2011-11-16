@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
@@ -215,9 +214,9 @@ public class TerraSliderSkin extends SliderSkin {
         }
 
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Decrement
+         * {@link Keyboard.Key#LEFT LEFT} or {@link Keyboard.Key#DOWN DOWN} Decrement
          * the slider's value.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increment
+         * {@link Keyboard.Key#RIGHT RIGHT} or {@link Keyboard.Key#UP UP} Increment
          * the slider's value.
          */
         @Override

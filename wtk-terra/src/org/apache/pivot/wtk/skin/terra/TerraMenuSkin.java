@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
@@ -389,12 +388,12 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Select the previous enabled menu item.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Select the next enabled menu item.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Close the current sub-menu.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Open the sub-menu of the current menu
+     * {@link Keyboard.Key#UP UP} Select the previous enabled menu item.<br>
+     * {@link Keyboard.Key#DOWN DOWN} Select the next enabled menu item.<br>
+     * {@link Keyboard.Key#LEFT LEFT} Close the current sub-menu.<br>
+     * {@link Keyboard.Key#RIGHT RIGHT} Open the sub-menu of the current menu
      * item.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} 'presses' the active menu item if it
+     * {@link Keyboard.Key#ENTER ENTER} 'presses' the active menu item if it
      * does not have a sub-menu.
      */
     @Override
@@ -522,7 +521,7 @@ public class TerraMenuSkin extends ContainerSkin implements MenuListener, Menu.S
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the active menu item if it does
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the active menu item if it does
      * not have a sub-menu.
      */
     @Override

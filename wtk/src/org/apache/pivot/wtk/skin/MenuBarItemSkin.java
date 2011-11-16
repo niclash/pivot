@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
 import org.apache.pivot.wtk.Container;
@@ -40,27 +39,27 @@ public abstract class MenuBarItemSkin extends ButtonSkin implements MenuBar.Item
 
     private ComponentKeyListener menuPopupComponentKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} +
+         * {@link Keyboard.Key#LEFT LEFT} or {@link Keyboard.Key#TAB TAB} +
          * {@link Keyboard.Modifier#SHIFT SHIFT} Activate the menu to the left of the
          * current menu.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} or {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Activate
+         * {@link Keyboard.Key#RIGHT RIGHT} or {@link Keyboard.Key#TAB TAB} Activate
          * the menu to the right of the current menu.<br>
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             MenuBar.Item menuBarItem = (MenuBar.Item)getComponent();
             MenuBar menuBar = (MenuBar)menuBarItem.getParent();
 
-            if (keyCode == JavaAwtKeyCode.LEFT
-                || (keyCode == JavaAwtKeyCode.TAB
+            if (keyCode == Keyboard.Key.LEFT
+                || (keyCode == Keyboard.Key.TAB
                     && Keyboard.isPressed(Keyboard.Modifier.SHIFT))) {
                 menuBar.activatePreviousItem();
                 consumed = true;
 
-            } else if (keyCode == JavaAwtKeyCode.RIGHT
-                || keyCode == JavaAwtKeyCode.TAB) {
+            } else if (keyCode == Keyboard.Key.RIGHT
+                || keyCode == Keyboard.Key.TAB) {
                 menuBar.activateNextItem();
                 consumed = true;
             }

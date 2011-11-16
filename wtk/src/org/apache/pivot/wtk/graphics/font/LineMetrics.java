@@ -5,4 +5,12 @@ public interface LineMetrics
     float getHeight();
 
     float getAscent();
+
+    float getDescent();
+
+    float getLeading();
+
+    float getStrikethroughOffset();
+
+    float getUnderlineOffset();
 }

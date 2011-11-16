@@ -18,7 +18,6 @@ package org.apache.pivot.tests;
 
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Map;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.Alert;
 import org.apache.pivot.wtk.Application;
@@ -50,7 +49,7 @@ public class ActionMappingTest implements Application {
 
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
         window = (Window)bxmlSerializer.readObject(ActionMappingTest.class, "action_mapping_test.bxml");
-        window.getActionMappings().add(new Window.ActionMapping(new Keyboard.KeyStroke( JavaAwtKeyCode.B,
+        window.getActionMappings().add(new Window.ActionMapping(new Keyboard.KeyStroke( Keyboard.Key.B,
             Keyboard.Modifier.SHIFT.getMask()), "action2"));
 
         window.open(display);

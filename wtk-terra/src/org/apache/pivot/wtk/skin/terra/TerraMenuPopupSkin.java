@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.ApplicationContext;
 
 import org.apache.pivot.util.Vote;
@@ -202,7 +201,7 @@ public class TerraMenuPopupSkin extends WindowSkin implements MenuPopupListener,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the menu popup.
+     * {@link Keyboard.Key#ESCAPE ESCAPE} Close the menu popup.
      */
     @Override
     public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

@@ -144,7 +144,7 @@ public class ColorChooser extends Container {
             throw new IllegalArgumentException("selectedColor is null.");
         }
 
-        setSelectedColor(Color.decode(selectedColor));
+        setSelectedColor(ColorFactory.decode(selectedColor));
     }
 
     /**

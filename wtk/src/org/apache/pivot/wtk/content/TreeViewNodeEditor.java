@@ -19,7 +19,6 @@ package org.apache.pivot.wtk.content;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.collections.Sequence.Tree.Path;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Container;
 import org.apache.pivot.wtk.ContainerMouseListener;
@@ -201,13 +200,13 @@ public class TreeViewNodeEditor extends Window implements TreeView.NodeEditor {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyPressed(Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed;
 
-        if (keyCode == JavaAwtKeyCode.ENTER) {
+        if (keyCode == Keyboard.Key.ENTER) {
             endEdit(true);
             consumed = true;
-        } else if (keyCode == JavaAwtKeyCode.ESCAPE) {
+        } else if (keyCode == Keyboard.Key.ESCAPE) {
             endEdit(false);
             consumed = true;
         } else {

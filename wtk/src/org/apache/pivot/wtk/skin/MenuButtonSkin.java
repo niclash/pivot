@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -167,7 +166,7 @@ public abstract class MenuButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link Keyboard.Key#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
      * @see #keyReleased(Component, Keyboard.Key,
@@ -196,7 +195,7 @@ public abstract class MenuButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
      */
     @Override
     public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

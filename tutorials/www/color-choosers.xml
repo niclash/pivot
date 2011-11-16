@@ -78,8 +78,8 @@ limitations under the License.
                                         importClass(org.apache.pivot.wtk.Keyboard);
 
                                         function keyPressed(component, keyCode, keyLocation) {
-                                            if (keyCode == Keyboard.KeyCode.TAB ||
-                                                keyCode == Keyboard.KeyCode.ENTER) {
+                                            if (keyCode == Keyboard.Key.TAB ||
+                                                keyCode == Keyboard.Key.ENTER) {
                                                 Component.clearFocus();
                                             }
                                         }

@@ -63,12 +63,12 @@ public class ApplicationHandlerTest implements Application,
     }
 
     @Override
-    public void keyPressed(int keyCode, Keyboard.KeyLocation keyLocation) {
+    public void keyPressed(Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         System.out.println("Unprocessed key pressed: " + keyCode + "; " + keyLocation);
     }
 
     @Override
-    public void keyReleased(int keyCode, Keyboard.KeyLocation keyLocation) {
+    public void keyReleased(Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         System.out.println("Unprocessed key released: " + keyCode + "; " + keyLocation);
     }
 

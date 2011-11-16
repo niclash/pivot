@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.Color;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -222,9 +221,9 @@ public class TerraCalendarSkin extends CalendarSkin {
         }
 
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} 'presses' the button.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP}, {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN},
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} & {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Navigate
+         * {@link Keyboard.Key#ENTER ENTER} 'presses' the button.<br>
+         * {@link Keyboard.Key#UP UP}, {@link Keyboard.Key#DOWN DOWN},
+         * {@link Keyboard.Key#LEFT LEFT} & {@link Keyboard.Key#RIGHT RIGHT} Navigate
          * around the date grid.
          */
         @Override
@@ -320,7 +319,7 @@ public class TerraCalendarSkin extends CalendarSkin {
         }
 
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+         * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
          */
         @Override
         public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

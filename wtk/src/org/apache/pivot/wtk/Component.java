@@ -35,6 +35,7 @@ import org.apache.pivot.util.ListenerList;
 import org.apache.pivot.wtk.effects.Decorator;
 import org.apache.pivot.wtk.graphics.AffineTransform;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.geom.Shape;
 
 /**
@@ -537,7 +538,7 @@ public abstract class Component implements ConstrainedVisual {
         }
 
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             for (ComponentKeyListener listener : this) {
@@ -548,7 +549,7 @@ public abstract class Component implements ConstrainedVisual {
         }
 
         @Override
-        public boolean keyReleased(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyReleased(Component component, Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
             boolean consumed = false;
 
             for (ComponentKeyListener listener : this) {
@@ -2068,7 +2069,7 @@ public abstract class Component implements ConstrainedVisual {
 
                     if (!transform.isIdentity()) {
                         // Apply the decorator's transform to the repaint area
-                        Bounds area = new Bounds(x, y, width, height);
+                        Area area = Platform.getInstalled().getGraphicsSystem().newArea(x, y, width, height);
                         Shape transformedShape = transform.createTransformedShape(area);
                         Bounds tranformedBounds = new Bounds(transformedShape.getBounds());
 
@@ -2840,7 +2841,7 @@ public abstract class Component implements ConstrainedVisual {
         return consumed;
     }
 
-    protected boolean keyPressed(int keyCode, Keyboard.KeyLocation keyLocation) {
+    protected boolean keyPressed(Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         if (isEnabled()) {
@@ -2854,7 +2855,7 @@ public abstract class Component implements ConstrainedVisual {
         return consumed;
     }
 
-    protected boolean keyReleased(int keyCode, Keyboard.KeyLocation keyLocation) {
+    protected boolean keyReleased(Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = false;
 
         if (isEnabled()) {

@@ -18,7 +18,6 @@ package org.apache.pivot.wtk.skin;
 
 import java.util.Locale;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.CalendarDate;
 import org.apache.pivot.util.Filter;
 import org.apache.pivot.util.Vote;
@@ -65,28 +64,28 @@ public abstract class CalendarButtonSkin extends ButtonSkin
 
     private ComponentKeyListener calendarPopupKeyListener = new ComponentKeyListener.Adapter() {
         /**
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the popup.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Choose the selected date.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Choose the selected date and transfer focus
+         * {@link Keyboard.Key#ESCAPE ESCAPE} Close the popup.<br>
+         * {@link Keyboard.Key#ENTER ENTER} Choose the selected date.<br>
+         * {@link Keyboard.Key#TAB TAB} Choose the selected date and transfer focus
          * forwards.<br>
-         * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
+         * {@link Keyboard.Key#TAB TAB} + {@link Keyboard.Modifier#SHIFT SHIFT} Choose the
          * selected date and transfer focus backwards.
          */
         @Override
-        public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
+        public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {
             CalendarButton calendarButton = (CalendarButton)getComponent();
 
             switch (keyCode) {
-                case JavaAwtKeyCode.ESCAPE: {
+                case ESCAPE: {
                     calendarPopup.close();
                     break;
                 }
 
-                case JavaAwtKeyCode.TAB:
-                case JavaAwtKeyCode.ENTER: {
+                case TAB:
+                case ENTER: {
                     calendarPopup.close();
 
-                    if (keyCode == JavaAwtKeyCode.TAB) {
+                    if (keyCode == Keyboard.Key.TAB) {
                         FocusTraversalDirection direction = (Keyboard.isPressed(Keyboard.Modifier.SHIFT)) ?
                             FocusTraversalDirection.BACKWARD : FocusTraversalDirection.FORWARD;
                         calendarButton.transferFocus(direction);
@@ -276,10 +275,10 @@ public abstract class CalendarButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Repaints the component to reflect the pressed
+     * {@link Keyboard.Key#SPACE SPACE} Repaints the component to reflect the pressed
      * state.
      *
-     * @see #keyReleased(Component, int,
+     * @see #keyReleased(Component, Keyboard.Key,
      * org.apache.pivot.wtk.Keyboard.KeyLocation)
      */
     @Override
@@ -305,7 +304,7 @@ public abstract class CalendarButtonSkin extends ButtonSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} 'presses' the button.
+     * {@link Keyboard.Key#SPACE SPACE} 'presses' the button.
      */
     @Override
     public boolean keyReleased(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

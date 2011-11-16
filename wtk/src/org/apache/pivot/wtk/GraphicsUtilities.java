@@ -28,6 +28,7 @@ import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.LinearGradientPaint;
 import org.apache.pivot.wtk.graphics.Paint;
 import org.apache.pivot.wtk.graphics.RadialGradientPaint;
@@ -251,7 +252,7 @@ public final class GraphicsUtilities {
         if (paintType == null) {
             throw new IllegalArgumentException(PAINT_TYPE_KEY + " is required.");
         }
-
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
         Paint paint;
         switch(PaintType.valueOf(paintType.toUpperCase(Locale.ENGLISH))) {
             case SOLID_COLOR: {
@@ -267,7 +268,7 @@ public final class GraphicsUtilities {
                 float endY = JSON.getFloat(dictionary, END_Y_KEY);
                 Color startColor = decodeColor((String)JSON.get(dictionary, START_COLOR_KEY));
                 Color endColor = decodeColor((String)JSON.get(dictionary, END_COLOR_KEY));
-                paint = new GradientPaint(startX, startY, startColor, endX, endY, endColor);
+                paint = graphicsFactory.newGradientPaint( startX, startY, startColor, endX, endY, endColor);
                 break;
             }
 
@@ -293,7 +294,7 @@ public final class GraphicsUtilities {
                     colors[i] = color;
                 }
 
-                paint = new LinearGradientPaint(startX, startY, endX, endY, fractions, colors);
+                paint = graphicsFactory.newLinearGradientPaint(startX, startY, endX, endY, fractions, colors);
                 break;
             }
 
@@ -318,7 +319,7 @@ public final class GraphicsUtilities {
                     colors[i] = color;
                 }
 
-                paint = new RadialGradientPaint(centerX, centerY, radius, fractions, colors);
+                paint = graphicsFactory.newRadialGradientPaint(centerX, centerY, radius, fractions, colors);
                 break;
             }
 

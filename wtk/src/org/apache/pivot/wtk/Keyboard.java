@@ -16,38 +16,25 @@
  */
 package org.apache.pivot.wtk;
 
-import java.lang.reflect.Field;
-import java.util.Locale;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
+import org.apache.pivot.collections.EnumSet;
+import org.apache.pivot.collections.Set;
 
 /**
  * Class representing the system keyboard.
  */
 public final class Keyboard {
+
+
     /**
      * Enumeration representing keyboard modifiers.
      */
     public enum Modifier {
-        NONE,
         SHIFT,
         CTRL,
         ALT,
-        META,
-        SHIFT_CTRL,
-        SHIFT_ALT,
-        SHIFT_META,
-        CTRL_ALT,
-        CTRL_META,
-        ALT_META,
-        SHIFT_CTRL_ALT,
-        SHIFT_CTRL_META,
-        CTRL_ALT_META,
-        SHIFT_CTRL_ALT_META
-//
-//        public int getMask() {
-//            return 1 << (ordinal()-1);
-//        }
+        META;
     }
+
 
     /**
      * Enumeration representing key locations.
@@ -56,8 +43,9 @@ public final class Keyboard {
         STANDARD,
         LEFT,
         RIGHT,
-        KEYPAD
+        KEYPAD;
     }
+
 
     public enum Key {
         A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,  // A-Z
@@ -69,18 +57,16 @@ public final class Keyboard {
         PLUS, MINUS, EQUALS,
         ADD, SUBTRACT, MULTIPLY, DIVIDE,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
-        UNDEFINED
+        UNDEFINED;
     }
-
     /**
      * Represents a keystroke, a combination of a keycode and modifier flags.
      */
     public static final class KeyStroke {
+
         private Key keyCode = Key.UNDEFINED;
-        private Modifier modifiers = Modifier.NONE;
-
-
-        public KeyStroke(Key keyCode, Modifier modifiers) {
+        private Set<Modifier> modifiers;
+        public KeyStroke(Key keyCode, Set<Modifier> modifiers) {
             this.keyCode = keyCode;
             this.modifiers = modifiers;
         }
@@ -89,8 +75,8 @@ public final class Keyboard {
             return keyCode;
         }
 
-        public Modifier getModifiers() {
-            return modifiers;
+        public Set<Modifier> getModifiers() {
+            return this.modifiers;
         }
 
         @Override
@@ -123,22 +109,32 @@ public final class Keyboard {
         }
 
         public static KeyStroke decode(String value) {
-            Platform.getInstalled().getInputSystem().decodeKeyStroke(value);
+            return Platform.getInstalled().getInputSystem().decodeKeyStroke( value );
         }
-    }
 
-    private static int modifiers = 0;
+    }
+    private static Set<Modifier> modifiers = new EnumSet<Modifier>(Modifier.class);
 
     /**
      * Returns a bitfield representing the keyboard modifiers that are
      * currently pressed.
+     * @return A set of Modifier enums representing the current state of the Keyboard Modifier keys.
      */
-    public static int getModifiers() {
+    public static Set<Modifier> getModifiers() {
         return modifiers;
     }
 
-    protected static void setModifiers(int modifiers) {
-        Keyboard.modifiers = modifiers;
+    public static boolean isNoModifiers()
+    {
+        return modifiers.getCount() == 0;
+    }
+
+    public static void setModifier( Modifier modifier ){
+        modifiers.add( modifier );
+    }
+
+    public static void clearModifier( Modifier modifier ){
+        modifiers.remove( modifier );
     }
 
     /**
@@ -150,7 +146,7 @@ public final class Keyboard {
      * <tt>true</tt> if the modifier is pressed; <tt>false</tt>, otherwise.
      */
     public static boolean isPressed(Modifier modifier) {
-        return (modifiers & modifier.getMask()) > 0;
+        return modifiers.contains( modifier );
     }
 
     /**

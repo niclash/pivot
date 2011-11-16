@@ -18,7 +18,6 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.json.JSONSerializer;
 import org.apache.pivot.serialization.SerializationException;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
@@ -253,8 +252,8 @@ public abstract class ComponentSkin implements Skin, ComponentListener,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} Transfers focus forwards<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#TAB TAB} + {@link Modifier#SHIFT SHIFT} Transfers focus
+     * {@link Keyboard.Key#TAB TAB} Transfers focus forwards<br>
+     * {@link Keyboard.Key#TAB TAB} + {@link Modifier#SHIFT SHIFT} Transfers focus
      * backwards
      */
     @Override

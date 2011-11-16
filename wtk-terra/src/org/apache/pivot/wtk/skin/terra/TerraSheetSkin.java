@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -490,8 +489,8 @@ public class TerraSheetSkin extends WindowSkin implements SheetStateListener {
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Close the sheet with a 'result' of true.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the sheet with a 'result' of false.
+     * {@link Keyboard.Key#ENTER ENTER} Close the sheet with a 'result' of true.<br>
+     * {@link Keyboard.Key#ESCAPE ESCAPE} Close the sheet with a 'result' of false.
      */
     @Override
     public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

@@ -7,4 +7,6 @@ public interface CompositeFactory
     AlphaComposite getSrcOver();
 
     AlphaComposite getSrcOver( float opacity );
+
+    AlphaComposite getDstIn();
 }

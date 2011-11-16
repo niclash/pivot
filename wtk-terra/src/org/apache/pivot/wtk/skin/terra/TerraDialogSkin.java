@@ -15,7 +15,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Container;
@@ -123,8 +122,8 @@ public class TerraDialogSkin extends TerraFrameSkin
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ENTER ENTER} Close the dialog with a 'result' of true.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#ESCAPE ESCAPE} Close the dialog with a 'result' of false.
+     * {@link Keyboard.Key#ENTER ENTER} Close the dialog with a 'result' of true.<br>
+     * {@link Keyboard.Key#ESCAPE ESCAPE} Close the dialog with a 'result' of false.
      */
     @Override
     public boolean keyPressed(Component component, Keyboard.Key keyCode, Keyboard.KeyLocation keyLocation) {

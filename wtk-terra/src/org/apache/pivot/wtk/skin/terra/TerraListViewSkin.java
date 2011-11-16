@@ -16,9 +16,7 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.Platform;
-
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Dictionary;
 import org.apache.pivot.collections.List;
@@ -989,14 +987,14 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Selects the previous enabled list item when select
+     * {@link Keyboard.Key#UP UP} Selects the previous enabled list item when select
      * mode is not {@link SelectMode#NONE}<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Selects the next enabled list item when select
+     * {@link Keyboard.Key#DOWN DOWN} Selects the next enabled list item when select
      * mode is not {@link SelectMode#NONE}<p>
-     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link Keyboard.Key#UP UP} Increases the
      * selection size by including the previous enabled list item when select
      * mode is {@link SelectMode#MULTI}<br>
-     * {@link Modifier#SHIFT SHIFT} + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Increases the
+     * {@link Modifier#SHIFT SHIFT} + {@link Keyboard.Key#DOWN DOWN} Increases the
      * selection size by including the next enabled list item when select mode
      * is {@link SelectMode#MULTI}
      */
@@ -1089,7 +1087,7 @@ public class TerraListViewSkin extends ComponentSkin implements ListView.Skin,
     }
 
     /**
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#SPACE SPACE} Toggles check mark selection when select
+     * {@link Keyboard.Key#SPACE SPACE} Toggles check mark selection when select
      * mode is {@link SelectMode#SINGLE}
      */
     @Override

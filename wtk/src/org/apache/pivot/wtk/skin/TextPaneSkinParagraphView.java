@@ -124,7 +124,7 @@ class TextPaneSkinParagraphView extends TextPaneSkinBlockView {
         layouter.end(paragraph, rows);
 
         // Recalculate terminator bounds
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = getTextPaneSkin().getFont().getLineMetrics("", 0, 0, fontRenderContext);
         int terminatorHeight = (int)Math.ceil(lm.getHeight());
 
@@ -209,7 +209,7 @@ class TextPaneSkinParagraphView extends TextPaneSkinBlockView {
         layouter.end(paragraph, rows);
 
         // Recalculate terminator bounds
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = getTextPaneSkin().getFont().getLineMetrics("", 0, 0, fontRenderContext);
         int terminatorHeight = (int)Math.ceil(lm.getHeight());
 

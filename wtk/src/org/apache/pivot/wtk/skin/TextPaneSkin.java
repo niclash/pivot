@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import org.apache.pivot.wtk.graphics.ColorFactory;
@@ -39,6 +40,7 @@ import org.apache.pivot.wtk.graphics.Graphics2D;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.graphics.font.FontRenderContext;
 import org.apache.pivot.wtk.graphics.font.LineMetrics;
+import org.apache.pivot.wtk.graphics.geom.Rectangle;
 import org.apache.pivot.wtk.text.BulletedList;
 import org.apache.pivot.wtk.text.ComponentNode;
 import org.apache.pivot.wtk.text.Document;
@@ -62,7 +64,8 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
 
             if (selection == null) {
                 TextPane textPane = (TextPane)getComponent();
-                textPane.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textPane.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
     }
@@ -118,7 +121,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
     private TextPaneSkinDocumentView documentView = null;
 
     private int caretX = 0;
-    private Rectangle caret = new Rectangle();
+    private Rectangle caret = Platform.getInstalled().getGraphicsSystem().newRectangle();
     private Area selection = null;
 
     private boolean caretOn = false;
@@ -261,7 +264,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
             documentView.setSkinLocation(margin.left, margin.top);
 
             updateSelection();
-            caretX = caret.x;
+            caretX = caret.getBounds().x;
 
             if (textPane.isFocused()) {
                 scrollCharacterToVisible(textPane.getSelectionStart());
@@ -690,7 +693,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 }
             }
 
-            caretX = caret.x;
+            caretX = caret.getBounds().x;
 
             // Set focus to the text input
             textPane.requestFocus();
@@ -809,7 +812,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                 textPane.setSelection(selectionStart, selectionLength);
                 scrollCharacterToVisible(selectionStart);
 
-                caretX = caret.x;
+                caretX = caret.getBounds().x;
 
                 consumed = true;
             } else if (keyCode == Keyboard.Key.RIGHT) {
@@ -841,7 +844,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                         textPane.setSelection(selectionStart, 0);
                         scrollCharacterToVisible(selectionStart);
 
-                        caretX = caret.x;
+                        caretX = caret.getBounds().x;
                     }
                 } else {
                     // Clear the selection and move the caret forward by one
@@ -857,7 +860,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
                     textPane.setSelection(selectionStart, 0);
                     scrollCharacterToVisible(selectionStart);
 
-                    caretX = caret.x;
+                    caretX = caret.getBounds().x;
                 }
 
                 consumed = true;
@@ -1056,7 +1059,8 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
             && documentView.isValid()) {
             if (selection == null) {
                 // Repaint previous caret bounds
-                textPane.repaint(caret.x, caret.y, caret.width, caret.height);
+                Bounds bounds = caret.getBounds();
+                textPane.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
             } else {
                 // Repaint previous selection bounds
                 Bounds bounds = selection.getBounds();
@@ -1107,6 +1111,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
     }
 
     private void updateSelection() {
+        GraphicsSystem graphicsSystem = Platform.getInstalled().getGraphicsSystem();
         if (documentView.getCharacterCount() > 0) {
             TextPane textPane = (TextPane)getComponent();
 
@@ -1114,8 +1119,12 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
             int selectionStart = textPane.getSelectionStart();
 
             Bounds leadingSelectionBounds = getCharacterBounds(selectionStart);
-            caret = leadingSelectionBounds.toRectangle();
-            caret.width = 1;
+            caret = graphicsSystem.newRectangle(
+                leadingSelectionBounds.x,
+                leadingSelectionBounds.y,
+                1,
+                leadingSelectionBounds.height
+            );
 
             // Update the selection
             int selectionLength = textPane.getSelectionLength();
@@ -1123,41 +1132,41 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
             if (selectionLength > 0) {
                 int selectionEnd = selectionStart + selectionLength - 1;
                 Bounds trailingSelectionBounds = getCharacterBounds(selectionEnd);
-                selection = new Area();
+                selection = graphicsSystem.newArea();
 
                 int firstRowIndex = getRowAt(selectionStart);
                 int lastRowIndex = getRowAt(selectionEnd);
 
                 if (firstRowIndex == lastRowIndex) {
-                    selection.add(new Area(new Rectangle(leadingSelectionBounds.x, leadingSelectionBounds.y,
+                    selection.add(graphicsSystem.newArea(leadingSelectionBounds.x, leadingSelectionBounds.y,
                         trailingSelectionBounds.x + trailingSelectionBounds.width - leadingSelectionBounds.x,
-                        trailingSelectionBounds.y + trailingSelectionBounds.height - leadingSelectionBounds.y)));
+                        trailingSelectionBounds.y + trailingSelectionBounds.height - leadingSelectionBounds.y));
                 } else {
                     int width = getWidth();
 
-                    selection.add(new Area(new Rectangle(leadingSelectionBounds.x,
+                    selection.add(graphicsSystem.newArea(leadingSelectionBounds.x,
                         leadingSelectionBounds.y,
                         width - margin.right - leadingSelectionBounds.x,
-                        leadingSelectionBounds.height)));
+                        leadingSelectionBounds.height));
 
                     if (lastRowIndex - firstRowIndex > 0) {
-                        selection.add(new Area(new Rectangle(margin.left,
+                        selection.add(graphicsSystem.newArea(margin.left,
                             leadingSelectionBounds.y + leadingSelectionBounds.height,
                             width - (margin.left + margin.right),
                             trailingSelectionBounds.y - (leadingSelectionBounds.y
-                                + leadingSelectionBounds.height))));
+                                + leadingSelectionBounds.height)));
                     }
 
-                    selection.add(new Area(new Rectangle(margin.left, trailingSelectionBounds.y,
+                    selection.add(graphicsSystem.newArea(margin.left, trailingSelectionBounds.y,
                         trailingSelectionBounds.x + trailingSelectionBounds.width - margin.left,
-                        trailingSelectionBounds.height)));
+                        trailingSelectionBounds.height));
                 }
             } else {
                 selection = null;
             }
         } else {
             // Clear the caret and the selection
-            caret = new Rectangle();
+            caret = graphicsSystem.newRectangle();
             selection = null;
         }
     }
@@ -1171,7 +1180,7 @@ public class TextPaneSkin extends ContainerSkin implements TextPane.Skin, TextPa
             caretOn = true;
             scheduledBlinkCaretCallback =
                 ApplicationContext.scheduleRecurringCallback( blinkCaretCallback,
-                                                              Platform.getCursorBlinkRate() );
+                                                              Platform.getInstalled().getCursorBlinkRate() );
 
             // Run the callback once now to show the cursor immediately
             blinkCaretCallback.run();

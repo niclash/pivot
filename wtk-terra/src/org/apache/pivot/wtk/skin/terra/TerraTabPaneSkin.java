@@ -16,7 +16,6 @@
  */
 package org.apache.pivot.wtk.skin.terra;
 
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.graphics.BasicStroke;
@@ -54,6 +53,7 @@ import org.apache.pivot.wtk.effects.easing.Easing;
 import org.apache.pivot.wtk.effects.easing.Quadratic;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.Graphics2D;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.RenderingHints;
 import org.apache.pivot.wtk.graphics.font.Font;
 import org.apache.pivot.wtk.skin.ButtonSkin;
@@ -238,21 +238,21 @@ public class TerraTabPaneSkin extends ContainerSkin
             // Draw the background
             graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
+            GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
             switch(tabOrientation) {
                 case HORIZONTAL: {
-                    graphics.setPaint(new GradientPaint(width / 2f, 0, buttonBevelColor,
+                    graphics.setPaint(graphicsFactory.newGradientPaint(width / 2f, 0, buttonBevelColor,
                         width / 2f, height / 2f, backgroundColor));
-                    graphics.fill(new RoundRectangle2D.Double(0.5, 0.5, width - 1, height - 1 + buttonCornerRadius,
-                        buttonCornerRadius, buttonCornerRadius));
+                    graphics.fill(graphicsFactory.newRoundRectangle( 0.5, 0.5, width - 1, height - 1 + buttonCornerRadius,
+                                                                     buttonCornerRadius, buttonCornerRadius ));
                     break;
                 }
 
                 case VERTICAL: {
-                    graphics.setPaint(new GradientPaint(0, height / 2f, buttonBevelColor,
+                    graphics.setPaint(graphicsFactory.newGradientPaint(0, height / 2f, buttonBevelColor,
                         width / 2f, height / 2f, backgroundColor));
-                    graphics.fill(new RoundRectangle2D.Double(0.5, 0.5, width - 1 + buttonCornerRadius, height - 1,
-                        buttonCornerRadius, buttonCornerRadius));
+                    graphics.fill(graphicsFactory.newRoundRectangle( 0.5, 0.5, width - 1 + buttonCornerRadius, height - 1,
+                                                                     buttonCornerRadius, buttonCornerRadius ));
                     break;
                 }
             }
@@ -263,14 +263,14 @@ public class TerraTabPaneSkin extends ContainerSkin
 
             switch(tabOrientation) {
                 case HORIZONTAL: {
-                    graphics.draw(new RoundRectangle2D.Double(0.5, 0.5, width - 1, height + buttonCornerRadius - 1,
-                        buttonCornerRadius, buttonCornerRadius));
+                    graphics.draw(graphicsFactory.newRoundRectangle( 0.5, 0.5, width - 1, height + buttonCornerRadius - 1,
+                                                                     buttonCornerRadius, buttonCornerRadius ));
                     break;
                 }
 
                 case VERTICAL: {
-                    graphics.draw(new RoundRectangle2D.Double(0.5, 0.5, width + buttonCornerRadius - 1, height - 1,
-                        buttonCornerRadius, buttonCornerRadius));
+                    graphics.draw(graphicsFactory.newRoundRectangle( 0.5, 0.5, width + buttonCornerRadius - 1, height - 1,
+                                                                     buttonCornerRadius, buttonCornerRadius ));
                     break;
                 }
             }
@@ -281,12 +281,12 @@ public class TerraTabPaneSkin extends ContainerSkin
                 // Draw divider
                 switch(tabOrientation) {
                     case HORIZONTAL: {
-                        graphics.draw(new Line2D.Double(0.5, height - 0.5, width - 0.5, height - 0.5));
+                        graphics.draw(graphicsFactory.newLine( 0.5, height - 0.5, width - 0.5, height - 0.5 ));
                         break;
                     }
 
                     case VERTICAL: {
-                        graphics.draw(new Line2D.Double(width - 0.5, 0.5, width - 0.5, height - 0.5));
+                        graphics.draw(graphicsFactory.newLine( width - 0.5, 0.5, width - 0.5, height - 0.5 ));
                         break;
                     }
                 }
@@ -296,7 +296,7 @@ public class TerraTabPaneSkin extends ContainerSkin
             Button.DataRenderer dataRenderer = tabButton.getDataRenderer();
             dataRenderer.render(tabButton.getButtonData(), tabButton, false);
 
-            Graphics2D contentGraphics = (Graphics2D)graphics.create();
+            Graphics2D contentGraphics = graphics.create();
             contentGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_OFF);
 
@@ -342,7 +342,7 @@ public class TerraTabPaneSkin extends ContainerSkin
             // Draw the close trigger
             if (tabPane.isCloseable()
                 && tabButton.isSelected()) {
-                graphics.setStroke(new BasicStroke(2.5f));
+                graphics.setStroke(graphicsFactory.getStrokeFactory().createBasicStroke( 2.5f));
 
                 int x = 0;
                 int y = 0;
@@ -360,8 +360,8 @@ public class TerraTabPaneSkin extends ContainerSkin
                     }
                 }
 
-                graphics.draw(new Line2D.Double(x, y, x + CLOSE_TRIGGER_SIZE - 1, y + CLOSE_TRIGGER_SIZE - 1));
-                graphics.draw(new Line2D.Double(x, y + CLOSE_TRIGGER_SIZE - 1, x + CLOSE_TRIGGER_SIZE - 1, y));
+                graphics.draw(graphicsFactory.newLine(x, y, x + CLOSE_TRIGGER_SIZE - 1, y + CLOSE_TRIGGER_SIZE - 1));
+                graphics.draw(graphicsFactory.newLine(x, y + CLOSE_TRIGGER_SIZE - 1, x + CLOSE_TRIGGER_SIZE - 1, y));
             }
         }
 
@@ -1039,31 +1039,32 @@ public class TerraTabPaneSkin extends ContainerSkin
             double bottom = top + contentBounds.height - 1;
             double right = left + contentBounds.width - 1;
 
+            GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
             graphics.setPaint(borderColor);
 
             // Draw the right and bottom borders
-            graphics.draw(new Line2D.Double(right, top, right, bottom));
-            graphics.draw(new Line2D.Double(left, bottom, right, bottom));
+            graphics.draw(graphicsFactory.newLine( right, top, right, bottom ));
+            graphics.draw(graphicsFactory.newLine( left, bottom, right, bottom ));
 
             // Draw the left and top borders
             switch (tabOrientation) {
                 case HORIZONTAL: {
-                    graphics.draw(new Line2D.Double(left, top, left, bottom));
+                    graphics.draw(graphicsFactory.newLine( left, top, left, bottom ));
 
                     Point selectedTabButtonLocation = activeTabButton.mapPointToAncestor(tabPane, 0, 0);
-                    graphics.draw(new Line2D.Double(left, top, selectedTabButtonLocation.x + 0.5, top));
-                    graphics.draw(new Line2D.Double(selectedTabButtonLocation.x + activeTabButton.getWidth() - 0.5,
-                        top, right, top));
+                    graphics.draw(graphicsFactory.newLine( left, top, selectedTabButtonLocation.x + 0.5, top ));
+                    graphics.draw(graphicsFactory.newLine( selectedTabButtonLocation.x + activeTabButton.getWidth() - 0.5,
+                                                           top, right, top ));
 
                     break;
                 }
 
                 case VERTICAL: {
-                    graphics.draw(new Line2D.Double(left, top, right, top));
+                    graphics.draw(graphicsFactory.newLine(left, top, right, top));
 
                     Point selectedTabButtonLocation = activeTabButton.mapPointToAncestor(tabPane, 0, 0);
-                    graphics.draw(new Line2D.Double(left, top, left, selectedTabButtonLocation.y + 0.5));
-                    graphics.draw(new Line2D.Double(left, selectedTabButtonLocation.y + activeTabButton.getHeight() - 0.5,
+                    graphics.draw(graphicsFactory.newLine(left, top, left, selectedTabButtonLocation.y + 0.5));
+                    graphics.draw(graphicsFactory.newLine(left, selectedTabButtonLocation.y + activeTabButton.getHeight() - 0.5,
                         left, bottom));
 
                     break;
@@ -1396,9 +1397,9 @@ public class TerraTabPaneSkin extends ContainerSkin
 
     /**
      * Key presses have no effect if the event has already been consumed.<p>
-     * CommandModifier + {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_1 KEYPAD_1} to
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N1 1} to {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#N9 9} Select the (enabled) tab at
+     * CommandModifier + {@link Keyboard.Key#KEYPAD_1 KEYPAD_1} to
+     * {@link Keyboard.Key#KEYPAD_9 KEYPAD_9}<br>or CommandModifier +
+     * {@link Keyboard.Key#N1 1} to {@link Keyboard.Key#N9 9} Select the (enabled) tab at
      * index 0 to 8 respectively<p>
      *
      * @see org.apache.pivot.ui.awt.JavaAwtPlatform#getCommandModifier()

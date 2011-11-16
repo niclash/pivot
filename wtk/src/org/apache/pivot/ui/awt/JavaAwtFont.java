@@ -1,7 +1,10 @@
 package org.apache.pivot.ui.awt;
 
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import org.apache.pivot.text.CharSequenceCharacterIterator;
 import org.apache.pivot.wtk.Bounds;
 import org.apache.pivot.wtk.graphics.GlyphVector;
 import org.apache.pivot.wtk.graphics.font.Font;
@@ -29,6 +32,28 @@ public class JavaAwtFont
         java.awt.font.FontRenderContext renderContext = ( (JavaAwtFontRenderContext) fontRenderContext ).getDelegate();
         java.awt.font.LineMetrics awtLineMetrics = delegate.getLineMetrics( text, renderContext );
         return new JavaAwtLineMetrics( awtLineMetrics );
+    }
+
+    @Override
+    public LineMetrics getLineMetrics( String text, int beginIndex, int limit, FontRenderContext fontRenderContext )
+    {
+        java.awt.font.FontRenderContext renderContext = ( (JavaAwtFontRenderContext) fontRenderContext ).getDelegate();
+        java.awt.font.LineMetrics awtLineMetrics = delegate.getLineMetrics( text, beginIndex, limit, renderContext );
+        return new JavaAwtLineMetrics( awtLineMetrics );
+    }
+
+    @Override
+    public Bounds getStringBounds( String text, int beginIndex, int limit, FontRenderContext fontRenderContext )
+    {
+        java.awt.font.FontRenderContext renderContext = ( (JavaAwtFontRenderContext) fontRenderContext ).getDelegate();
+        Rectangle2D rect = delegate.getStringBounds( text, beginIndex, limit, renderContext );
+        return new Bounds( (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight() );
+    }
+
+    @Override
+    public GlyphVector createGlyphVector( FontRenderContext fontRenderContext, StringCharacterIterator line )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -70,6 +95,14 @@ public class JavaAwtFont
     {
         java.awt.font.FontRenderContext awtContext = ( (JavaAwtFontRenderContext) fontRenderContext ).getDelegate();
         java.awt.font.GlyphVector awtGlyphVector = delegate.createGlyphVector( awtContext, glyphCodes );
+        return new JavaAwtGlyphVector( awtGlyphVector );
+    }
+
+    @Override
+    public GlyphVector createGlyphVector( FontRenderContext fontRenderContext, CharSequenceCharacterIterator ci )
+    {
+        java.awt.font.FontRenderContext awtContext = ( (JavaAwtFontRenderContext) fontRenderContext ).getDelegate();
+        java.awt.font.GlyphVector awtGlyphVector = delegate.createGlyphVector( awtContext, ci );
         return new JavaAwtGlyphVector( awtGlyphVector );
     }
 

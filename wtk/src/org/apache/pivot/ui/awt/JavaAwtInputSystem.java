@@ -2,6 +2,8 @@ package org.apache.pivot.ui.awt;
 
 import java.lang.reflect.Field;
 import java.util.Locale;
+import org.apache.pivot.collections.EnumSet;
+import org.apache.pivot.collections.Set;
 import org.apache.pivot.wtk.InputSystem;
 import org.apache.pivot.wtk.Keyboard;
 import org.apache.pivot.wtk.Platform;
@@ -18,22 +20,14 @@ public class JavaAwtInputSystem implements InputSystem
         }
 
         int keyCode = JavaAwtKeyCode.UNDEFINED;
-        int modifiers = 0x00;
+        Set<Keyboard.Modifier> modifiers = new EnumSet<Keyboard.Modifier>( Keyboard.Modifier.class );
 
         String[] keys = value.split("-");
         for (int i = 0, n = keys.length; i < n; i++) {
             if (i < n - 1) {
                 // Modifier
                 String modifierAbbreviation = keys[i].toUpperCase( Locale.ENGLISH);
-
-                Keyboard.Modifier modifier;
-                if (modifierAbbreviation.equals(COMMAND_ABBREVIATION)) {
-                    modifier = Platform.getInstalled().getCommandModifier();
-                } else {
-                    modifier = Keyboard.Modifier.valueOf( modifierAbbreviation );
-                }
-
-                modifiers |= modifier.getMask();
+                modifiers.add( convert( modifierAbbreviation ) );
             } else {
                 // Keycode
                 try {
@@ -46,5 +40,15 @@ public class JavaAwtInputSystem implements InputSystem
         }
 
         return new Keyboard.KeyStroke(keyCode, modifiers);
+    }
+
+    private Keyboard.Modifier convert( String modifierAbbreviation ) {
+        Keyboard.Modifier modifier;
+        if (modifierAbbreviation.equals(COMMAND_ABBREVIATION)) {
+            modifier = Platform.getInstalled().getCommandModifier();
+        } else {
+            modifier = Keyboard.Modifier.valueOf( modifierAbbreviation );
+        }
+        return modifier;
     }
 }

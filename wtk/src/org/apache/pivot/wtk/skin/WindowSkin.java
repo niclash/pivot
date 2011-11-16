@@ -58,7 +58,7 @@ public class WindowSkin extends ContainerSkin implements Window.Skin,
     }
 
     public WindowSkin() {
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(ColorFactory.WHITE);
     }
 
     @Override

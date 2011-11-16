@@ -1164,13 +1164,12 @@ public class Window extends Container {
     }
 
     @Override
-    public boolean keyReleased(int keyCode, Keyboard.KeyLocation keyLocation) {
+    public boolean keyReleased(Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
         boolean consumed = super.keyReleased(keyCode, keyLocation);
 
         // Perform any action defined for this keystroke
         // in the active window's action dictionary
-        Keyboard.KeyStroke keyStroke = new Keyboard.KeyStroke(keyCode,
-            Keyboard.getModifiers());
+        Keyboard.KeyStroke keyStroke = new Keyboard.KeyStroke(keyCode, Keyboard.getModifiers());
 
         Action action = actionMap.get(keyStroke);
         if (action != null

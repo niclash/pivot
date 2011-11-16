@@ -11,11 +11,16 @@ import org.apache.pivot.wtk.graphics.CompositeFactory;
 import org.apache.pivot.wtk.graphics.GradientFactory;
 import org.apache.pivot.wtk.graphics.GradientPaint;
 import org.apache.pivot.wtk.graphics.GraphicsSystem;
+import org.apache.pivot.wtk.graphics.Line;
 import org.apache.pivot.wtk.graphics.LinearGradientPaint;
+import org.apache.pivot.wtk.graphics.Paint;
 import org.apache.pivot.wtk.graphics.RadialGradientPaint;
 import org.apache.pivot.wtk.graphics.StrokeFactory;
 import org.apache.pivot.wtk.graphics.font.FontFactory;
+import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.geom.Ellipse;
+import org.apache.pivot.wtk.graphics.geom.Rectangle;
+import org.apache.pivot.wtk.graphics.geom.RoundRectangle;
 
 public class JavaAwtGraphicsSystem
     implements GraphicsSystem
@@ -198,6 +203,55 @@ public class JavaAwtGraphicsSystem
     {
         return fontFactory;
 
+    }
+
+    @Override
+    public Area newArea()
+    {
+        java.awt.geom.Area awt = new java.awt.geom.Area();
+        return new JavaAwtArea(awt);
+    }
+
+    @Override
+    public Area newArea( int x, int y, int width, int height )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Rectangle newRectangle()
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Rectangle newRectangle( int x, int y, int width, int height )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public RoundRectangle newRoundRectangle( double x,
+                                             double y,
+                                             double width,
+                                             double height,
+                                             double radius1,
+                                             double radius2
+    )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Line newLine( double x1, double y1, double x2, double y2 )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Paint newGradientPaint( float i, float v, Color buttonBevelColor, float v1, float v2, Color backgroundColor )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

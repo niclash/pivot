@@ -17,7 +17,6 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.ui.awt.DisplayHost;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.wtk.graphics.ColorFactory;
 
 import org.apache.pivot.wtk.Bounds;
@@ -419,12 +418,12 @@ public class ScrollPaneSkin extends ContainerSkin
 
     /**
      * Key presses have no effect if the event has already been consumed.<p>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#UP UP} Scroll up a single scroll unit.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#DOWN DOWN} Scroll down a single scroll unit.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#LEFT LEFT} Scroll left a single scroll unit.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#RIGHT RIGHT} Scroll right a single scroll unit.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#PAGE_UP PAGE_UP} Scroll up a single scroll block.<br>
-     * {@link org.apache.pivot.ui.awt.JavaAwtKeyCode#PAGE_DOWN PAGE_DOWN} Scroll down a single scroll block.
+     * {@link Keyboard.Key#UP UP} Scroll up a single scroll unit.<br>
+     * {@link Keyboard.Key#DOWN DOWN} Scroll down a single scroll unit.<br>
+     * {@link Keyboard.Key#LEFT LEFT} Scroll left a single scroll unit.<br>
+     * {@link Keyboard.Key#RIGHT RIGHT} Scroll right a single scroll unit.<br>
+     * {@link Keyboard.Key#PAGE_UP PAGE_UP} Scroll up a single scroll block.<br>
+     * {@link Keyboard.Key#PAGE_DOWN PAGE_DOWN} Scroll down a single scroll block.
      *
      * @see ScrollBar#getBlockIncrement()
      * @see ScrollBar#getUnitIncrement()

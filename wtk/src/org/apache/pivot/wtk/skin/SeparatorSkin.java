@@ -18,6 +18,7 @@ package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.Platform;
 import org.apache.pivot.wtk.Bounds;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.BasicStroke;
 import org.apache.pivot.wtk.graphics.Color;
@@ -73,9 +74,9 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
 
         if (heading != null
             && heading.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             Bounds headingBounds = font.getStringBounds(heading, fontRenderContext);
-            preferredWidth = (int)Math.ceil(headingBounds.toRectangle().getWidth())
+            preferredWidth = (int)Math.ceil(headingBounds.width)
                 + (padding.left + padding.right);
         }
 
@@ -91,7 +92,7 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
 
         if (heading != null
             && heading.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(heading, fontRenderContext);
             preferredHeight = Math.max((int)Math.ceil(lm.getAscent() + lm.getDescent()
                 + lm.getLeading()), preferredHeight);
@@ -112,7 +113,7 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
 
         if (heading != null
             && heading.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             Bounds headingBounds = font.getStringBounds(heading, fontRenderContext);
             LineMetrics lm = font.getLineMetrics(heading, fontRenderContext);
             preferredWidth = (int)Math.ceil(headingBounds.getWidth());
@@ -138,10 +139,10 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
         int separatorY = padding.top;
 
         String heading = separator.getHeading();
-
+        GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
         if (heading != null
             && heading.length() > 0) {
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = font.getLineMetrics(heading, fontRenderContext);
 
             graphics.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -153,17 +154,21 @@ public class SeparatorSkin extends ComponentSkin implements SeparatorListener {
             graphics.setPaint(headingColor);
             graphics.drawString(heading, padding.left, lm.getAscent() + padding.top);
 
-            Rectangle2D headingBounds = font.getStringBounds(heading, fontRenderContext);
+            Bounds headingBounds = font.getStringBounds(heading, fontRenderContext);
 
-            Area titleClip = new Area(graphics.getClip());
-            titleClip.subtract(new Area(new Rectangle2D.Double(padding.left, padding.top,
-                headingBounds.getWidth() + padding.right, headingBounds.getHeight())));
+            Bounds clip = graphics.getClip();
+            Area titleClip = graphicsFactory.newArea( clip.x, clip.y, clip.width, clip.height );
+            titleClip.subtract(graphicsFactory.newArea(
+                padding.left,
+                padding.top,
+                headingBounds.getWidth() + padding.right,
+                headingBounds.getHeight()));
             graphics.clip(titleClip);
 
             separatorY += (lm.getAscent() + lm.getDescent()) / 2 + 1;
         }
 
-        graphics.setStroke(new BasicStroke(thickness));
+        graphics.setStroke(graphicsFactory.getStrokeFactory().createBasicStroke(thickness));
         graphics.setColor(color);
         graphics.drawLine(0, separatorY, width, separatorY);
     }

@@ -27,7 +27,6 @@ import org.apache.pivot.collections.ListListener;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.io.FileList;
-import org.apache.pivot.ui.awt.JavaAwtKeyCode;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
@@ -74,9 +73,9 @@ public class FileDropTargetDemo extends Window implements Bindable {
 
         fileTableView.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
             @Override
-            public boolean keyPressed(Component component, int keyCode, Keyboard.KeyLocation keyLocation) {
-                if (keyCode == JavaAwtKeyCode.DELETE
-                    || keyCode == JavaAwtKeyCode.BACKSPACE) {
+            public boolean keyPressed(Component component, Keyboard.Key  keyCode, Keyboard.KeyLocation keyLocation) {
+                if (keyCode == Keyboard.Key .DELETE
+                    || keyCode == Keyboard.Key .BACKSPACE) {
                     Sequence<Span> selectedRanges = fileTableView.getSelectedRanges();
 
                     for (int i = selectedRanges.getLength() - 1; i >= 0; i--) {

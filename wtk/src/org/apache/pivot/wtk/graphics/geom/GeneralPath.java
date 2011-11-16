@@ -2,7 +2,7 @@ package org.apache.pivot.wtk.graphics.geom;
 
 import org.apache.pivot.wtk.Bounds;
 
-public interface GeneralPath
+public interface GeneralPath extends Shape
 {
     public static final int WIND_EVEN_ODD = PathIterator.WIND_EVEN_ODD;
 

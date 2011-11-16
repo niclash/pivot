@@ -14,4 +14,7 @@ public class RenderingHints
     public static final String VALUE_ANTIALIAS_OFF = "anti-alias off";
     public static final String VALUE_FRACTIONALMETRICS_DEFAULT = "fractional-metrics default";
 
+    public static final String VALUE_INTERPOLATION_NEAREST_NEIGHBOR = "interpolation-nearest-neighbor";
+    public static final String VALUE_INTERPOLATION_BILINEAR = "interpolation-bilinear";
+    public static final String VALUE_INTERPOLATION_BICUBIC = "interpolation-bicubic";
 }

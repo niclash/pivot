@@ -17,6 +17,7 @@
 package org.apache.pivot.wtk.skin;
 
 import org.apache.pivot.wtk.Platform;
+import org.apache.pivot.wtk.graphics.GraphicsSystem;
 import org.apache.pivot.wtk.graphics.geom.Area;
 import org.apache.pivot.wtk.graphics.Color;
 import java.text.CharacterIterator;
@@ -82,7 +83,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
     @Override
     protected void childLayout(int breakWidth) {
         TextNode textNode = (TextNode)getNode();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
         CharSequenceCharacterIterator ci = new CharSequenceCharacterIterator(textNode.getCharacters(), start);
 
@@ -147,7 +148,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
     @Override
     public Dimensions getPreferredSize(int breakWidth) {
         TextNode textNode = (TextNode)getNode();
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
 
         CharSequenceCharacterIterator ci = new CharSequenceCharacterIterator(textNode.getCharacters(), start);
 
@@ -201,7 +202,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
 
     @Override
     public int getBaseline() {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = getEffectiveFont().getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
         return (int) ascent;
@@ -216,7 +217,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
         if (glyphVector != null) {
             TextPane textPane = (TextPane)getTextPaneSkin().getComponent();
 
-            FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+            FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
             LineMetrics lm = getEffectiveFont().getLineMetrics("", fontRenderContext);
             float ascent = lm.getAscent();
             int strikethroughX = Math.round(lm.getAscent() + lm.getStrikethroughOffset());
@@ -254,15 +255,15 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
                 } else {
                     x1 = width;
                 }
-
-                Rectangle selection = new Rectangle(x0, 0, x1 - x0, height);
+                GraphicsSystem graphicsFactory = Platform.getInstalled().getGraphicsSystem();
+                Bounds selection = new Bounds(x0, 0, x1 - x0, height);
 
                 // Paint the unselected text
-                Area unselectedArea = new Area();
-                unselectedArea.add(new Area(new Rectangle(0, 0, width, height)));
-                unselectedArea.subtract(new Area(selection));
+                Area unselectedArea = graphicsFactory.newArea();
+                unselectedArea.add(graphicsFactory.newArea(0, 0, width, height));
+                unselectedArea.subtract(graphicsFactory.newArea(selection.x, selection.y, selection.width, selection.height));
 
-                Graphics2D textGraphics = (Graphics2D)graphics.create();
+                Graphics2D textGraphics = graphics.create();
                 textGraphics.setColor(getEffectiveForegroundColor());
                 textGraphics.clip(unselectedArea);
                 textGraphics.drawGlyphVector(glyphVector, 0, ascent);
@@ -282,10 +283,10 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
                     selectionColor = getTextPaneSkin().getInactiveSelectionColor();
                 }
 
-                Graphics2D selectedTextGraphics = (Graphics2D)graphics.create();
+                Graphics2D selectedTextGraphics = graphics.create();
                 selectedTextGraphics.setColor(textPane.isFocused() &&
                     textPane.isEditable() ? selectionColor : getTextPaneSkin().getInactiveSelectionColor());
-                selectedTextGraphics.clip(selection.getBounds());
+                selectedTextGraphics.clip(selection);
                 selectedTextGraphics.drawGlyphVector(glyphVector, 0, ascent);
                 if (underline) {
                     selectedTextGraphics.drawLine(0, underlineX, width, underlineX);
@@ -327,7 +328,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
 
     @Override
     public int getInsertionPoint(int x, int y) {
-        FontRenderContext fontRenderContext = Platform.getFontRenderContext();
+        FontRenderContext fontRenderContext = Platform.getInstalled().getFontRenderContext();
         LineMetrics lm = getEffectiveFont().getLineMetrics("", fontRenderContext);
         float ascent = lm.getAscent();
 
@@ -337,7 +338,7 @@ class TextPaneSkinTextNodeView extends TextPaneSkinNodeView implements TextNodeL
         while (i < n) {
             Shape glyphBounds = glyphVector.getGlyphLogicalBounds(i);
 
-            if (glyphBounds.contains(x, y - ascent)) {
+            if (glyphBounds.contains(x, (int) (y - ascent) )) {
                 Bounds glyphBounds2D = glyphBounds.getBounds();
 
                 if (x - glyphBounds2D.getX() > glyphBounds2D.getWidth() / 2
